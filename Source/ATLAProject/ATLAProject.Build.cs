@@ -8,7 +8,8 @@ public class ATLAProject : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput",
+			"Slate", "SlateCore", "UMG", "OnlineSubsystem", "OnlineSubsystemSteam", "Steamworks"});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 
