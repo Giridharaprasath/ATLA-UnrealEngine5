@@ -20,8 +20,33 @@ public:
 	UATLAGameInstanceSubsystem();
 
 	UFUNCTION(BlueprintCallable)
-	static bool HasOnlineSubsystem(FName Subsystem);
+	bool HasOnlineSubsystem(FName Subsystem);
+
+	UFUNCTION(BlueprintCallable)
+	void CreateATLASession(bool UseLan = true, FString LobbyPath = FString(TEXT("/Game/Maps/Testing/Testing_Level")));
+
+protected:
+
+	// Function fired when a session create request has completed
+	void OnCreateSessionComplete(FName SessionName, bool bWasSuccessful);
+	// Function fired when a session start request has completed
+	void OnStartSessionComplete(FName SessionName, bool bWasSuccessful);
 
 private:
+	FString PlayerSteamName;
+	FString PathToLobby { TEXT("") };
+
 	IOnlineSessionPtr SessionInterface;
+	TSharedPtr<FOnlineSessionSettings> LastSessionSettings;
+
+	// Delegates called when session created
+	FOnCreateSessionCompleteDelegate OnCreateSessionCompleteDelegate;
+	// Delegates called when session started
+	FOnStartSessionCompleteDelegate OnStartSessionCompleteDelegate;
+
+
+	// Handles to registered delegates for creating a session
+	FDelegateHandle OnCreateSessionCompleteDelegateHandle;
+	// Handles to registered delegates for starting a session
+	FDelegateHandle OnStartSessionCompleteDelegateHandle;
 };
