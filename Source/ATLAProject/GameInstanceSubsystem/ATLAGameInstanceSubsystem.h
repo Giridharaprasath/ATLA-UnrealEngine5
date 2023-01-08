@@ -19,11 +19,17 @@ class ATLAPROJECT_API UATLAGameInstanceSubsystem : public UGameInstanceSubsystem
 public:
 	UATLAGameInstanceSubsystem();
 
+	// Get Player Name
+	FString GetPlayerName();
+
 	UFUNCTION(BlueprintCallable)
 	bool HasOnlineSubsystem(FName Subsystem);
 
 	UFUNCTION(BlueprintCallable)
 	void CreateATLASession(bool UseLan = true, FString LobbyPath = FString(TEXT("/Game/Maps/Testing/Testing_Level")));
+
+	UFUNCTION(BlueprintCallable)
+	void DestroyATLASession();
 
 protected:
 
@@ -31,6 +37,8 @@ protected:
 	void OnCreateSessionComplete(FName SessionName, bool bWasSuccessful);
 	// Function fired when a session start request has completed
 	void OnStartSessionComplete(FName SessionName, bool bWasSuccessful);
+	// Function fired when a session destroy request has completed
+	void OnDestroySessionComplete(FName SessionName, bool bWasSuccessful);
 
 private:
 	FString PlayerSteamName;
@@ -43,10 +51,14 @@ private:
 	FOnCreateSessionCompleteDelegate OnCreateSessionCompleteDelegate;
 	// Delegates called when session started
 	FOnStartSessionCompleteDelegate OnStartSessionCompleteDelegate;
+	// Delegates called when session destroyed
+	FOnDestroySessionCompleteDelegate OnDestroySessionCompleteDelegate;
 
 
 	// Handles to registered delegates for creating a session
 	FDelegateHandle OnCreateSessionCompleteDelegateHandle;
 	// Handles to registered delegates for starting a session
 	FDelegateHandle OnStartSessionCompleteDelegateHandle;
+	// Handles to registered delegates for destroying a session
+	FDelegateHandle OnDestroySessionCompleteDelegateHandle;
 };

@@ -15,7 +15,8 @@
 
 UATLAGameInstanceSubsystem::UATLAGameInstanceSubsystem() :
 	OnCreateSessionCompleteDelegate(FOnCreateSessionCompleteDelegate::CreateUObject(this, &ThisClass::OnCreateSessionComplete)),
-	OnStartSessionCompleteDelegate(FOnStartSessionCompleteDelegate::CreateUObject(this, &ThisClass::OnStartSessionComplete))
+	OnStartSessionCompleteDelegate(FOnStartSessionCompleteDelegate::CreateUObject(this, &ThisClass::OnStartSessionComplete)),
+	OnDestroySessionCompleteDelegate(FOnDestroySessionCompleteDelegate::CreateUObject(this, &ThisClass::OnDestroySessionComplete))
 {
     if (SteamAPI_Init())
     {
@@ -44,6 +45,15 @@ UATLAGameInstanceSubsystem::UATLAGameInstanceSubsystem() :
 	}
 }
 
+FString UATLAGameInstanceSubsystem::GetPlayerName()
+{
+	if (!PlayerSteamName.IsEmpty())
+	{
+		return FString(PlayerSteamName);
+	}
+	return FString(TEXT(" "));
+}
+
 bool UATLAGameInstanceSubsystem::HasOnlineSubsystem(FName SubsystemName)
 {
     return IOnlineSubsystem::DoesInstanceExist(SubsystemName);
@@ -63,6 +73,10 @@ void UATLAGameInstanceSubsystem::CreateATLASession(bool UseLan, FString LobbyPat
 	}
 
 	auto ExistingSession = SessionInterface->GetNamedSession(NAME_GameSession);
+	if (ExistingSession != nullptr)
+	{
+		DestroyATLASession();
+	}
 	
 	PathToLobby = FString::Printf(TEXT("%s?listen"), *LobbyPath);
 
@@ -83,6 +97,17 @@ void UATLAGameInstanceSubsystem::CreateATLASession(bool UseLan, FString LobbyPat
 
 	const ULocalPlayer* LocalPlayer = GetWorld()->GetFirstLocalPlayerFromController();
 	SessionInterface->CreateSession(*LocalPlayer->GetPreferredUniqueNetId(), NAME_GameSession, *LastSessionSettings);
+}
+
+void UATLAGameInstanceSubsystem::DestroyATLASession()
+{
+	if (!SessionInterface.IsValid())
+	{
+		return;
+	}
+
+	OnDestroySessionCompleteDelegateHandle = SessionInterface->AddOnDestroySessionCompleteDelegate_Handle(OnDestroySessionCompleteDelegate);
+	SessionInterface->DestroySession(NAME_GameSession);
 }
 
 void UATLAGameInstanceSubsystem::OnCreateSessionComplete(FName SessionName, bool bWasSuccessful)
@@ -124,5 +149,19 @@ void UATLAGameInstanceSubsystem::OnStartSessionComplete(FName SessionName, bool 
 				UGameplayStatics::OpenLevel(World, FName(*FString(PathToLobby)), true);
 			}
 		}
+	}
+}
+
+void UATLAGameInstanceSubsystem::OnDestroySessionComplete(FName SessionName, bool bWasSuccessful)
+{
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 100.f, FColor::Red,
+		FString::Printf(TEXT("OnDestroySessionComplete %s, %d"), *SessionName.ToString(), bWasSuccessful));
+	}
+
+	if (SessionInterface)
+	{
+		SessionInterface->ClearOnDestroySessionCompleteDelegate_Handle(OnDestroySessionCompleteDelegateHandle);
 	}
 }
