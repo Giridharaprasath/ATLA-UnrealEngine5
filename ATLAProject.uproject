@@ -142,10 +142,6 @@
 			"Enabled": false
 		},
 		{
-			"Name": "RiderSourceCodeAccess",
-			"Enabled": false
-		},
-		{
 			"Name": "SubversionSourceControl",
 			"Enabled": false
 		},
@@ -183,6 +179,14 @@
 		{
 			"Name": "CryptoKeys",
 			"Enabled": false
+		},
+		{
+			"Name": "CodeEditor",
+			"Enabled": true
+		},
+		{
+			"Name": "CodeView",
+			"Enabled": true
 		}
 	],
 	"TargetPlatforms": [

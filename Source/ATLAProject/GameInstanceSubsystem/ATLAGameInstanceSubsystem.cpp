@@ -5,6 +5,7 @@
 #include "OnlineSubsystem.h"
 #include "OnlineSessionSettings.h"
 #include "Kismet/GameplayStatics.h"
+#include "Online.h"
 
 #include "steam/steam_api.h"
 #ifdef _MSC_VER

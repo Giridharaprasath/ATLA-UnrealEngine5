@@ -23,6 +23,9 @@ private:
 	UPROPERTY(meta = (BindWidget))
 	class UTextBlock* TextBlock_PlayerName;
 
+	UPROPERTY(meta = (BindWidget))
+	UTextBlock* TextBlock_Hint;
+
 	UPROPERTY()
 	class UATLAGameInstanceSubsystem* ATLAGISubsystem;
 };

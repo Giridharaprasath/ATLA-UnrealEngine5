@@ -4,6 +4,7 @@
 #include "UserWidgetTitleScreen.h"
 #include "Components/TextBlock.h"
 #include "OnlineSubsystem.h"
+#include "Online.h"
 
 #include "ATLAProject/GameInstanceSubsystem/ATLAGameInstanceSubsystem.h" // * Header File to include ATLA GameInstance Subsystem
 
@@ -20,7 +21,6 @@ void UUserWidgetTitleScreen::NativeConstruct()
     {
         FString PlayerName = ATLAGISubsystem->GetPlayerName();
         TextBlock_PlayerName->SetText(FText::FromString(*PlayerName));
-
 
     }
 }
