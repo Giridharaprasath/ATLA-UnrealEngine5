@@ -4,33 +4,21 @@
 #include "ATLAGameInstanceSubsystem.h"
 #include "OnlineSubsystem.h"
 #include "OnlineSessionSettings.h"
+#include "Chaos/AABB.h"
+#include "Chaos/AABB.h"
+#include "Chaos/AABB.h"
+#include "Chaos/AABB.h"
+#include "Interfaces/OnlineExternalUIInterface.h"
 #include "Kismet/GameplayStatics.h"
-#include "Online.h"
-
-#include "steam/steam_api.h"
-#ifdef _MSC_VER
-#pragma warning(push)
-#pragma warning(disable:4996)
-#pragma warning(disable:4265)
-#endif
+// #include "Interfaces/OnlineIdentityInterface.h"
 
 UATLAGameInstanceSubsystem::UATLAGameInstanceSubsystem() :
 	OnCreateSessionCompleteDelegate(FOnCreateSessionCompleteDelegate::CreateUObject(this, &ThisClass::OnCreateSessionComplete)),
 	OnStartSessionCompleteDelegate(FOnStartSessionCompleteDelegate::CreateUObject(this, &ThisClass::OnStartSessionComplete)),
-	OnDestroySessionCompleteDelegate(FOnDestroySessionCompleteDelegate::CreateUObject(this, &ThisClass::OnDestroySessionComplete))
+	OnDestroySessionCompleteDelegate(FOnDestroySessionCompleteDelegate::CreateUObject(this, &ThisClass::OnDestroySessionComplete)),
+	OnSessionUserInviteAcceptedDelegate(FOnSessionUserInviteAcceptedDelegate::CreateUObject(this, &ThisClass::OnSessionInviteAccepted)),
+	OnJoinSessionCompleteDelegate(FOnJoinSessionCompleteDelegate::CreateUObject(this, &ThisClass::OnJoinSessionComplete))
 {
-    if (SteamAPI_Init())
-    {
-        PlayerSteamName = SteamFriends()->GetPersonaName();
-		if (!PlayerSteamName.IsEmpty())
-        {
-            if (GEngine)
-            {
-                GEngine->AddOnScreenDebugMessage(-1, 100.f, FColor::Cyan, FString::Printf(TEXT("Player Steam Name: %s"), *PlayerSteamName));
-            }
-        }
-    }
-
     IOnlineSubsystem* Subsystem = IOnlineSubsystem::Get();
 	if (Subsystem)
 	{
@@ -42,35 +30,32 @@ UATLAGameInstanceSubsystem::UATLAGameInstanceSubsystem() :
 				GEngine->AddOnScreenDebugMessage(-1, 100.f, FColor::Blue,
 					FString::Printf(TEXT("SUBSYSTEM PRESENT: %s"), *Subsystem->GetSubsystemName().ToString()));
 			}
+
+			OnSessionInviteAcceptedDelegateHandle = SessionInterface->AddOnSessionUserInviteAcceptedDelegate_Handle(OnSessionUserInviteAcceptedDelegate);
 		}
 	}
 }
 
-FString UATLAGameInstanceSubsystem::GetPlayerName()
+void UATLAGameInstanceSubsystem::Deinitialize()
 {
-	if (!PlayerSteamName.IsEmpty())
+	if (SessionInterface)
 	{
-		return FString(PlayerSteamName);
+		SessionInterface->ClearOnSessionUserInviteAcceptedDelegate_Handle(OnSessionInviteAcceptedDelegateHandle);
 	}
-	return FString(TEXT(" "));
+	Super::Deinitialize();
 }
 
-bool UATLAGameInstanceSubsystem::HasOnlineSubsystem(FName SubsystemName)
-{
-    return IOnlineSubsystem::DoesInstanceExist(SubsystemName);
-}
-
-void UATLAGameInstanceSubsystem::CreateATLASession(bool UseLan, FString LobbyPath)
+void UATLAGameInstanceSubsystem::CreateATLASession(ULocalPlayer* LocalPlayer, bool UseLan, FString LobbyPath)
 {
 	if (!SessionInterface.IsValid())
 	{
 		return;
 	}
-
+	
 	if (GEngine)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 100.f, FColor::Red, 
-			FString::Printf(TEXT("Create ATLA Session with condition: %d, %s"), UseLan, *LobbyPath));
+		GEngine->AddOnScreenDebugMessage(-1, 100.f, FColor::Green, 
+			FString::Printf(TEXT("Create ATLA Session LAN: %hhd, Level: %s"), UseLan, *LobbyPath));
 	}
 
 	auto ExistingSession = SessionInterface->GetNamedSession(NAME_GameSession);
@@ -79,25 +64,24 @@ void UATLAGameInstanceSubsystem::CreateATLASession(bool UseLan, FString LobbyPat
 		DestroyATLASession();
 	}
 	
-	PathToLobby = FString::Printf(TEXT("%s?listen"), *LobbyPath);
-
+	//PathToLobby = FString::Printf(TEXT("%s?listen"), *LobbyPath);
+	PathToLobby = LobbyPath;
 	OnCreateSessionCompleteDelegateHandle = SessionInterface->AddOnCreateSessionCompleteDelegate_Handle(OnCreateSessionCompleteDelegate);
 
-	LastSessionSettings = MakeShareable(new FOnlineSessionSettings());
-	LastSessionSettings->bIsLANMatch = UseLan;
-	LastSessionSettings->NumPublicConnections = 5;
-	LastSessionSettings->bAllowJoinInProgress = true;
-	LastSessionSettings->bAllowJoinViaPresenceFriendsOnly = true;
-	LastSessionSettings->bAllowInvites = true;
-	LastSessionSettings->bUsesPresence = true;
-	LastSessionSettings->bShouldAdvertise = true;
-	LastSessionSettings->bUseLobbiesIfAvailable = true;
-	LastSessionSettings->bUsesStats = true;
+	SessionSettings = MakeShareable(new FOnlineSessionSettings());
+	SessionSettings->bIsLANMatch = UseLan;
+	SessionSettings->NumPublicConnections = 5;
+	SessionSettings->bAllowJoinInProgress = true;
+	SessionSettings->bAllowJoinViaPresenceFriendsOnly = true;
+	SessionSettings->bAllowInvites = true;
+	SessionSettings->bUsesPresence = true;
+	SessionSettings->bShouldAdvertise = true;
+	SessionSettings->bUseLobbiesIfAvailable = true;
+	SessionSettings->bUsesStats = true;
 
-	LastSessionSettings->Set(FName("LobbyName"), PlayerSteamName, EOnlineDataAdvertisementType::ViaOnlineServiceAndPing);
+	// LastSessionSettings->Set(FName("LobbyName"), PlayerSteamName, EOnlineDataAdvertisementType::ViaOnlineServiceAndPing);
 
-	const ULocalPlayer* LocalPlayer = GetWorld()->GetFirstLocalPlayerFromController();
-	SessionInterface->CreateSession(*LocalPlayer->GetPreferredUniqueNetId(), NAME_GameSession, *LastSessionSettings);
+	SessionInterface->CreateSession(*LocalPlayer->GetPreferredUniqueNetId(), NAME_GameSession, *SessionSettings);
 }
 
 void UATLAGameInstanceSubsystem::DestroyATLASession()
@@ -106,9 +90,58 @@ void UATLAGameInstanceSubsystem::DestroyATLASession()
 	{
 		return;
 	}
+	
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 100.f, FColor::Green, 
+			FString::Printf(TEXT("Destroy ATLA Session S: %s"), LexToString(NAME_GameSession)));
+	}
 
 	OnDestroySessionCompleteDelegateHandle = SessionInterface->AddOnDestroySessionCompleteDelegate_Handle(OnDestroySessionCompleteDelegate);
 	SessionInterface->DestroySession(NAME_GameSession);
+}
+
+void UATLAGameInstanceSubsystem::JoinATLASession(int32 LocalPlayer, const FOnlineSessionSearchResult& SessionSearchResult)
+{
+	if (!SessionInterface.IsValid())
+	{
+		return;
+	}
+	
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 100.f, FColor::Green, 
+			FString::Printf(TEXT("Join ATLA Session P: %d, SSR: %s"), LocalPlayer, *SessionSearchResult.GetSessionIdStr()));
+	}
+	
+	OnJoinSessionCompleteDelegateHandle = SessionInterface->AddOnJoinSessionCompleteDelegate_Handle(OnJoinSessionCompleteDelegate);
+	SessionInterface->JoinSession(LocalPlayer, NAME_GameSession, SessionSearchResult);
+}
+
+void UATLAGameInstanceSubsystem::FindFriendATLASession()
+{
+	if (!SessionInterface.IsValid())
+	{
+		return;
+	}
+
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 100.f, FColor::Green,
+			FString::Printf(TEXT("Find Friend ATLA Session")));
+	}
+
+	//SessionInterface->FindFriendSession()
+}
+
+bool UATLAGameInstanceSubsystem::CheckIfPlayerInSession(ULocalPlayer* LocalPlayer)
+{
+	if (SessionInterface)
+	{
+		return SessionInterface->IsPlayerInSession(NAME_GameSession, *LocalPlayer->GetPreferredUniqueNetId());
+	}
+
+	return false;
 }
 
 void UATLAGameInstanceSubsystem::OnCreateSessionComplete(FName SessionName, bool bWasSuccessful)
@@ -116,7 +149,7 @@ void UATLAGameInstanceSubsystem::OnCreateSessionComplete(FName SessionName, bool
 	if (GEngine)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 100.f, FColor::Red, 
-		FString::Printf(TEXT("OnCreateSessionComplete %s, %d"), *SessionName.ToString(), bWasSuccessful));
+		FString::Printf(TEXT("OnCreateSessionComplete SN: %s, b: %hhd"), *SessionName.ToString(), bWasSuccessful));
 	}
 
 	if (SessionInterface)
@@ -136,7 +169,7 @@ void UATLAGameInstanceSubsystem::OnStartSessionComplete(FName SessionName, bool 
 	if (GEngine)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 100.f, FColor::Red, 
-		FString::Printf(TEXT("OnStartSessionComplete %s, %d"), *SessionName.ToString(), bWasSuccessful));
+		FString::Printf(TEXT("OnStartSessionComplete SN: %s, b: %hhd"), *SessionName.ToString(), bWasSuccessful));
 	}
 
 	if (SessionInterface)
@@ -144,25 +177,59 @@ void UATLAGameInstanceSubsystem::OnStartSessionComplete(FName SessionName, bool 
 		SessionInterface->ClearOnStartSessionCompleteDelegate_Handle(OnStartSessionCompleteDelegateHandle);
 		if (bWasSuccessful)
 		{
-			UWorld* World = GetWorld();
-			if (World)
-			{
-				UGameplayStatics::OpenLevel(World, FName(*FString(PathToLobby)), true);
-			}
+			UGameplayStatics::OpenLevel(GetWorld(), FName(*FString(PathToLobby)), true, "?listen");
 		}
 	}
 }
 
-void UATLAGameInstanceSubsystem::OnDestroySessionComplete(FName SessionName, bool bWasSuccessful)
+void UATLAGameInstanceSubsystem::OnDestroySessionComplete(FName SessionName, bool bWasSuccessful) 
 {
 	if (GEngine)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 100.f, FColor::Red,
-		FString::Printf(TEXT("OnDestroySessionComplete %s, %d"), *SessionName.ToString(), bWasSuccessful));
+		FString::Printf(TEXT("OnDestroySessionComplete SN: %s, b: %hhd"), *SessionName.ToString(), bWasSuccessful));
+	}
+}
+
+void UATLAGameInstanceSubsystem::OnSessionInviteAccepted(bool bWasSuccessful, int32 LocalPlayer,
+	TSharedPtr<const FUniqueNetId> PersonInviting, const FOnlineSessionSearchResult& SessionToJoin)
+{
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 100.f, FColor::Red,
+		FString::Printf(TEXT("OnSessionInviteAcceptedComplete PI: %s, b: %hhd"),
+			*PersonInviting->ToString(), bWasSuccessful));
+	}
+	
+	if (bWasSuccessful)
+	{
+		if (SessionInterface && SessionToJoin.IsValid())
+		{
+			JoinATLASession(LocalPlayer, SessionToJoin);
+		}
+	}
+}
+
+void UATLAGameInstanceSubsystem::OnJoinSessionComplete(FName SessionName, EOnJoinSessionCompleteResult::Type Result)
+{
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 100.f, FColor::Red, 
+		FString::Printf(TEXT("OnJoinSessionComplete SN: %s, R: %s"), *SessionName.ToString(), LexToString(Result)));
 	}
 
 	if (SessionInterface)
 	{
-		SessionInterface->ClearOnDestroySessionCompleteDelegate_Handle(OnDestroySessionCompleteDelegateHandle);
+		SessionInterface->ClearOnJoinSessionCompleteDelegate_Handle(OnJoinSessionCompleteDelegateHandle);
+
+		FString TravelURL;
+		SessionInterface->GetResolvedConnectString(NAME_GameSession, TravelURL);
+
+		APlayerController* PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+		
+		if (PlayerController)
+		{
+			PlayerController->ClientTravel(TravelURL, TRAVEL_Absolute);
+		}
 	}
 }

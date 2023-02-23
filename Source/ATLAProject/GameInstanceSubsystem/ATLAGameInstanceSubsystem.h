@@ -3,6 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "OnlineSubsystem.h"
+#include "OnlineSessionSettings.h"
 #include "Subsystems/GameInstanceSubsystem.h"
 #include "Interfaces/OnlineSessionInterface.h"
 
@@ -18,18 +20,22 @@ class ATLAPROJECT_API UATLAGameInstanceSubsystem : public UGameInstanceSubsystem
 	
 public:
 	UATLAGameInstanceSubsystem();
-
-	// Get Player Name
-	FString GetPlayerName();
-
+	virtual void Deinitialize() override;
+	
 	UFUNCTION(BlueprintCallable)
-	bool HasOnlineSubsystem(FName Subsystem);
-
-	UFUNCTION(BlueprintCallable)
-	void CreateATLASession(bool UseLan = true, FString LobbyPath = FString(TEXT("/Game/Maps/Testing/Testing_Level")));
+	void CreateATLASession(ULocalPlayer* LocalPlayer, bool UseLan = true,
+		FString LobbyPath = FString(TEXT("/Game/Maps/Testing/Testing_Level")));
 
 	UFUNCTION(BlueprintCallable)
 	void DestroyATLASession();
+
+	void JoinATLASession(int32 LocalPlayer, const FOnlineSessionSearchResult& SessionSearchResult);
+
+	void FindFriendATLASession();
+
+	UFUNCTION(BlueprintCallable)
+	bool CheckIfPlayerInSession(ULocalPlayer* LocalPlayer);
+
 
 protected:
 
@@ -39,13 +45,17 @@ protected:
 	void OnStartSessionComplete(FName SessionName, bool bWasSuccessful);
 	// Function fired when a session destroy request has completed
 	void OnDestroySessionComplete(FName SessionName, bool bWasSuccessful);
+	// Function fired when a session invite request has accepted
+	void OnSessionInviteAccepted(bool bWasSuccessful, int32 LocalPlayer, TSharedPtr<const FUniqueNetId> PersonInviting,
+		const FOnlineSessionSearchResult& SessionToJoin);
+	// Function fires when a session join request has completed
+	void OnJoinSessionComplete(FName SessionName, EOnJoinSessionCompleteResult::Type Result);
 
 private:
-	FString PlayerSteamName;
 	FString PathToLobby { TEXT("") };
 
 	IOnlineSessionPtr SessionInterface;
-	TSharedPtr<FOnlineSessionSettings> LastSessionSettings;
+	TSharedPtr<FOnlineSessionSettings> SessionSettings;
 
 	// Delegates called when session created
 	FOnCreateSessionCompleteDelegate OnCreateSessionCompleteDelegate;
@@ -53,7 +63,10 @@ private:
 	FOnStartSessionCompleteDelegate OnStartSessionCompleteDelegate;
 	// Delegates called when session destroyed
 	FOnDestroySessionCompleteDelegate OnDestroySessionCompleteDelegate;
-
+	// Delegates called when session invite accepted
+	FOnSessionUserInviteAcceptedDelegate OnSessionUserInviteAcceptedDelegate;
+	// Delegates called when session joined
+	FOnJoinSessionCompleteDelegate OnJoinSessionCompleteDelegate;
 
 	// Handles to registered delegates for creating a session
 	FDelegateHandle OnCreateSessionCompleteDelegateHandle;
@@ -61,4 +74,8 @@ private:
 	FDelegateHandle OnStartSessionCompleteDelegateHandle;
 	// Handles to registered delegates for destroying a session
 	FDelegateHandle OnDestroySessionCompleteDelegateHandle;
+	// Handles to registered delegates for accepting a session invite
+	FDelegateHandle OnSessionInviteAcceptedDelegateHandle;
+	// Handles to registered delegates for joining a session
+	FDelegateHandle OnJoinSessionCompleteDelegateHandle;
 };
