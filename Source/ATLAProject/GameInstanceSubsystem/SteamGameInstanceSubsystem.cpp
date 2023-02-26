@@ -74,3 +74,12 @@ void USteamGameInstanceSubsystem::OpenSteamInviteUI()
 		//SteamFriends()->ActivateGameOverlayInviteDialog()
 	}
 }
+
+void USteamGameInstanceSubsystem::OpenSteamOverlayUI()
+{
+	if (SteamSubsystem)
+	{
+		SteamFriends()->ActivateGameOverlay("Friends");
+	}
+}
+

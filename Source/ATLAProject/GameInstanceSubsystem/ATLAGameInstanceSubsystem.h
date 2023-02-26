@@ -31,8 +31,6 @@ public:
 
 	void JoinATLASession(int32 LocalPlayer, const FOnlineSessionSearchResult& SessionSearchResult);
 
-	void FindFriendATLASession();
-
 	UFUNCTION(BlueprintCallable)
 	bool CheckIfPlayerInSession(ULocalPlayer* LocalPlayer);
 

@@ -31,6 +31,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void OpenSteamInviteUI();
 
+	UFUNCTION(BlueprintCallable)
+	void OpenSteamOverlayUI();
+
 private:
 	bool bSteamIsOnline { false };
 	IOnlineSubsystem* SteamSubsystem;

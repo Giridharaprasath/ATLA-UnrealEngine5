@@ -118,22 +118,6 @@ void UATLAGameInstanceSubsystem::JoinATLASession(int32 LocalPlayer, const FOnlin
 	SessionInterface->JoinSession(LocalPlayer, NAME_GameSession, SessionSearchResult);
 }
 
-void UATLAGameInstanceSubsystem::FindFriendATLASession()
-{
-	if (!SessionInterface.IsValid())
-	{
-		return;
-	}
-
-	if (GEngine)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 100.f, FColor::Green,
-			FString::Printf(TEXT("Find Friend ATLA Session")));
-	}
-
-	//SessionInterface->FindFriendSession()
-}
-
 bool UATLAGameInstanceSubsystem::CheckIfPlayerInSession(ULocalPlayer* LocalPlayer)
 {
 	if (SessionInterface)
