@@ -65,13 +65,54 @@ FString USteamGameInstanceSubsystem::GetPlayerSteamName()
 	return FString(TEXT(" "));
 }
 
+UTexture2D* USteamGameInstanceSubsystem::GetPlayerSteamAvatar()
+{
+	uint32 Width = 0;
+	uint32 Height = 0;
+
+	if (SteamAPI_Init())
+	{
+		if (SteamUser())
+		{
+			int Picture = SteamFriends()->GetMediumFriendAvatar(SteamUser()->GetSteamID());
+
+			SteamUtils()->GetImageSize(Picture, &Width, &Height);
+		
+			if (Width > 0 && Height > 0)
+			{
+				uint8* oAvatarRGBA = new uint8[Width * Height * 4];
+
+				SteamUtils()->GetImageRGBA(Picture, (uint8*)oAvatarRGBA, 4 * Width * Height * sizeof(char));
+
+				UTexture2D* Avatar = UTexture2D::CreateTransient(Width, Height, PF_R8G8B8A8);
+
+				if (FTexturePlatformData* PlatformData = Avatar->GetPlatformData())
+				{
+					uint8* MipData = (uint8*)PlatformData->Mips[0].BulkData.Lock(LOCK_READ_WRITE);
+					FMemory::Memcpy(MipData, (void*)oAvatarRGBA, Height * Width * 4);
+					PlatformData->Mips[0].BulkData.Unlock();
+
+					delete[] oAvatarRGBA;
+
+					PlatformData->SetNumSlices(1);
+					Avatar->NeverStream = true;
+				}
+
+				Avatar->UpdateResource();
+
+				return Avatar;
+			}
+		}
+	}
+
+	return nullptr;
+}
+
 void USteamGameInstanceSubsystem::OpenSteamInviteUI()
 {
 	if (SteamSubsystem)
 	{
 		SteamFriends()->ActivateGameOverlay("LobbyInvite");
-		
-		//SteamFriends()->ActivateGameOverlayInviteDialog()
 	}
 }
 

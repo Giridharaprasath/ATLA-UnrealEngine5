@@ -29,6 +29,9 @@ public:
 	FString GetPlayerSteamName();
 
 	UFUNCTION(BlueprintCallable)
+	UTexture2D* GetPlayerSteamAvatar();
+
+	UFUNCTION(BlueprintCallable)
 	void OpenSteamInviteUI();
 
 	UFUNCTION(BlueprintCallable)
