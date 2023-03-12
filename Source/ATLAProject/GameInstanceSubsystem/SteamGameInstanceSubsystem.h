@@ -9,7 +9,7 @@
 #include "SteamGameInstanceSubsystem.generated.h"
 
 /**
- * 
+ * Steam Game Instance Subsystem Class
  */
 UCLASS()
 class ATLAPROJECT_API USteamGameInstanceSubsystem : public UGameInstanceSubsystem

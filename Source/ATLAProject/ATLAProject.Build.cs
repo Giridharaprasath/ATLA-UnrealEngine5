@@ -7,18 +7,19 @@ public class ATLAProject : ModuleRules
 	public ATLAProject(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
-	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput",
-			"Slate", "SlateCore", "UMG", "OnlineSubsystem", "OnlineSubsystemSteam", "Steamworks"});
-
-		PrivateDependencyModuleNames.AddRange(new string[] {  });
-
-		// Uncomment if you are using Slate UI
-		// PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
 		
-		// Uncomment if you are using online features
-		// PrivateDependencyModuleNames.Add("OnlineSubsystem");
-
-		// To include OnlineSubsystemSteam, add it to the plugins section in your uproject file with the Enabled attribute set to true
+		// Core dependencies
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput" });
+		
+		// UMG dependencies
+		PublicDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore", "UMG" });
+		
+		// Online Subsystem dependencies
+		PublicDependencyModuleNames.AddRange(new string[] { "OnlineSubsystem", "OnlineSubsystemSteam", "Steamworks" });
+		
+		// Gameplay Ability System dependencies
+		PublicDependencyModuleNames.AddRange(new string[] { "GameplayAbilities", "GameplayTags", "GameplayTasks" });
+		
+		PrivateDependencyModuleNames.AddRange(new string[] {  });
 	}
 }
