@@ -19,22 +19,22 @@ class ATLAPROJECT_API USteamGameInstanceSubsystem : public UGameInstanceSubsyste
 public:
 	USteamGameInstanceSubsystem();
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category = "ATLA|Steam")
 	bool GetSteamIsOnline();
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category = "ATLA|Steam")
 	FString GetPlayerSteamID();
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category = "ATLA|Steam")
 	FString GetPlayerSteamName();
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category = "ATLA|Steam")
 	UTexture2D* GetPlayerSteamAvatar();
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category = "ATLA|Steam")
 	void OpenSteamInviteUI();
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category = "ATLA|Steam")
 	void OpenSteamOverlayUI();
 
 private:

@@ -22,16 +22,16 @@ public:
 	UATLAGameInstanceSubsystem();
 	virtual void Deinitialize() override;
 	
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category = "ATLA")
 	void CreateATLASession(ULocalPlayer* LocalPlayer, bool UseLan = true,
 		FString LobbyPath = FString(TEXT("/Game/Maps/Testing/Testing_Level")));
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category = "ATLA")
 	void DestroyATLASession();
 
 	void JoinATLASession(int32 LocalPlayer, const FOnlineSessionSearchResult& SessionSearchResult);
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category = "ATLA")
 	bool CheckIfPlayerInSession(ULocalPlayer* LocalPlayer);
 
 

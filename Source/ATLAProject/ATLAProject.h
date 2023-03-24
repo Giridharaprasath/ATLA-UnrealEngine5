@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 
-UENUM(BlueprintType)
+UENUM(BlueprintType, Category = "ATLA|AbilityInputID")
 enum class EATLAAbilityID : uint8
 {
 	// 0 None
@@ -16,5 +16,7 @@ enum class EATLAAbilityID : uint8
 	// 3 Jump
 	Jump UMETA(DisplayName = "Jump"),
 	//4 Sprint
-	Sprint UMETA(DisplayName = "Sprint")
+	Sprint UMETA(DisplayName = "Sprint"),
+	// 4 Glide
+	Glide UMETA(DisplayName = "Glide")
 };

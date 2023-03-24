@@ -58,3 +58,18 @@ void AATLAPlayerCharacter::InitATLAAbilitySystemComponent(AATLAPlayerState* ATLA
 	SetMana(GetMaxMana());
 	SetStamina(GetMaxStamina());
 }
+
+void AATLAPlayerCharacter::ActivateAbilityInputID(bool Activate, const EATLAAbilityID AbilityInputID)
+{
+	if (ATLAAbilitySystemComponent.IsValid())
+	{
+		if (Activate)
+		{
+			ATLAAbilitySystemComponent->AbilityLocalInputPressed(static_cast<int32>(AbilityInputID));
+		}
+		else
+		{
+			ATLAAbilitySystemComponent->AbilityLocalInputReleased(static_cast<int32>(AbilityInputID));
+		}
+	}
+}

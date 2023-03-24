@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "ATLAProject/Character/ATLACharacterBase.h"
 #include "ATLAProject/Player/ATLAPlayerState.h"
+#include "ATLAProject/ATLAProject.h"
 #include "ATLAPlayerCharacter.generated.h"
 
 /**
@@ -20,6 +21,9 @@ public:
 
 	virtual void PossessedBy(AController* NewController) override;
 
+	UFUNCTION(BlueprintCallable, Category = "ATLA|Abilities")
+	void ActivateAbilityInputID(bool Activate, const EATLAAbilityID AbilityInputID);
+	
 protected:
 
 	bool ASCInputBound = false;
