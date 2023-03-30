@@ -15,8 +15,37 @@ enum class EATLAAbilityID : uint8
 	Cancel UMETA(DisplayName = "Cancel"),
 	// 3 Jump
 	Jump UMETA(DisplayName = "Jump"),
-	//4 Sprint
+	// 4 Sprint
 	Sprint UMETA(DisplayName = "Sprint"),
-	// 4 Glide
-	Glide UMETA(DisplayName = "Glide")
+	// 5 Glide
+	Glide UMETA(DisplayName = "Glide"),
+	// 6 Dodge
+	Dodge UMETA(DisplayName = "Dodge"),
+	// 7 Can Do Abilities
+	CanDoAbilities UMETA(DisplayName = "CanDoAbilities"),
+	// 8 Ability
+	Ability UMETA(DisplayName = "Ability"),
+
+	/*
+	 *  AIR ABILITIES
+	 */
+	// AIR BALL
+	AirBall UMETA(DisplayName = "Air Ball"),
+
+	/*
+	 *  WATER ABILITIES
+	 */
+	Heal UMETA(DisplayName = "Heal"),
+
+	/*
+	 *  EARTH ABILITIES
+	 */
+	// SEISMIC SENSE
+	SeismicSense UMETA(DisplayName = "Seismic Sense"),
+
+	/*
+	 *  FIRE ABILITIES
+	 */
+	// TORCH
+	Torch UMETA(DisplayName = "Torch")
 };

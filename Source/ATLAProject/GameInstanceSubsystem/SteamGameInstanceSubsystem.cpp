@@ -123,4 +123,3 @@ void USteamGameInstanceSubsystem::OpenSteamOverlayUI()
 		SteamFriends()->ActivateGameOverlay("Friends");
 	}
 }
-

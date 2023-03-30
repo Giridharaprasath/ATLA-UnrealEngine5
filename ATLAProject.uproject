@@ -11,7 +11,8 @@
 			"AdditionalDependencies": [
 				"Engine",
 				"UMG",
-				"GameplayAbilities"
+				"GameplayAbilities",
+				"GameplayTags"
 			]
 		}
 	],
@@ -207,6 +208,7 @@
 		}
 	],
 	"TargetPlatforms": [
-		"Windows"
+		"Windows",
+		"HoloLens"
 	]
 }

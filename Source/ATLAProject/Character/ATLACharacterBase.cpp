@@ -20,7 +20,7 @@ AATLACharacterBase::AATLACharacterBase(const class FObjectInitializer& ObjectIni
 	bAlwaysRelevant = true;
 	
 	DeadTag = FGameplayTag::RequestGameplayTag(FName("State.Dead"));
-	EffectRemoveOnDeathTag = FGameplayTag::RequestGameplayTag(FName("Slate.RemoveOnDeath"));
+	EffectRemoveOnDeathTag = FGameplayTag::RequestGameplayTag(FName("State.RemoveOnDeath"));
 }
 
 // Called when the game starts or when spawned
