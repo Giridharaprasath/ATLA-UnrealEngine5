@@ -2,8 +2,11 @@
 
 
 #include "ATLAPlayerState.h"
+
+#include "ATLAPlayerController.h"
 #include "ATLAProject/Character/Abilities/AttributeSets/CharacterAttributeSetBase.h"
 #include "ATLAProject/Character/Abilities/ATLAAbilitySystemComponent.h"
+#include "ATLAProject/HUD/ATLAHUD.h"
 
 void AATLAPlayerState::BeginPlay()
 {
@@ -104,6 +107,18 @@ int32 AATLAPlayerState::GetCharacterLevel() const
 
 void AATLAPlayerState::OnHealthChanged(const FOnAttributeChangeData& Data)
 {
+	float Health = Data.NewValue;
+
+	// Update Player HUD
+	AATLAPlayerController* ATLAPlayerController = Cast<AATLAPlayerController>(GetOwner());
+	if (ATLAPlayerController)
+	{
+		AATLAHUD* ATLAHUD = ATLAPlayerController->GetHUD<AATLAHUD>();
+		if (ATLAHUD)
+		{
+			ATLAHUD->SetPlayerHealthBar(Health / GetMaxHealth());
+		}
+	}
 }
 
 void AATLAPlayerState::OnMaxHealthChanged(const FOnAttributeChangeData& Data)

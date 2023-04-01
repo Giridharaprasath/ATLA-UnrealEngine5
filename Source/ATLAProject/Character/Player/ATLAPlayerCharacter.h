@@ -9,6 +9,7 @@
 #include "ATLAPlayerCharacter.generated.h"
 
 class UInputAction;
+class UATLAGameplayAbility;
 
 /**
  * ATLA Player Character Class
@@ -27,6 +28,9 @@ public:
 	void ActivateAbilityInputID(bool Activate, const EATLAAbilityID AbilityInputID);
 
 	void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "ATLA|Abilities")
+	TArray<TSubclassOf<UATLAGameplayAbility>> OwnedAbilities;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "ATLA|Input")
 	UInputAction* IA_Ability_1;
@@ -66,6 +70,9 @@ protected:
 	
 	UFUNCTION(BlueprintCallable, Category = "ATLA|Abilities")
 	void GiveNewAbility(TSubclassOf<UATLAGameplayAbility> AbilityClass);
+
+	UFUNCTION(BlueprintCallable, Category = "ATLA|Abilities")
+	void GetAllAvailableAbilities();
 
 private:
 	void HandleInputPressed_Ability_1();

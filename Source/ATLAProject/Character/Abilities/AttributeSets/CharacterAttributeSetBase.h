@@ -115,4 +115,7 @@ public:
 	virtual void OnRep_CharacterLevel(const FGameplayAttributeData& OldCharacterLevel);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Attribute Set Overrides
+	virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
 };

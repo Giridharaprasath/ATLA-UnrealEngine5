@@ -121,6 +121,16 @@ void AATLAPlayerCharacter::GiveNewAbility(TSubclassOf<UATLAGameplayAbility> Abil
 	GetAbilityLevel(AbilityClass.GetDefaultObject()->AbilityID), static_cast<int32>(AbilityClass.GetDefaultObject()->AbilityInputID), this));
 }
 
+void AATLAPlayerCharacter::GetAllAvailableAbilities()
+{
+	TArray<FGameplayAbilitySpec> AvailableAbilities = ATLAAbilitySystemComponent->GetActivatableAbilities();
+	for (const FGameplayAbilitySpec& Ability : AvailableAbilities)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Green,
+			FString::Printf(TEXT("Ability Level: %d"), Ability.InputID));
+	}
+}
+
 void AATLAPlayerCharacter::HandleInputPressed_Ability_1()
 {
 	if (Ability_1)
