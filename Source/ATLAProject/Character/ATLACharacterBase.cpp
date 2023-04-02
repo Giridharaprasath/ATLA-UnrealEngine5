@@ -105,6 +105,11 @@ void AATLACharacterBase::FinishDying()
 	Destroy();
 }
 
+FText AATLACharacterBase::GetCharacterName() const
+{
+	return CharacterName;
+}
+
 int32 AATLACharacterBase::GetCharacterLevel() const
 {
 	if (CharacterAttributeSetBase.IsValid())

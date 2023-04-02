@@ -11,7 +11,7 @@
 #include "ATLAGameInstanceSubsystem.generated.h"
 
 /**
- * ATLA Game Instance Subsystem Class
+ * ATLA Game Instance Subsystem Class.
  */
 UCLASS()
 class ATLAPROJECT_API UATLAGameInstanceSubsystem : public UGameInstanceSubsystem

@@ -2,3 +2,9 @@
 
 
 #include "ATLAPlayerHUDUI.h"
+#include "ATLAProject/Player/ATLAPlayerState.h"
+
+void UATLAPlayerHUDUI::CreateOtherPlayerHUD()
+{
+	AATLAPlayerState* ATLAPlayerState = GetOwningPlayerState<AATLAPlayerState>();
+}

@@ -12,6 +12,16 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FCharacterDiedDelegate, AATLACharacterBase*, Character);
 
+class FObjectInitializer;
+class UAbilitySystemComponent;
+class UATLAAbilitySystemComponent;
+class UCharacterAttributeSetBase;
+class UATLAGameplayAbility;
+class UGameplayEffect;
+
+/*
+ *  ATLA Character Base Class.
+ */
 UCLASS()
 class ATLAPROJECT_API AATLACharacterBase : public ACharacter, public IAbilitySystemInterface
 {
@@ -19,9 +29,9 @@ class ATLAPROJECT_API AATLACharacterBase : public ACharacter, public IAbilitySys
 
 public:
 	// Sets default values for this character's properties
-	AATLACharacterBase(const class FObjectInitializer& ObjectInitializer);
+	AATLACharacterBase(const FObjectInitializer& ObjectInitializer);
 
-	virtual class UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	
 	UPROPERTY(BlueprintAssignable, Category = "ATLA|Character")
 	FCharacterDiedDelegate OnCharacterDied;
@@ -38,6 +48,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "ATLA|Character")
 	virtual void FinishDying();
+	
+	UFUNCTION(BlueprintCallable, Category = "ATLA|Character")
+	FText GetCharacterName() const;
 
 	// Getters for attributes from ATLAAttributeSetBase
 
@@ -66,8 +79,8 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	TWeakObjectPtr<class UATLAAbilitySystemComponent> ATLAAbilitySystemComponent;
-	TWeakObjectPtr<class UCharacterAttributeSetBase> CharacterAttributeSetBase;
+	TWeakObjectPtr<UATLAAbilitySystemComponent> ATLAAbilitySystemComponent;
+	TWeakObjectPtr<UCharacterAttributeSetBase> CharacterAttributeSetBase;
 
 	FGameplayTag DeadTag;
 	FGameplayTag EffectRemoveOnDeathTag;
@@ -79,13 +92,13 @@ protected:
 	UAnimMontage* DeathMontage;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "ATLA|Abilities")
-	TArray<TSubclassOf<class UATLAGameplayAbility>> CharacterAbilities;
+	TArray<TSubclassOf<UATLAGameplayAbility>> CharacterAbilities;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "ATLA|Abilities")
-	TSubclassOf<class UGameplayEffect> DefaultAttributes;
+	TSubclassOf<UGameplayEffect> DefaultAttributes;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "ATLA|Abilities")
-	TArray<TSubclassOf<class UGameplayEffect>> StartupEffects;
+	TArray<TSubclassOf<UGameplayEffect>> StartupEffects;
 
 	virtual void AddCharacterAbilities();
 

@@ -8,7 +8,7 @@
 #include "ATLAGameplayAbility.generated.h"
 
 /**
- * 
+ * ATLA Gameplay Ability Class.
  */
 UCLASS()
 class ATLAPROJECT_API UATLAGameplayAbility : public UGameplayAbility

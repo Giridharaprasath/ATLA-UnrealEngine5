@@ -7,7 +7,7 @@
 #include "ATLAPlayerController.generated.h"
 
 /**
- * ATLA Player Controller Class
+ * ATLA Player Controller Class.
  */
 UCLASS()
 class ATLAPROJECT_API AATLAPlayerController : public APlayerController
@@ -16,4 +16,7 @@ class ATLAPROJECT_API AATLAPlayerController : public APlayerController
 
 protected:
 	virtual void OnPossess(APawn* InPawn) override;
+
+	UFUNCTION(BlueprintCallable, Category = "ATLA|HUD")
+	void CreatePlayerHUD(const FText& CharacterName);
 };

@@ -7,7 +7,7 @@
 #include "ATLAPlayerHUDUI.generated.h"
 
 /**
- * 
+ * ATLA Player HUD User Widget Class.
  */
 UCLASS()
 class ATLAPROJECT_API UATLAPlayerHUDUI : public UUserWidget
@@ -17,4 +17,9 @@ class ATLAPROJECT_API UATLAPlayerHUDUI : public UUserWidget
 public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "ATLA|UI")
 	void SetPlayerHealthBar(float HealthPercentage);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "ATLA|UI")
+	void SetCharacterName(const FText& Name);
+
+	void CreateOtherPlayerHUD();
 };

@@ -16,7 +16,7 @@
 		GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName)
 
 /**
- * Character Attribute Set Base Class for all the Characters
+ * Character Attribute Set Base Class for all the Characters.
  */
 UCLASS()
 class ATLAPROJECT_API UCharacterAttributeSetBase : public UAttributeSet

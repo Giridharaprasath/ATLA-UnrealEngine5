@@ -5,6 +5,7 @@
 #include "ATLAPlayerState.h"
 #include "ATLAProject/HUD/ATLAHUD.h"
 #include "AbilitySystemComponent.h"
+//#include "ATLAProject/Character/Player/ATLAPlayerCharacter.h"
 
 void AATLAPlayerController::OnPossess(APawn* InPawn)
 {
@@ -16,9 +17,19 @@ void AATLAPlayerController::OnPossess(APawn* InPawn)
 	{
 		ATLAPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(ATLAPlayerState, InPawn);
 	}
+}
 
+void AATLAPlayerController::CreatePlayerHUD(const FText& CharacterName)
+{
+	if (!IsLocalPlayerController())
+	{
+		return;
+	}
+	
 	AATLAHUD* ATLAHUD = GetHUD<AATLAHUD>();
-
+	AATLAPlayerState* ATLAPlayerState = GetPlayerState<AATLAPlayerState>();
+	//AATLAPlayerCharacter* ATLAPlayerCharacter = GetPawn<AATLAPlayerCharacter>();
+	
 	if (ATLAHUD)
 	{
 		ATLAHUD->CreatePlayerHUD();
@@ -27,5 +38,12 @@ void AATLAPlayerController::OnPossess(APawn* InPawn)
 		{
 			ATLAHUD->SetPlayerHealthBar(ATLAPlayerState->GetHealth() / FMath::Max(ATLAPlayerState->GetMaxHealth(), 1.f));
 		}
+		
+		/*if (ATLAPlayerCharacter)
+		{
+			ATLAHUD->SetCharacterName(ATLAPlayerCharacter->GetCharacterName());
+		}*/
+
+		ATLAHUD->SetCharacterName(CharacterName);
 	}
 }

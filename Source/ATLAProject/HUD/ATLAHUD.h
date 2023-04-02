@@ -8,7 +8,7 @@
 
 
 /**
- * 
+ * ATLA HUD Class.
  */
 UCLASS()
 class ATLAPROJECT_API AATLAHUD : public AHUD
@@ -22,4 +22,7 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "ATLA|HUD")
 	void SetPlayerHealthBar(float HealthPercentage);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "ATLA|HUD")
+	void SetCharacterName(const FText& Name);
 };

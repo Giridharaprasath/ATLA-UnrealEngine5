@@ -9,8 +9,12 @@
 #include "GameplayEffectTypes.h"
 #include "ATLAPlayerState.generated.h"
 
+class UAbilitySystemComponent;
+class UATLAAbilitySystemComponent;
+class UCharacterAttributeSetBase;
+
 /**
- * ATLA Player State Class
+ * ATLA Player State Class.
  */
 UCLASS()
 class ATLAPROJECT_API AATLAPlayerState : public APlayerState, public IAbilitySystemInterface
@@ -20,7 +24,7 @@ class ATLAPROJECT_API AATLAPlayerState : public APlayerState, public IAbilitySys
 public:
 	AATLAPlayerState();
 
-	virtual class UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
 	class UCharacterAttributeSetBase* GetAttributeSetBase() const;
 
@@ -54,10 +58,10 @@ public:
 protected:
 
 	UPROPERTY()
-	class UATLAAbilitySystemComponent* ATLAAbilitySystemComponent;
+	UATLAAbilitySystemComponent* ATLAAbilitySystemComponent;
 
 	UPROPERTY()
-	class UCharacterAttributeSetBase* CharacterAttributeSetBase;
+	UCharacterAttributeSetBase* CharacterAttributeSetBase;
 
 	FGameplayTag DeadTag;
 

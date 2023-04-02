@@ -8,11 +8,12 @@
 #include "ATLAProject/ATLAProject.h"
 #include "ATLAPlayerCharacter.generated.h"
 
+class FObjectInitializer;
 class UInputAction;
 class UATLAGameplayAbility;
 
 /**
- * ATLA Player Character Class
+ * ATLA Player Character Class.
  */
 UCLASS()
 class ATLAPROJECT_API AATLAPlayerCharacter : public AATLACharacterBase
@@ -20,7 +21,7 @@ class ATLAPROJECT_API AATLAPlayerCharacter : public AATLACharacterBase
 	GENERATED_BODY()
 
 public:
-	AATLAPlayerCharacter(const class FObjectInitializer& ObjectInitializer);
+	AATLAPlayerCharacter(const FObjectInitializer& ObjectInitializer);
 
 	virtual void PossessedBy(AController* NewController) override;
 
@@ -28,7 +29,7 @@ public:
 	void ActivateAbilityInputID(bool Activate, const EATLAAbilityID AbilityInputID);
 
 	void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
-
+	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "ATLA|Abilities")
 	TArray<TSubclassOf<UATLAGameplayAbility>> OwnedAbilities;
 

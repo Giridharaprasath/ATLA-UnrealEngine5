@@ -7,7 +7,7 @@
 #include "ATLAAssetManager.generated.h"
 
 /**
- * ATLA Asset Manager Class
+ * ATLA Asset Manager Class.
  */
 UCLASS()
 class ATLAPROJECT_API UATLAAssetManager : public UAssetManager

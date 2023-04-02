@@ -9,7 +9,7 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FReceivedDamageDelegate, UATLAAbilitySystemComponent*, SourceASC, float, UnmitigatedDamage, float, MitigatedDamage);
 
 /**
- * ATLA Ability System Component Class
+ * ATLA Ability System Component Class.
  */
 UCLASS()
 class ATLAPROJECT_API UATLAAbilitySystemComponent : public UAbilitySystemComponent
