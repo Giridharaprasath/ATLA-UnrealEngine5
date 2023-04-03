@@ -6,7 +6,6 @@
 #include "GameFramework/HUD.h"
 #include "ATLAHUD.generated.h"
 
-
 /**
  * ATLA HUD Class.
  */
@@ -32,4 +31,16 @@ public:
 	// Set Current Player Character Name
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "ATLA|HUD")
 	void SetCharacterName(const FText& Name);
+
+	// Get Game Name
+	UFUNCTION(BlueprintPure, Category = "ATLA|HUD|Debug")
+	static FString GetGameName();
+
+	// Get Game Version
+	UFUNCTION(BlueprintPure, Category = "ATLA||HUD|Debug")
+	static FString GetGameVersion();
+
+	// Get Company Name
+	UFUNCTION(BlueprintPure, Category = "ATLA|HUD|Debug")
+	static FString GetCompanyName();
 };
