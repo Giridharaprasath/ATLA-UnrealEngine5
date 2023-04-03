@@ -17,12 +17,19 @@ class ATLAPROJECT_API AATLAHUD : public AHUD
 
 public:
 
+	// Create Current Player UI
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "ATLA|HUD")
 	void CreatePlayerHUD();
 
+	// Create Team Member Infos UI
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "ATLA|HUD")
+	void CreateTeamHUD();
+
+	// Set Current Player Health Bar
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "ATLA|HUD")
 	void SetPlayerHealthBar(float HealthPercentage);
 
+	// Set Current Player Character Name
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "ATLA|HUD")
 	void SetCharacterName(const FText& Name);
 };

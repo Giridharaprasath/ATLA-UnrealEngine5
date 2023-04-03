@@ -19,4 +19,7 @@ protected:
 
 	UFUNCTION(BlueprintCallable, Category = "ATLA|HUD")
 	void CreatePlayerHUD(const FText& CharacterName);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "ATLA|HUD")
+	void CreateTeamHUD();
 };

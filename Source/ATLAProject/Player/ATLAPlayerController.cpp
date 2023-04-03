@@ -46,4 +46,6 @@ void AATLAPlayerController::CreatePlayerHUD(const FText& CharacterName)
 
 		ATLAHUD->SetCharacterName(CharacterName);
 	}
+
+	CreateTeamHUD();
 }

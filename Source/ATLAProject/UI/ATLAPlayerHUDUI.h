@@ -21,5 +21,6 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "ATLA|UI")
 	void SetCharacterName(const FText& Name);
 
-	void CreateOtherPlayerHUD();
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "ATLA|UI")
+	void CreateTeamHUD();
 };

@@ -13,6 +13,9 @@ class UAbilitySystemComponent;
 class UATLAAbilitySystemComponent;
 class UCharacterAttributeSetBase;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnHealth, float, Health);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnCharacterSelected, bool, bCharacterSelected);
+
 /**
  * ATLA Player State Class.
  */
@@ -54,6 +57,17 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "ATLA|ATLAPlayerState|Attributes")
 	int32 GetCharacterLevel() const;
+	
+	UFUNCTION(BlueprintCallable, Category = "ATLA|Character")
+	FText GetCharacterName() const;
+
+	UFUNCTION(BlueprintCallable, Category = "ATLA|Character")
+	void SetCharacterName(FText NewCharacterName);
+	
+	UFUNCTION()
+	virtual void OnRep_CharacterName(const FText OldCharacterName);
+	
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 protected:
 
@@ -64,7 +78,7 @@ protected:
 	UCharacterAttributeSetBase* CharacterAttributeSetBase;
 
 	FGameplayTag DeadTag;
-
+	
 	FDelegateHandle HealthChangeDelegateHandle;
 	FDelegateHandle MaxHealthChangeDelegateHandle;
 	FDelegateHandle ManaChangeDelegateHandle;
@@ -84,4 +98,15 @@ protected:
 	virtual void OnCharacterlevelChanged(const FOnAttributeChangeData& Data);
 
 	virtual void OnStunTagChanged(const FGameplayTag CallbackTag, int32 NewCount);
+
+	UPROPERTY(BlueprintReadOnly, Category = "ATLA|Character", ReplicatedUsing = OnRep_CharacterName)
+	FText CharacterName;
+
+	// Custom Delegates
+	
+	UPROPERTY(BlueprintAssignable, Category = "ATLA|ATLAPlayerState")
+	FOnHealth OnHealth;
+
+	UPROPERTY(BlueprintAssignable, Category = "ATLA|Character")
+	FOnCharacterSelected OnCharacterSelected;
 };

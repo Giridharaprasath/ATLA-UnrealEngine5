@@ -6,8 +6,8 @@
 #include "ATLAPlayerController.h"
 #include "ATLAProject/Character/Abilities/AttributeSets/CharacterAttributeSetBase.h"
 #include "ATLAProject/Character/Abilities/ATLAAbilitySystemComponent.h"
-#include "ATLAProject/Character/Player/ATLAPlayerCharacter.h"
 #include "ATLAProject/HUD/ATLAHUD.h"
+#include "Net/UnrealNetwork.h"
 
 void AATLAPlayerState::BeginPlay()
 {
@@ -50,6 +50,36 @@ AATLAPlayerState::AATLAPlayerState()
 	NetUpdateFrequency = 100.0f;
 
 	DeadTag = FGameplayTag::RequestGameplayTag(FName("State.Dead"));
+}
+
+FText AATLAPlayerState::GetCharacterName() const 
+{
+	return CharacterName;
+}
+
+void AATLAPlayerState::SetCharacterName(FText NewCharacterName)
+{
+	CharacterName = NewCharacterName;
+}
+
+void AATLAPlayerState::OnRep_CharacterName(const FText OldCharacterName)
+{
+	if (CharacterName.IsEmpty())
+	{
+		OnCharacterSelected.Broadcast(false);
+	}
+
+	else
+	{
+		OnCharacterSelected.Broadcast(true);
+	}
+}
+
+void AATLAPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME_CONDITION_NOTIFY(AATLAPlayerState, CharacterName, COND_None, REPNOTIFY_Always);
 }
 
 UAbilitySystemComponent* AATLAPlayerState::GetAbilitySystemComponent() const
@@ -129,6 +159,7 @@ void AATLAPlayerState::OnHealthChanged(const FOnAttributeChangeData& Data)
 			ATLAPlayerCharacter->Die();
 		}
 	}*/
+	OnHealth.Broadcast(Health / GetMaxHealth());
 }
 
 void AATLAPlayerState::OnMaxHealthChanged(const FOnAttributeChangeData& Data)
