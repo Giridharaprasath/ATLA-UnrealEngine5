@@ -6,6 +6,7 @@
 #include "ATLAPlayerController.h"
 #include "ATLAProject/Character/Abilities/AttributeSets/CharacterAttributeSetBase.h"
 #include "ATLAProject/Character/Abilities/ATLAAbilitySystemComponent.h"
+#include "ATLAProject/Character/Player/ATLAPlayerCharacter.h"
 #include "ATLAProject/HUD/ATLAHUD.h"
 
 void AATLAPlayerState::BeginPlay()
@@ -119,6 +120,15 @@ void AATLAPlayerState::OnHealthChanged(const FOnAttributeChangeData& Data)
 			ATLAHUD->SetPlayerHealthBar(Health / GetMaxHealth());
 		}
 	}
+
+	/*if (!IsAlive() && !ATLAAbilitySystemComponent->HasMatchingGameplayTag(DeadTag))
+	{
+		AATLAPlayerCharacter* ATLAPlayerCharacter = Cast<AATLAPlayerCharacter>(GetPawn());
+		if (ATLAPlayerCharacter)
+		{
+			ATLAPlayerCharacter->Die();
+		}
+	}*/
 }
 
 void AATLAPlayerState::OnMaxHealthChanged(const FOnAttributeChangeData& Data)

@@ -26,7 +26,7 @@ public:
 
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
-	class UCharacterAttributeSetBase* GetAttributeSetBase() const;
+	UCharacterAttributeSetBase* GetAttributeSetBase() const;
 
 	UFUNCTION(BlueprintCallable, Category = "ATLA|ATLAPlayerState")
 	bool IsAlive() const;
@@ -74,7 +74,7 @@ protected:
 	FDelegateHandle CharacterLevelChangeDelegateHandle;
 
 	virtual void BeginPlay() override;
-
+	
 	virtual void OnHealthChanged(const FOnAttributeChangeData& Data);
 	virtual void OnMaxHealthChanged(const FOnAttributeChangeData& Data);
 	virtual void OnManaChanged(const FOnAttributeChangeData& Data);
