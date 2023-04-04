@@ -1,9 +1,10 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Developed By Melon Studios.
 
 #pragma once
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameMode.h"
+
 #include "ATLAGameMode.generated.h"
 
 /**
@@ -13,5 +14,4 @@ UCLASS()
 class ATLAPROJECT_API AATLAGameMode : public AGameMode
 {
 	GENERATED_BODY()
-	
 };

@@ -1,16 +1,8 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
+// Developed By Melon Studios.
 
 #include "ATLAGameInstanceSubsystem.h"
-#include "OnlineSubsystem.h"
-#include "OnlineSessionSettings.h"
-#include "Chaos/AABB.h"
-#include "Chaos/AABB.h"
-#include "Chaos/AABB.h"
-#include "Chaos/AABB.h"
 #include "Interfaces/OnlineExternalUIInterface.h"
 #include "Kismet/GameplayStatics.h"
-// #include "Interfaces/OnlineIdentityInterface.h"
 
 UATLAGameInstanceSubsystem::UATLAGameInstanceSubsystem() :
 	OnCreateSessionCompleteDelegate(FOnCreateSessionCompleteDelegate::CreateUObject(this, &ThisClass::OnCreateSessionComplete)),

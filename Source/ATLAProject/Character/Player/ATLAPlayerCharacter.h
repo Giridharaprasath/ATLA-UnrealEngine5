@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Developed By Melon Studios.
 
 #pragma once
 
@@ -6,6 +6,7 @@
 #include "ATLAProject/Character/ATLACharacterBase.h"
 #include "ATLAProject/Player/ATLAPlayerState.h"
 #include "ATLAProject/ATLAProject.h"
+
 #include "ATLAPlayerCharacter.generated.h"
 
 class FObjectInitializer;
