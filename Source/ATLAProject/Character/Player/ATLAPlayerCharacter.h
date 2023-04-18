@@ -35,6 +35,12 @@ public:
 	TArray<TSubclassOf<UATLAGameplayAbility>> OwnedAbilities;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "ATLA|Input")
+	UInputAction* IA_ConfirmAbility;
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "ATLA|Input")
+	UInputAction* IA_CancelAbility;
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "ATLA|Input")
 	UInputAction* IA_Ability_1;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "ATLA|Input")
@@ -77,6 +83,9 @@ protected:
 	void GetAllAvailableAbilities();
 
 private:
+	void HandleInputPressesd_ConfirmAbility();
+	void HandleInputPressed_CancelAbility();
+	
 	void HandleInputPressed_Ability_1();
 	void HandleInputPressed_Ability_2();
 	void HandleInputPressed_Ability_3();

@@ -43,7 +43,7 @@ void AATLAPlayerCharacter::BindASCInput()
 		ATLAAbilitySystemComponent->BindAbilityActivationToInputComponent(InputComponent,FGameplayAbilityInputBinds(
 			FString("ConfirmTarget"), FString("CancelTarget"), AbilityEnumAssetPath,
 			static_cast<int32>(EATLAAbilityID::Confirm), static_cast<int32>(EATLAAbilityID::Cancel)));
-
+		
 		ASCInputBound = true;
 	}
 }
@@ -83,6 +83,16 @@ void AATLAPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 
 	if (EnhancedInputComponent)
 	{
+		if (IA_ConfirmAbility)
+		{
+			EnhancedInputComponent->BindAction(IA_ConfirmAbility, ETriggerEvent::Triggered, this, &ThisClass::HandleInputPressesd_ConfirmAbility);
+		}
+
+		if (IA_CancelAbility)
+		{
+			EnhancedInputComponent->BindAction(IA_CancelAbility, ETriggerEvent::Triggered, this, &ThisClass::HandleInputPressed_CancelAbility);
+		}
+		
 		if (IA_Ability_1)
 		{
 			EnhancedInputComponent->BindAction(IA_Ability_1, ETriggerEvent::Triggered, this, &ThisClass::HandleInputPressed_Ability_1);
@@ -128,6 +138,16 @@ void AATLAPlayerCharacter::GetAllAvailableAbilities()
 		GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Green,
 			FString::Printf(TEXT("Ability Level: %d"), Ability.InputID));
 	}
+}
+
+void AATLAPlayerCharacter::HandleInputPressesd_ConfirmAbility()
+{
+	ATLAAbilitySystemComponent->InputConfirm();
+}
+
+void AATLAPlayerCharacter::HandleInputPressed_CancelAbility()
+{
+	ATLAAbilitySystemComponent->InputCancel();
 }
 
 void AATLAPlayerCharacter::HandleInputPressed_Ability_1()
