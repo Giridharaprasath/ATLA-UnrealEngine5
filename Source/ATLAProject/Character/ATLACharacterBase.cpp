@@ -22,13 +22,6 @@ AATLACharacterBase::AATLACharacterBase(const class FObjectInitializer& ObjectIni
 	EffectRemoveOnDeathTag = FGameplayTag::RequestGameplayTag(FName("State.RemoveOnDeath"));
 }
 
-// Called when the game starts or when spawned
-void AATLACharacterBase::BeginPlay()
-{
-	Super::BeginPlay();
-	
-}
-
 UAbilitySystemComponent* AATLACharacterBase::GetAbilitySystemComponent() const
 {
 	return ATLAAbilitySystemComponent.Get();
@@ -138,24 +131,6 @@ float AATLACharacterBase::GetMaxHealth() const
 	return 0.0f;
 }
 
-float AATLACharacterBase::GetMana() const
-{
-	if (CharacterAttributeSetBase.IsValid())
-	{
-		return CharacterAttributeSetBase->GetMana();
-	}
-	return 0.0f;
-}
-
-float AATLACharacterBase::GetMaxMana() const
-{
-	if (CharacterAttributeSetBase.IsValid())
-	{
-		return CharacterAttributeSetBase->GetMaxMana();
-	}
-	return 0.0f;
-}
-
 float AATLACharacterBase::GetStamina() const
 {
 	if (CharacterAttributeSetBase.IsValid())
@@ -240,14 +215,6 @@ void AATLACharacterBase::SetHealth(float Health)
 	if (CharacterAttributeSetBase.IsValid())
 	{
 		CharacterAttributeSetBase->SetHealth(Health);
-	}
-}
-
-void AATLACharacterBase::SetMana(float Mana)
-{
-	if (CharacterAttributeSetBase.IsValid())
-	{
-		CharacterAttributeSetBase->SetMana(Mana);
 	}
 }
 

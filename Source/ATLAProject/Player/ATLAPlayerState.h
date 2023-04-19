@@ -45,12 +45,6 @@ public:
 	float GetMaxHealth() const;
 
 	UFUNCTION(BlueprintCallable, Category = "ATLA|ATLAPlayerState|Attributes")
-	float GetMana() const;
-
-	UFUNCTION(BlueprintCallable, Category = "ATLA|ATLAPlayerState|Attributes")
-	float GetMaxMana() const;
-
-	UFUNCTION(BlueprintCallable, Category = "ATLA|ATLAPlayerState|Attributes")
 	float GetStamina() const;
 
 	UFUNCTION(BlueprintCallable, Category = "ATLA|ATLAPlayerState|Attributes")
@@ -82,8 +76,6 @@ protected:
 	
 	FDelegateHandle HealthChangeDelegateHandle;
 	FDelegateHandle MaxHealthChangeDelegateHandle;
-	FDelegateHandle ManaChangeDelegateHandle;
-	FDelegateHandle MaxManaChangeDelegateHandle;
 	FDelegateHandle StaminaChangeDelegateHandle;
 	FDelegateHandle MaxStaminaChangeDelegateHandle;
 	FDelegateHandle CharacterLevelChangeDelegateHandle;
@@ -92,8 +84,6 @@ protected:
 	
 	virtual void OnHealthChanged(const FOnAttributeChangeData& Data);
 	virtual void OnMaxHealthChanged(const FOnAttributeChangeData& Data);
-	virtual void OnManaChanged(const FOnAttributeChangeData& Data);
-	virtual void OnMaxManaChanged(const FOnAttributeChangeData& Data);
 	virtual void OnStaminaChanged(const FOnAttributeChangeData& Data);
 	virtual void OnMaxStaminaChanged(const FOnAttributeChangeData& Data);
 	virtual void OnCharacterlevelChanged(const FOnAttributeChangeData& Data);

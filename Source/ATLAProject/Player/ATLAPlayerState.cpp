@@ -18,11 +18,6 @@ void AATLAPlayerState::BeginPlay()
 		MaxHealthChangeDelegateHandle = ATLAAbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
 			CharacterAttributeSetBase->GetMaxHealthAttribute()).AddUObject(this, &ThisClass::OnMaxHealthChanged);
 		
-		ManaChangeDelegateHandle = ATLAAbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-			CharacterAttributeSetBase->GetManaAttribute()).AddUObject(this, &ThisClass::OnManaChanged);
-		MaxManaChangeDelegateHandle = ATLAAbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-			CharacterAttributeSetBase->GetMaxManaAttribute()).AddUObject(this, &ThisClass::OnMaxManaChanged);
-		
 		StaminaChangeDelegateHandle = ATLAAbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
 			CharacterAttributeSetBase->GetStaminaAttribute()).AddUObject(this, &ThisClass::OnStaminaChanged);
 		MaxStaminaChangeDelegateHandle = ATLAAbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
@@ -109,16 +104,6 @@ float AATLAPlayerState::GetMaxHealth() const
 	return CharacterAttributeSetBase->GetMaxHealth();
 }
 
-float AATLAPlayerState::GetMana() const
-{
-	return CharacterAttributeSetBase->GetMana();
-}
-
-float AATLAPlayerState::GetMaxMana() const
-{
-	return CharacterAttributeSetBase->GetMaxMana();
-}
-
 float AATLAPlayerState::GetStamina() const
 {
 	return CharacterAttributeSetBase->GetStamina();
@@ -161,14 +146,6 @@ void AATLAPlayerState::OnHealthChanged(const FOnAttributeChangeData& Data)
 }
 
 void AATLAPlayerState::OnMaxHealthChanged(const FOnAttributeChangeData& Data)
-{
-}
-
-void AATLAPlayerState::OnManaChanged(const FOnAttributeChangeData& Data)
-{
-}
-
-void AATLAPlayerState::OnMaxManaChanged(const FOnAttributeChangeData& Data)
 {
 }
 

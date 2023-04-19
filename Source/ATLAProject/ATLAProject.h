@@ -35,6 +35,7 @@ enum class EATLAAbilityID : uint8
 	/*
 	 *  WATER ABILITIES
 	 */
+	// HEAL
 	Heal UMETA(DisplayName = "Heal"),
 
 	/*

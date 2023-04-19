@@ -79,9 +79,6 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "ATLA|Abilities")
 	void GiveNewAbility(TSubclassOf<UATLAGameplayAbility> AbilityClass);
 
-	UFUNCTION(BlueprintCallable, Category = "ATLA|Abilities")
-	void GetAllAvailableAbilities();
-
 private:
 	void HandleInputPressesd_ConfirmAbility();
 	void HandleInputPressed_CancelAbility();

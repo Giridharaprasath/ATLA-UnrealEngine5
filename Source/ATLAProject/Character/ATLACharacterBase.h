@@ -65,20 +65,12 @@ public:
 	float GetMaxHealth() const;
 	
 	UFUNCTION(BlueprintCallable, Category = "ATLA|Character|Attributes")
-	float GetMana() const;
-	
-	UFUNCTION(BlueprintCallable, Category = "ATLA|Character|Attributes")
-	float GetMaxMana() const;
-	
-	UFUNCTION(BlueprintCallable, Category = "ATLA|Character|Attributes")
 	float GetStamina() const;
 	
 	UFUNCTION(BlueprintCallable, Category = "ATLA|Character|Attributes")
 	float GetMaxStamina() const;
 	
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
 
 	TWeakObjectPtr<UATLAAbilitySystemComponent> ATLAAbilitySystemComponent;
 	TWeakObjectPtr<UCharacterAttributeSetBase> CharacterAttributeSetBase;
@@ -113,6 +105,5 @@ protected:
 	*/
 	
 	virtual void SetHealth(float Health);
-	virtual void SetMana(float Mana);
 	virtual void SetStamina(float Stamina);
 };

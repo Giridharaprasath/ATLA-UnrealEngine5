@@ -56,7 +56,6 @@ void AATLAPlayerCharacter::InitATLAAbilitySystemComponent(AATLAPlayerState* ATLA
 	ATLAAbilitySystemComponent->SetTagMapCount(DeadTag, 0);
 	InitializeAttributes();
 	SetHealth(GetMaxHealth());
-	SetMana(GetMaxMana());
 	SetStamina(GetMaxStamina());
 }
 
@@ -128,16 +127,6 @@ void AATLAPlayerCharacter::GiveNewAbility(TSubclassOf<UATLAGameplayAbility> Abil
 
 	ATLAAbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(AbilityClass,
 	GetAbilityLevel(AbilityClass.GetDefaultObject()->AbilityID), static_cast<int32>(AbilityClass.GetDefaultObject()->AbilityInputID), this));
-}
-
-void AATLAPlayerCharacter::GetAllAvailableAbilities()
-{
-	TArray<FGameplayAbilitySpec> AvailableAbilities = ATLAAbilitySystemComponent->GetActivatableAbilities();
-	for (const FGameplayAbilitySpec& Ability : AvailableAbilities)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Green,
-			FString::Printf(TEXT("Ability Level: %d"), Ability.InputID));
-	}
 }
 
 void AATLAPlayerCharacter::HandleInputPressesd_ConfirmAbility()

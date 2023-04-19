@@ -40,21 +40,6 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category = "AttributeSet|Health", ReplicatedUsing = OnRep_HealthRegenRate)
 	FGameplayAttributeData HealthRegenRate;
 	ATTRIBUTE_ACCESSORS(UCharacterAttributeSetBase, HealthRegenRate)
-
-	// Current Mana, Capped by Max Mana.
-	UPROPERTY(BlueprintReadOnly, Category = "AttributeSet|Mana", ReplicatedUsing = OnRep_Mana)
-	FGameplayAttributeData Mana;
-	ATTRIBUTE_ACCESSORS(UCharacterAttributeSetBase, Mana)
-
-	// Maximum Mana for the Character.
-	UPROPERTY(BlueprintReadOnly, Category = "AttributeSet|Mana", ReplicatedUsing = OnRep_MaxMana)
-	FGameplayAttributeData MaxMana;
-	ATTRIBUTE_ACCESSORS(UCharacterAttributeSetBase, MaxMana)
-
-	// Mana Regeneration rate for the Character.
-	UPROPERTY(BlueprintReadOnly, Category = "AttributeSet|Mana", ReplicatedUsing = OnRep_ManaRegenRate)
-	FGameplayAttributeData ManaRegenRate;
-	ATTRIBUTE_ACCESSORS(UCharacterAttributeSetBase, ManaRegenRate)
 	
 	// Current Stamina, Capped by Max Stamina.
 	UPROPERTY(BlueprintReadOnly, Category = "AttributeSet|Stamina", ReplicatedUsing = OnRep_Stamina)
@@ -92,15 +77,6 @@ public:
 
 	UFUNCTION()
 	virtual void OnRep_HealthRegenRate(const FGameplayAttributeData& OldHealthRegenRate);
-	
-	UFUNCTION()
-	virtual void OnRep_Mana(const FGameplayAttributeData& OldMana);
-	
-	UFUNCTION()
-	virtual void OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana);
-
-	UFUNCTION()
-	virtual void OnRep_ManaRegenRate(const FGameplayAttributeData& OldManaRegenRate);
 	
 	UFUNCTION()
 	virtual void OnRep_Stamina(const FGameplayAttributeData& OldStamina);
