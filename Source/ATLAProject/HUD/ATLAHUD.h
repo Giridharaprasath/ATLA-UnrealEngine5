@@ -33,6 +33,15 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "ATLA|HUD")
 	void SetCharacterName(const FText& Name);
 
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "HUD")
+	void OpenPauseMenu(bool bOpenPauseMenu);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "HUD")
+	void OpenInteractionUI(bool bOpenInteractionUI);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "HUD")
+	void OpenPlayerMenu(bool bOpenPlayerMenu);
+
 	// Get Game Name
 	UFUNCTION(BlueprintPure, Category = "ATLA|HUD|Debug")
 	static FString GetGameName();

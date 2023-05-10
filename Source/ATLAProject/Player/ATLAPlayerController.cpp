@@ -4,18 +4,48 @@
 #include "ATLAPlayerState.h"
 #include "ATLAProject/HUD/ATLAHUD.h"
 #include "AbilitySystemComponent.h"
+#include "ATLAProject/Game/ATLAGameState.h"
+#include "Kismet/GameplayStatics.h"
 //#include "ATLAProject/Character/Player/ATLAPlayerCharacter.h"
+
+void AATLAPlayerController::ServerCreateTeamHUD_Implementation()
+{
+	AATLAGameState* GameState = Cast<AATLAGameState>(UGameplayStatics::GetGameState(GetWorld()));
+	if (GameState)
+	{
+		GameState->MulticastCreateTeamHUD();
+	}
+}
+
+void AATLAPlayerController::BeginPlay()
+{
+	Super::BeginPlay();
+
+	if (!IsLocalPlayerController())
+	{
+		return;
+	}
+
+	ATLAHUD = GetHUD<AATLAHUD>();
+	ATLAGameState = Cast<AATLAGameState>(UGameplayStatics::GetGameState(GetWorld()));
+	ATLAPlayerState = GetPlayerState<AATLAPlayerState>();
+}
 
 void AATLAPlayerController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
 
-	AATLAPlayerState* ATLAPlayerState = GetPlayerState<AATLAPlayerState>();
-
 	if (ATLAPlayerState)
 	{
 		ATLAPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(ATLAPlayerState, InPawn);
 	}
+}
+
+void AATLAPlayerController::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	ServerCreateTeamHUD();
+	
+	Super::EndPlay(EndPlayReason);
 }
 
 void AATLAPlayerController::CreatePlayerHUD(const FText& CharacterName)
@@ -25,8 +55,6 @@ void AATLAPlayerController::CreatePlayerHUD(const FText& CharacterName)
 		return;
 	}
 	
-	AATLAHUD* ATLAHUD = GetHUD<AATLAHUD>();
-	AATLAPlayerState* ATLAPlayerState = GetPlayerState<AATLAPlayerState>();
 	//AATLAPlayerCharacter* ATLAPlayerCharacter = GetPawn<AATLAPlayerCharacter>();
 	
 	if (ATLAHUD)
@@ -46,5 +74,5 @@ void AATLAPlayerController::CreatePlayerHUD(const FText& CharacterName)
 		ATLAHUD->SetCharacterName(CharacterName);
 	}
 
-	CreateTeamHUD();
+	ServerCreateTeamHUD();
 }

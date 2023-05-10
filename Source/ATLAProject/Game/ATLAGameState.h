@@ -14,4 +14,9 @@ UCLASS()
 class ATLAPROJECT_API AATLAGameState : public AGameState
 {
 	GENERATED_BODY()
+
+public:
+
+	UFUNCTION(BlueprintCallable, NetMulticast, Reliable, Category = "ATLA")
+	void MulticastCreateTeamHUD();
 };
