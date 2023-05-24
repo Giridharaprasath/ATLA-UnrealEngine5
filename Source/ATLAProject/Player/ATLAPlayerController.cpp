@@ -5,6 +5,7 @@
 #include "ATLAProject/HUD/ATLAHUD.h"
 #include "AbilitySystemComponent.h"
 #include "ATLAProject/Game/ATLAGameState.h"
+#include "ATLAProject/Game/ATLAGameMode.h"
 #include "Kismet/GameplayStatics.h"
 //#include "ATLAProject/Character/Player/ATLAPlayerCharacter.h"
 
@@ -14,6 +15,26 @@ void AATLAPlayerController::ServerCreateTeamHUD_Implementation()
 	if (GameState)
 	{
 		GameState->MulticastCreateTeamHUD();
+	}
+}
+
+void AATLAPlayerController::ClientSpawnPlayer_Implementation(int32 PlayerIndex)
+{
+	if (!IsLocalPlayerController())
+	{
+		return;
+	}
+
+	ServerSpawnPlayer(this, PlayerIndex);
+}
+
+void AATLAPlayerController::ServerSpawnPlayer_Implementation(AATLAPlayerController* ATLAPlayerController, int32 PlayerIndex)
+{
+	AATLAGameMode* ATLAGameMode = Cast<AATLAGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
+
+	if (ATLAGameMode)
+	{
+		ATLAGameMode->SpawnSelectedCharacter(ATLAPlayerController, PlayerIndex);
 	}
 }
 

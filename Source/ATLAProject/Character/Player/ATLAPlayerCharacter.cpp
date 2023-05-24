@@ -129,6 +129,16 @@ void AATLAPlayerCharacter::GiveNewAbility(TSubclassOf<UATLAGameplayAbility> Abil
 	GetAbilityLevel(AbilityClass.GetDefaultObject()->AbilityID), static_cast<int32>(AbilityClass.GetDefaultObject()->AbilityInputID), this));
 }
 
+void AATLAPlayerCharacter::ServerSaveCharacterName_Implementation()
+{
+	AATLAPlayerState* ATLAPlayerState = Cast<AATLAPlayerState>(GetPlayerState());
+
+	if (ATLAPlayerState)
+	{
+		ATLAPlayerState->SetCharacterName(GetCharacterName());
+	}
+}
+
 void AATLAPlayerCharacter::HandleInputPressesd_ConfirmAbility()
 {
 	ATLAAbilitySystemComponent->InputConfirm();

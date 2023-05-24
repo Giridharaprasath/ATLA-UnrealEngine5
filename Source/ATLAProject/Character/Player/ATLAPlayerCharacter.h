@@ -79,6 +79,9 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "ATLA|Abilities")
 	void GiveNewAbility(TSubclassOf<UATLAGameplayAbility> AbilityClass);
 
+	UFUNCTION(Server, Reliable, BlueprintCallable, Category = "ATLA")
+	void ServerSaveCharacterName();
+
 private:
 	void HandleInputPressesd_ConfirmAbility();
 	void HandleInputPressed_CancelAbility();

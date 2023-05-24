@@ -41,6 +41,12 @@ public:
 
 	UFUNCTION(BlueprintGetter, Category = "ATLA")
 	AATLAPlayerState* GetATLAPlayerState() { return ATLAPlayerState; }
+
+	UFUNCTION(Client, Reliable, BlueprintCallable, Category = "ATLA")
+	void ClientSpawnPlayer(int32 PlayerIndex);
+
+	UFUNCTION(Server, Reliable, BlueprintCallable, Category = "ATLA")
+	void ServerSpawnPlayer(AATLAPlayerController* ATLAPlayerController, int32 PlayerIndex);
 	
 protected:
 	
