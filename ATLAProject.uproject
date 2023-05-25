@@ -12,7 +12,8 @@
 				"Engine",
 				"UMG",
 				"GameplayAbilities",
-				"GameplayTags"
+				"GameplayTags",
+				"DeveloperSettings"
 			]
 		}
 	],
