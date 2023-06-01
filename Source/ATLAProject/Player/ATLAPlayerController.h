@@ -47,6 +47,9 @@ public:
 
 	UFUNCTION(Server, Reliable, BlueprintCallable, Category = "ATLA")
 	void ServerSpawnPlayer(AATLAPlayerController* ATLAPlayerController, int32 PlayerIndex);
+
+	UFUNCTION(BlueprintCallable, Category = "ATLA|HUD")
+	void CreatePlayerHUD(const FText& CharacterName);
 	
 protected:
 	
@@ -56,8 +59,6 @@ protected:
 
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
-	UFUNCTION(BlueprintCallable, Category = "ATLA|HUD")
-	void CreatePlayerHUD(const FText& CharacterName);
 
 	UPROPERTY(BlueprintGetter = GetATLAHUD, VisibleInstanceOnly, Category = "ATLA")
 	AATLAHUD* ATLAHUD;

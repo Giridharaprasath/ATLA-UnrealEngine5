@@ -6,6 +6,8 @@
 #include "ATLAProject/Character/ATLACharacterBase.h"
 #include "ATLAProject/Player/ATLAPlayerState.h"
 #include "ATLAProject/ATLAProject.h"
+#include "ATLAProject/Player/ATLAPlayerController.h"
+#include "InputMappingContext.h"
 
 #include "ATLAPlayerCharacter.generated.h"
 
@@ -33,6 +35,9 @@ public:
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "ATLA|Abilities")
 	TArray<TSubclassOf<UATLAGameplayAbility>> OwnedAbilities;
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "ATLA|Input")
+	UInputMappingContext* IMC_PlayerInput;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "ATLA|Input")
 	UInputAction* IA_ConfirmAbility;
@@ -63,12 +68,21 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "ATLA|AbilitySlot")
 	TSubclassOf<UATLAGameplayAbility> Ability_4;
+
+	UFUNCTION(BlueprintGetter, Category = "ATLA")
+	AATLAPlayerController* GetATLAPlayerController() { return ATLAPlayerController; }
+
+	UFUNCTION(Client, Reliable, BlueprintCallable, Category = "ATLA")
+	void ClientSetUpCharacter();
 	
 protected:
 
 	bool ASCInputBound = false;
 
 	FGameplayTag DeadTag;
+
+	UPROPERTY(BlueprintGetter = GetATLAPlayerController, VisibleInstanceOnly, Category = "ATLA")
+	AATLAPlayerController* ATLAPlayerController;
 	
 	virtual void OnRep_PlayerState() override; 
 	
@@ -78,6 +92,12 @@ protected:
 	
 	UFUNCTION(BlueprintCallable, Category = "ATLA|Abilities")
 	void GiveNewAbility(TSubclassOf<UATLAGameplayAbility> AbilityClass);
+
+	UFUNCTION(Client, Reliable, BlueprintCallable, Category = "ATLA|Input")
+	void ClientAddInputMapping();
+
+	UFUNCTION(Client, Reliable, BlueprintCallable, Category = "ATLA")
+	void ClientSetCharacterName();
 
 	UFUNCTION(Server, Reliable, BlueprintCallable, Category = "ATLA")
 	void ServerSaveCharacterName();

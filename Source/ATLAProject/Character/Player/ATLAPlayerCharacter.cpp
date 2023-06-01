@@ -4,6 +4,7 @@
 #include "ATLAProject/Character/Abilities/ATLAAbilitySystemComponent.h"
 #include "ATLAProject/Character/Abilities/ATLAGameplayAbility.h"
 #include "EnhancedInputComponent.h"
+#include "EnhancedInputSubsystems.h"
 
 AATLAPlayerCharacter::AATLAPlayerCharacter(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
@@ -21,6 +22,13 @@ void AATLAPlayerCharacter::PossessedBy(AController* NewController)
 		AddStartupEffects();
 		AddCharacterAbilities();
 	}
+}
+
+void AATLAPlayerCharacter::ClientSetUpCharacter_Implementation()
+{
+	ClientAddInputMapping();
+	ClientSetCharacterName();
+	ServerSaveCharacterName();
 }
 
 void AATLAPlayerCharacter::OnRep_PlayerState()
@@ -126,7 +134,30 @@ void AATLAPlayerCharacter::GiveNewAbility(TSubclassOf<UATLAGameplayAbility> Abil
 	}
 
 	ATLAAbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(AbilityClass,
-	GetAbilityLevel(AbilityClass.GetDefaultObject()->AbilityID), static_cast<int32>(AbilityClass.GetDefaultObject()->AbilityInputID), this));
+		GetAbilityLevel(AbilityClass.GetDefaultObject()->AbilityID), static_cast<int32>(AbilityClass.GetDefaultObject()->AbilityInputID), this));
+}
+
+void AATLAPlayerCharacter::ClientAddInputMapping_Implementation()
+{
+	ATLAPlayerController = Cast<AATLAPlayerController>(GetController());
+
+	if (ATLAPlayerController)
+	{
+		UEnhancedInputLocalPlayerSubsystem* InputSubsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(ATLAPlayerController->GetLocalPlayer());
+
+		if (InputSubsystem)
+		{
+			InputSubsystem->AddMappingContext(IMC_PlayerInput, 0);
+		}
+	}
+}
+
+void AATLAPlayerCharacter::ClientSetCharacterName_Implementation()
+{
+	if (ATLAPlayerController)
+	{
+		ATLAPlayerController->CreatePlayerHUD(GetCharacterName());
+	}
 }
 
 void AATLAPlayerCharacter::ServerSaveCharacterName_Implementation()
