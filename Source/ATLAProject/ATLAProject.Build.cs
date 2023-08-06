@@ -19,8 +19,5 @@ public class ATLAProject : ModuleRules
 		
 		// Gameplay Ability System dependencies
 		PublicDependencyModuleNames.AddRange(new string[] { "GameplayAbilities", "GameplayTags", "GameplayTasks" });
-
-		// Developer Settings dependencies
-		PublicDependencyModuleNames.AddRange(new string[] { "DeveloperSettings" });
 	}
 }

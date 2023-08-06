@@ -1,15 +1,15 @@
 // Developed By Melon Studios.
 
 
-#include "ATLADeveloperSettings.h"
+#include "MelonLordDeveloperSettings.h"
 
-UATLADeveloperSettings::UATLADeveloperSettings(const FObjectInitializer& obj) : EditorUIScale(1.0f)
+UMelonLordDeveloperSettings::UMelonLordDeveloperSettings(const FObjectInitializer& obj) : EditorUIScale(1.0f)
 {
-	CategoryName = "ATLA";
-	SectionName = "ATLA Settings";
+	CategoryName = "General";
+	SectionName = "Melon Lord";
 }
 
-void UATLADeveloperSettings::PostInitProperties()
+void UMelonLordDeveloperSettings::PostInitProperties()
 {
 	Super::PostInitProperties();
 
@@ -19,7 +19,7 @@ void UATLADeveloperSettings::PostInitProperties()
 	}
 }
 
-void UATLADeveloperSettings::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
+void UMelonLordDeveloperSettings::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
 {
 	Super::PostEditChangeProperty(PropertyChangedEvent);
 
