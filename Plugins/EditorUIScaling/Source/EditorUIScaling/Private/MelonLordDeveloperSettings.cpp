@@ -19,6 +19,7 @@ void UMelonLordDeveloperSettings::PostInitProperties()
 	}
 }
 
+#if WITH_EDITOR
 void UMelonLordDeveloperSettings::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
 {
 	Super::PostEditChangeProperty(PropertyChangedEvent);
@@ -28,3 +29,4 @@ void UMelonLordDeveloperSettings::PostEditChangeProperty(FPropertyChangedEvent& 
 		FSlateApplication::Get().SetApplicationScale(EditorUIScale);
 	}
 }
+#endif

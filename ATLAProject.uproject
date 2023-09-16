@@ -206,10 +206,6 @@
 		{
 			"Name": "GameplayAbilities",
 			"Enabled": true
-		},
-		{
-			"Name": "RiderSourceCodeAccess",
-			"Enabled": false
 		}
 	],
 	"TargetPlatforms": [
