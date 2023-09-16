@@ -62,7 +62,8 @@ void UATLAGameInstanceSubsystem::CreateATLASession(ULocalPlayer* LocalPlayer, bo
 
 	SessionSettings = MakeShareable(new FOnlineSessionSettings());
 	SessionSettings->bIsLANMatch = UseLan;
-	SessionSettings->NumPublicConnections = 5;
+	// FOR NOW ONLY 4 PLAYERS
+	SessionSettings->NumPublicConnections = 4;
 	SessionSettings->bAllowJoinInProgress = true;
 	SessionSettings->bAllowJoinViaPresenceFriendsOnly = true;
 	SessionSettings->bAllowInvites = true;

@@ -20,6 +20,9 @@ class ATLAPROJECT_API AATLAPlayerController : public APlayerController
 	GENERATED_BODY()
 
 public:
+
+	UFUNCTION(Server, Reliable, Category = "ATLA|Discord")
+	void ServerSetDiscordRPC();
 	
 	UFUNCTION(Server, Reliable, Category = "ATLA|HUD")
 	void ServerCreateTeamHUD();
@@ -32,6 +35,12 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "HUD")
 	void OpenPlayerMenu();
+	
+	UFUNCTION(BlueprintImplementableEvent, Category = "ATLA|Discord")
+	void SetDiscordPartySize(const int& PartySize);
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "ATLA|Discord")
+	void SetDiscordCharacter(const FText& CurrentCharacter);
 
 	UFUNCTION(BlueprintGetter, Category = "ATLA")
 	AATLAHUD* GetATLAHUD() { return ATLAHUD; }

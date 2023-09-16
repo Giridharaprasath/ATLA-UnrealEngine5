@@ -19,5 +19,8 @@ public class ATLAProject : ModuleRules
 		
 		// Gameplay Ability System dependencies
 		PublicDependencyModuleNames.AddRange(new string[] { "GameplayAbilities", "GameplayTags", "GameplayTasks" });
+		
+		// Discord RPC Plugin
+		PublicDependencyModuleNames.AddRange(new string[] { "DiscordRPC" });
 	}
 }

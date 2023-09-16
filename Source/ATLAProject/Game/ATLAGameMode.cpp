@@ -9,6 +9,7 @@ void AATLAGameMode::OnPostLogin(AController* NewPlayer)
 	ATLAPlayerControllers.Add(NewATLAPlayerController);
 
 	NewATLAPlayerController->ServerCreateTeamHUD_Implementation();
+	NewATLAPlayerController->ServerSetDiscordRPC_Implementation();
 }
 
 void AATLAGameMode::Logout(AController* Exiting)
@@ -18,4 +19,5 @@ void AATLAGameMode::Logout(AController* Exiting)
 	ATLAPlayerControllers.Remove(LeavingATLAPlayerController);
 
 	LeavingATLAPlayerController->ServerCreateTeamHUD_Implementation();
+	LeavingATLAPlayerController->ServerSetDiscordRPC_Implementation();
 }

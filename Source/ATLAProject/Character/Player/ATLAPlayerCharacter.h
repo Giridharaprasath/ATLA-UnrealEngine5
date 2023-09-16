@@ -102,6 +102,9 @@ protected:
 	UFUNCTION(Server, Reliable, BlueprintCallable, Category = "ATLA")
 	void ServerSaveCharacterName();
 
+	UFUNCTION(Client, Reliable, BlueprintCallable, Category = "ATLA|Discord")
+	void ClientSetDiscordState();
+
 private:
 	void HandleInputPressesd_ConfirmAbility();
 	void HandleInputPressed_CancelAbility();

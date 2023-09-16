@@ -29,6 +29,7 @@ void AATLAPlayerCharacter::ClientSetUpCharacter_Implementation()
 	ClientAddInputMapping();
 	ClientSetCharacterName();
 	ServerSaveCharacterName();
+	ClientSetDiscordState();
 }
 
 void AATLAPlayerCharacter::OnRep_PlayerState()
@@ -167,6 +168,14 @@ void AATLAPlayerCharacter::ServerSaveCharacterName_Implementation()
 	if (ATLAPlayerState)
 	{
 		ATLAPlayerState->SetCharacterName(GetCharacterName());
+	}
+}
+
+void AATLAPlayerCharacter::ClientSetDiscordState_Implementation()
+{
+	if (ATLAPlayerController)
+	{
+		ATLAPlayerController->SetDiscordCharacter(GetCharacterName());
 	}
 }
 

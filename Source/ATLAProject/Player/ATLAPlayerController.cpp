@@ -9,6 +9,15 @@
 #include "Kismet/GameplayStatics.h"
 //#include "ATLAProject/Character/Player/ATLAPlayerCharacter.h"
 
+void AATLAPlayerController::ServerSetDiscordRPC_Implementation()
+{
+	AATLAGameState* GameState = Cast<AATLAGameState>(UGameplayStatics::GetGameState(GetWorld()));
+	if (GameState)
+	{
+		GameState->SetDiscordPartySize();
+	}
+}
+
 void AATLAPlayerController::ServerCreateTeamHUD_Implementation()
 {
 	AATLAGameState* GameState = Cast<AATLAGameState>(UGameplayStatics::GetGameState(GetWorld()));
@@ -65,6 +74,7 @@ void AATLAPlayerController::OnPossess(APawn* InPawn)
 void AATLAPlayerController::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
 	ServerCreateTeamHUD();
+	ServerSetDiscordRPC();
 	
 	Super::EndPlay(EndPlayReason);
 }
