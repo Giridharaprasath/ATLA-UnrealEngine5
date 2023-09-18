@@ -16,35 +16,35 @@ struct FDiscordRichPresence
 	GENERATED_BODY()
 
 	UPROPERTY(BlueprintReadWrite, Category = "Discord")
-	FString state;
+	FString State;
 	UPROPERTY(BlueprintReadWrite, Category = "Discord")
-	FString details;
+	FString Details;
 	UPROPERTY(BlueprintReadWrite, Category = "Discord")
-	int startTimestamp = 0;
+	int StartTimestamp = 0;
 	UPROPERTY(BlueprintReadWrite, Category = "Discord")
-	int endTimestamp = 0;
+	int EndTimestamp = 0;
 	UPROPERTY(BlueprintReadWrite, Category = "Discord")
-	FString largeImageKey;
+	FString LargeImageKey;
 	UPROPERTY(BlueprintReadWrite, Category = "Discord")
-	FString largeImageText;
+	FString LargeImageText;
 	UPROPERTY(BlueprintReadWrite, Category = "Discord")
-	FString smallImageKey;
+	FString SmallImageKey;
 	UPROPERTY(BlueprintReadWrite, Category = "Discord")
-	FString smallImageText;
+	FString SmallImageText;
 	UPROPERTY(BlueprintReadWrite, Category = "Discord")
-	FString partyId;
+	FString PartyId;
 	UPROPERTY(BlueprintReadWrite, Category = "Discord")
-	int partySize = 0;
+	int PartySize = 0;
 	UPROPERTY(BlueprintReadWrite, Category = "Discord")
-	int partyMax = 0;
+	int PartyMax = 0;
 	UPROPERTY(BlueprintReadWrite, Category = "Discord")
-	FString matchSecret;
+	FString MatchSecret;
 	UPROPERTY(BlueprintReadWrite, Category = "Discord")
-	FString joinSecret;
+	FString JoinSecret;
 	UPROPERTY(BlueprintReadWrite, Category = "Discord")
-	FString spectateSecret;
+	FString SpectateSecret;
 	UPROPERTY(BlueprintReadWrite, Category = "Discord")
-	bool instance = false;
+	bool bInstance = false;
 };
 
 /**
@@ -61,7 +61,7 @@ public:
 	bool IsConnected;
 	
 	UFUNCTION(BlueprintCallable, Category = "Discord")
-	void InitiateDiscord(const FString& applicationId, bool autoRegister, const FString& optionalSteamId);
+	void InitiateDiscord(const FString& ApplicationID, bool bAutoRegister, const FString& SteamID);
 
 	UFUNCTION(BlueprintCallable, Category = "Discord")
 	void ShutdownDiscord();
@@ -92,6 +92,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Discord|Set")
 	void SetRPCPartyMax(int CurrentPartyMax);
+
+	UFUNCTION(BlueprintCallable, Category = "Discord|Reset")
+	void ResetDiscordPresence();
 
 protected:
 

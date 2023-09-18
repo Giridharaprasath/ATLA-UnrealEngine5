@@ -23,6 +23,9 @@ public:
 
 	UFUNCTION(Server, Reliable, Category = "ATLA|Discord")
 	void ServerSetDiscordRPC();
+
+	UFUNCTION(Client, Reliable, Category = "ATLA|Discord")
+	void ClientSetDiscordRPC(const int& PartySize);
 	
 	UFUNCTION(Server, Reliable, Category = "ATLA|HUD")
 	void ServerCreateTeamHUD();
@@ -35,12 +38,6 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "HUD")
 	void OpenPlayerMenu();
-	
-	UFUNCTION(BlueprintImplementableEvent, Category = "ATLA|Discord")
-	void SetDiscordPartySize(const int& PartySize);
-
-	UFUNCTION(BlueprintImplementableEvent, Category = "ATLA|Discord")
-	void SetDiscordCharacter(const FText& CurrentCharacter);
 
 	UFUNCTION(BlueprintGetter, Category = "ATLA")
 	AATLAHUD* GetATLAHUD() { return ATLAHUD; }
@@ -59,6 +56,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "ATLA|HUD")
 	void CreatePlayerHUD(const FText& CharacterName);
+	
+	UFUNCTION(BlueprintImplementableEvent, Category = "ATLA|Discord")
+	void SetDiscordPartySize(const int& PartySize);
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "ATLA|Discord")
+	void SetDiscordCharacter(const FText& CurrentCharacter);
 	
 protected:
 	

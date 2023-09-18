@@ -106,7 +106,7 @@ protected:
 	void ClientSetDiscordState();
 
 private:
-	void HandleInputPressesd_ConfirmAbility();
+	void HandleInputPressed_ConfirmAbility();
 	void HandleInputPressed_CancelAbility();
 	
 	void HandleInputPressed_Ability_1();

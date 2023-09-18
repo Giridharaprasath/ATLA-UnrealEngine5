@@ -18,7 +18,7 @@ class ATLAPROJECT_API AATLAGameState : public AGameState
 public:
 
 	UFUNCTION(BlueprintCallable, NetMulticast, Reliable, Category = "ATLA|Discord")
-	void SetDiscordPartySize();
+	void MulticastSetDiscordPartySize();
 	
 	UFUNCTION(BlueprintCallable, NetMulticast, Reliable, Category = "ATLA")
 	void MulticastCreateTeamHUD();

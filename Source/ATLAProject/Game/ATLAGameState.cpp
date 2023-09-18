@@ -5,7 +5,7 @@
 #include "ATLAProject/Player/ATLAPlayerController.h"
 #include "GameFramework/PlayerState.h"
 
-void AATLAGameState::SetDiscordPartySize_Implementation()
+void AATLAGameState::MulticastSetDiscordPartySize_Implementation()
 {
 	const int PartySize = PlayerArray.Num();
 	for (APlayerState* PlayerState : PlayerArray)
@@ -14,7 +14,7 @@ void AATLAGameState::SetDiscordPartySize_Implementation()
 
 		if (ATLAPlayerController)
 		{
-			ATLAPlayerController->SetDiscordPartySize(PartySize);
+			ATLAPlayerController->ClientSetDiscordRPC(PartySize);
 		}
 	}
 }

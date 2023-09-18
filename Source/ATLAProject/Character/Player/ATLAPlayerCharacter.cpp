@@ -93,7 +93,7 @@ void AATLAPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	{
 		if (IA_ConfirmAbility)
 		{
-			EnhancedInputComponent->BindAction(IA_ConfirmAbility, ETriggerEvent::Triggered, this, &ThisClass::HandleInputPressesd_ConfirmAbility);
+			EnhancedInputComponent->BindAction(IA_ConfirmAbility, ETriggerEvent::Triggered, this, &ThisClass::HandleInputPressed_ConfirmAbility);
 		}
 
 		if (IA_CancelAbility)
@@ -179,7 +179,7 @@ void AATLAPlayerCharacter::ClientSetDiscordState_Implementation()
 	}
 }
 
-void AATLAPlayerCharacter::HandleInputPressesd_ConfirmAbility()
+void AATLAPlayerCharacter::HandleInputPressed_ConfirmAbility()
 {
 	ATLAAbilitySystemComponent->InputConfirm();
 }

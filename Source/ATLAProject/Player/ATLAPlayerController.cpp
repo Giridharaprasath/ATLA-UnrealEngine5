@@ -14,8 +14,13 @@ void AATLAPlayerController::ServerSetDiscordRPC_Implementation()
 	AATLAGameState* GameState = Cast<AATLAGameState>(UGameplayStatics::GetGameState(GetWorld()));
 	if (GameState)
 	{
-		GameState->SetDiscordPartySize();
+		GameState->MulticastSetDiscordPartySize();
 	}
+}
+
+void AATLAPlayerController::ClientSetDiscordRPC_Implementation(const int& PartySize)
+{
+	SetDiscordPartySize(PartySize);
 }
 
 void AATLAPlayerController::ServerCreateTeamHUD_Implementation()

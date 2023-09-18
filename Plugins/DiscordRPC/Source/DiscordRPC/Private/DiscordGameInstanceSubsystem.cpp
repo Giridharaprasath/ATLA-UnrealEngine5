@@ -4,15 +4,16 @@
 #include "discord_rpc.h"
 #include <time.h>
 
-void UDiscordGameInstanceSubsystem::InitiateDiscord(const FString& applicationId, bool autoRegister, const FString& optionalSteamId)
+void UDiscordGameInstanceSubsystem::InitiateDiscord(const FString& ApplicationID, bool bAutoRegister, const FString& SteamID)
 {
 	IsConnected = false;
 	DiscordEventHandlers Handlers{};
-	auto appId = StringCast<ANSICHAR>(*applicationId);
-	auto steamId = StringCast<ANSICHAR>(*optionalSteamId);
-	Discord_Initialize((const char*)appId.Get(), &Handlers, autoRegister, (const char*)steamId.Get());
+	auto AppId = StringCast<ANSICHAR>(*ApplicationID);
+	auto SteamId = StringCast<ANSICHAR>(*SteamID);
+	Discord_Initialize(AppId.Get(), &Handlers, bAutoRegister, SteamId.Get());
 	
 	SetRPCLargeImageKey("gameicon");
+	SetRPCLargeImageText("ATLA");
 	StartTimeStamp();
 	
 	UpdateDiscordPresence();
@@ -25,98 +26,110 @@ void UDiscordGameInstanceSubsystem::ShutdownDiscord()
 
 void UDiscordGameInstanceSubsystem::UpdateDiscordPresence()
 {
-	DiscordRichPresence DiscordRichPresence{};
-	
-	auto state = StringCast<ANSICHAR>(*RichPresence.state);
-	DiscordRichPresence.state = state.Get();
+	DiscordRichPresence DiscordRichPresence;
 
-	auto details = StringCast<ANSICHAR>(*RichPresence.details);
-	DiscordRichPresence.details = details.Get();
+	auto State = StringCast<ANSICHAR>(*RichPresence.State);
+	DiscordRichPresence.state = State.Get();
 
-	auto largeImageKey = StringCast<ANSICHAR>(*RichPresence.largeImageKey);
-	DiscordRichPresence.largeImageKey = largeImageKey.Get();
+	auto Details = StringCast<ANSICHAR>(*RichPresence.Details);
+	DiscordRichPresence.details = Details.Get();
 
-	auto largeImageText = StringCast<ANSICHAR>(*RichPresence.largeImageText);
-	DiscordRichPresence.largeImageText = largeImageText.Get();
+	auto LargeImageKey = StringCast<ANSICHAR>(*RichPresence.LargeImageKey);
+	DiscordRichPresence.largeImageKey = LargeImageKey.Get();
 
-	auto smallImageKey = StringCast<ANSICHAR>(*RichPresence.smallImageKey);
-	DiscordRichPresence.smallImageKey = smallImageKey.Get();
+	auto LargeImageText = StringCast<ANSICHAR>(*RichPresence.LargeImageText);
+	DiscordRichPresence.largeImageText = LargeImageText.Get();
 
-	auto smallImageText = StringCast<ANSICHAR>(*RichPresence.smallImageText);
-	DiscordRichPresence.smallImageText = smallImageText.Get();
+	auto SmallImageKey = StringCast<ANSICHAR>(*RichPresence.SmallImageKey);
+	DiscordRichPresence.smallImageKey = SmallImageKey.Get();
 
-	auto partyId = StringCast<ANSICHAR>(*RichPresence.partyId);
-	DiscordRichPresence.partyId = partyId.Get();
+	auto SmallImageText = StringCast<ANSICHAR>(*RichPresence.SmallImageText);
+	DiscordRichPresence.smallImageText = SmallImageText.Get();
 
-	auto matchSecret = StringCast<ANSICHAR>(*RichPresence.matchSecret);
-	DiscordRichPresence.matchSecret = matchSecret.Get();
+	auto PartyId = StringCast<ANSICHAR>(*RichPresence.PartyId);
+	DiscordRichPresence.partyId = PartyId.Get();
 
-	auto joinSecret = StringCast<ANSICHAR>(*RichPresence.joinSecret);
-	DiscordRichPresence.joinSecret = joinSecret.Get();
+	auto MatchSecret = StringCast<ANSICHAR>(*RichPresence.MatchSecret);
+	DiscordRichPresence.matchSecret = MatchSecret.Get();
 
-	auto spectateSecret = StringCast<ANSICHAR>(*RichPresence.spectateSecret);
-	DiscordRichPresence.spectateSecret = spectateSecret.Get();
-	DiscordRichPresence.startTimestamp = RichPresence.startTimestamp;
-	DiscordRichPresence.endTimestamp = RichPresence.endTimestamp;
-	DiscordRichPresence.partySize = RichPresence.partySize;
-	DiscordRichPresence.partyMax = RichPresence.partyMax;
-	DiscordRichPresence.instance = RichPresence.instance;
+	auto JoinSecret = StringCast<ANSICHAR>(*RichPresence.JoinSecret);
+	DiscordRichPresence.joinSecret = JoinSecret.Get();
+
+	auto SpectateSecret = StringCast<ANSICHAR>(*RichPresence.SpectateSecret);
+	DiscordRichPresence.spectateSecret = SpectateSecret.Get();
+	DiscordRichPresence.startTimestamp = RichPresence.StartTimestamp;
+	DiscordRichPresence.endTimestamp = RichPresence.EndTimestamp;
+	DiscordRichPresence.partySize = RichPresence.PartySize;
+	DiscordRichPresence.partyMax = RichPresence.PartyMax;
+	DiscordRichPresence.instance = RichPresence.bInstance;
 	
 	Discord_UpdatePresence(&DiscordRichPresence);	
 }
 
 void UDiscordGameInstanceSubsystem::SetRPCState(const FString& CurrentState)
 {
-	RichPresence.state = CurrentState;
+	RichPresence.State = CurrentState;
 
 	UpdateDiscordPresence();
 }
 
 void UDiscordGameInstanceSubsystem::SetRPCDetails(const FString& CurrentDetails)
 {
-	RichPresence.details = CurrentDetails;
+	RichPresence.Details = CurrentDetails;
 
 	UpdateDiscordPresence();
 }
 
 void UDiscordGameInstanceSubsystem::SetRPCLargeImageKey(const FString& CurrentLargeImageKey)
 {
-	RichPresence.largeImageKey = CurrentLargeImageKey;
+	RichPresence.LargeImageKey = CurrentLargeImageKey;
 
 	UpdateDiscordPresence();
 }
 
 void UDiscordGameInstanceSubsystem::SetRPCLargeImageText(const FString& CurrentLargeImageText)
 {
-	RichPresence.largeImageText = CurrentLargeImageText;
+	RichPresence.LargeImageText = CurrentLargeImageText;
 
 	UpdateDiscordPresence();
 }
 
 void UDiscordGameInstanceSubsystem::SetRPCSmallImageKey(const FString& CurrentSmallImageKey)
 {
-	RichPresence.smallImageKey = CurrentSmallImageKey;
+	RichPresence.SmallImageKey = CurrentSmallImageKey;
 
 	UpdateDiscordPresence();
 }
 
 void UDiscordGameInstanceSubsystem::SetRPCSmallImageText(const FString& CurrentSmallImageText)
 {
-	RichPresence.smallImageText = CurrentSmallImageText;
+	RichPresence.SmallImageText = CurrentSmallImageText;
 
 	UpdateDiscordPresence();
 }
 
 void UDiscordGameInstanceSubsystem::SetRPCPartySize(int CurrentPartySize)
 {
-	RichPresence.partySize = CurrentPartySize;
+	RichPresence.PartySize = CurrentPartySize;
 
 	UpdateDiscordPresence();
 }
 
 void UDiscordGameInstanceSubsystem::SetRPCPartyMax(int CurrentPartyMax)
 {
-	RichPresence.partyMax = CurrentPartyMax;
+	RichPresence.PartyMax = CurrentPartyMax;
+
+	UpdateDiscordPresence();
+}
+
+void UDiscordGameInstanceSubsystem::ResetDiscordPresence()
+{
+	RichPresence.Details = "";
+	RichPresence.State = "";
+	RichPresence.PartyMax = 0;
+	RichPresence.PartySize = 0;
+	RichPresence.SmallImageKey = "";
+	RichPresence.SmallImageText = "";
 
 	UpdateDiscordPresence();
 }
@@ -126,7 +139,7 @@ void UDiscordGameInstanceSubsystem::StartTimeStamp()
 	time_t StartTime;
 	time(&StartTime);
 
-	RichPresence.startTimestamp = StartTime;
+	RichPresence.StartTimestamp = StartTime;
 
 	UpdateDiscordPresence();
 }
