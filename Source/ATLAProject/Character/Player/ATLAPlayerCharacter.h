@@ -105,6 +105,9 @@ protected:
 	UFUNCTION(Client, Reliable, BlueprintCallable, Category = "ATLA|Discord")
 	void ClientSetDiscordState();
 
+	UFUNCTION(Server, Reliable, BlueprintCallable, Category = "ATLA|Ability")
+	void ServerSetAbilityLevel(TSubclassOf<UATLAGameplayAbility> AbilityClass, int32 NewLevel);
+
 private:
 	void HandleInputPressed_ConfirmAbility();
 	void HandleInputPressed_CancelAbility();

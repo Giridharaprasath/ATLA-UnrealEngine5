@@ -22,6 +22,9 @@ public:
 	bool bStartupEffectsApplied = false;
 
 	FReceivedDamageDelegate ReceivedDamage;
+	
+	UFUNCTION(BlueprintAuthorityOnly, Category = "ATLA|Ability")
+	void SetAbilityLevel(TSubclassOf<UGameplayAbility> AbilityClass, int32 NewLevel);
 
 	// To Broadcasts On ReceivedDamage whenever this ASC receives Damage.
 	virtual void ReceiveDamage(UATLAAbilitySystemComponent* SourceASC, float UnmitigatedDamage, float MitigatedDamage);

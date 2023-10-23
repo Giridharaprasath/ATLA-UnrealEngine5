@@ -179,6 +179,16 @@ void AATLAPlayerCharacter::ClientSetDiscordState_Implementation()
 	}
 }
 
+void AATLAPlayerCharacter::ServerSetAbilityLevel_Implementation(TSubclassOf<UATLAGameplayAbility> AbilityClass, int32 NewLevel)
+{
+	if (!HasAuthority() || !ATLAAbilitySystemComponent.IsValid())
+	{
+		return;
+	}
+
+	ATLAAbilitySystemComponent->SetAbilityLevel(AbilityClass, NewLevel);
+}
+
 void AATLAPlayerCharacter::HandleInputPressed_ConfirmAbility()
 {
 	ATLAAbilitySystemComponent->InputConfirm();
