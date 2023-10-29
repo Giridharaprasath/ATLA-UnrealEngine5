@@ -105,9 +105,6 @@ protected:
 	UFUNCTION(Client, Reliable, BlueprintCallable, Category = "ATLA|Discord")
 	void ClientSetDiscordState();
 
-	UFUNCTION(Server, Reliable, BlueprintCallable, Category = "ATLA|Ability")
-	void ServerSetAbilityLevel(TSubclassOf<UATLAGameplayAbility> AbilityClass, int32 NewLevel);
-
 private:
 	void HandleInputPressed_ConfirmAbility();
 	void HandleInputPressed_CancelAbility();
@@ -121,4 +118,12 @@ private:
 	void HandleInputReleased_Ability_2();
 	void HandleInputReleased_Ability_3();
 	void HandleInputReleased_Ability_4();
+
+public:
+	
+	UFUNCTION(Server, Reliable, BlueprintCallable, Category = "ATLA|Abilities")
+	void ServerSetAbilityLevel(TSubclassOf<UATLAGameplayAbility> AbilityClass, int32 NewLevel);
+	
+	UFUNCTION(BlueprintImplementableEvent, Category = "ATLA|Abilities|Debug")
+	void GiveAllAbilitiesToPlayer();
 };

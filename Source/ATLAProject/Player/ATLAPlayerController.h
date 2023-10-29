@@ -7,6 +7,7 @@
 
 #include "ATLAPlayerController.generated.h"
 
+class FObjectInitializer;
 class AATLAHUD;
 class AATLAGameState;
 class AATLAPlayerState;
@@ -20,6 +21,8 @@ class ATLAPROJECT_API AATLAPlayerController : public APlayerController
 	GENERATED_BODY()
 
 public:
+
+	AATLAPlayerController(const FObjectInitializer& ObjectInitializer);
 
 	UFUNCTION(Server, Reliable, Category = "ATLA|Discord")
 	void ServerSetDiscordRPC();

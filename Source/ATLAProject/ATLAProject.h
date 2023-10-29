@@ -17,8 +17,8 @@ enum class EATLAAbilityID : uint8
 	Jump UMETA(DisplayName = "Jump"),
 	// 4 Sprint
 	Sprint UMETA(DisplayName = "Sprint"),
-	// 5 Glide
-	Glide UMETA(DisplayName = "Glide"),
+	// 5 Vision
+	Vision UMETA(DisplayName = "Vision"),
 	// 6 Dodge
 	Dodge UMETA(DisplayName = "Dodge"),
 	// 7 Can Do Abilities
@@ -29,8 +29,11 @@ enum class EATLAAbilityID : uint8
 	/*
 	 *  AIR ABILITIES
 	 */
+	// Glide
+	Glide UMETA(DisplayName = "Glide"),
 	// AIR BALL
 	AirBall UMETA(DisplayName = "Air Ball"),
+	
 
 	/*
 	 *  WATER ABILITIES

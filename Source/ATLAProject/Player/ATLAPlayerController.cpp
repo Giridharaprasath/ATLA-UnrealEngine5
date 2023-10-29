@@ -4,10 +4,16 @@
 #include "ATLAPlayerState.h"
 #include "ATLAProject/HUD/ATLAHUD.h"
 #include "AbilitySystemComponent.h"
+#include "ATLAProject/CheatManager/ATLACheatManager.h"
 #include "ATLAProject/Game/ATLAGameState.h"
 #include "ATLAProject/Game/ATLAGameMode.h"
 #include "Kismet/GameplayStatics.h"
 //#include "ATLAProject/Character/Player/ATLAPlayerCharacter.h"
+
+AATLAPlayerController::AATLAPlayerController(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
+{
+	CheatClass = UATLACheatManager::StaticClass();
+}
 
 void AATLAPlayerController::ServerSetDiscordRPC_Implementation()
 {
