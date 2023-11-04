@@ -120,6 +120,12 @@ private:
 	void HandleInputReleased_Ability_4();
 
 public:
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "ATLA|Player")
+	void PlayerIsFalling();
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "ATLA|Player")
+	void PlayerIsGrounded();
 	
 	UFUNCTION(Server, Reliable, BlueprintCallable, Category = "ATLA|Abilities")
 	void ServerSetAbilityLevel(TSubclassOf<UATLAGameplayAbility> AbilityClass, int32 NewLevel);
