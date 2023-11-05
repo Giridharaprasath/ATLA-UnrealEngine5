@@ -22,8 +22,6 @@ class ATLAPROJECT_API AATLAPlayerController : public APlayerController
 
 public:
 
-	AATLAPlayerController(const FObjectInitializer& ObjectInitializer);
-
 	UFUNCTION(Server, Reliable, Category = "ATLA|Discord")
 	void ServerSetDiscordRPC();
 
