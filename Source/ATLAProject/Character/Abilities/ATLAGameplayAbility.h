@@ -28,5 +28,11 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "ATLA|Ability")
 	bool ActiveAbilityOnGranted = false;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "ATLA|Ability")
+	float AbilityDuration = 0.f;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "ATLA|Ability")
+	bool bAbilityHasDuration = false;
+
 	virtual void OnAvatarSet(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& Spec) override;
 };

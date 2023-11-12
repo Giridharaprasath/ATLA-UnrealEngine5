@@ -130,6 +130,6 @@ public:
 	UFUNCTION(Server, Reliable, BlueprintCallable, Category = "ATLA|Abilities")
 	void ServerSetAbilityLevel(TSubclassOf<UATLAGameplayAbility> AbilityClass, int32 NewLevel);
 	
-	UFUNCTION(BlueprintImplementableEvent, Category = "ATLA|Abilities|Debug")
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "ATLA|Abilities|Debug")
 	void GiveAllAbilitiesToPlayer();
 };
