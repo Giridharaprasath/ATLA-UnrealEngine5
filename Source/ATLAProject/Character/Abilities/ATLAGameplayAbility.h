@@ -33,6 +33,9 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "ATLA|Ability")
 	bool bAbilityHasDuration = false;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "ATLA|Ability")
+	bool bAbilityHasCooldown = false;
 
 	virtual void OnAvatarSet(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& Spec) override;
 };
