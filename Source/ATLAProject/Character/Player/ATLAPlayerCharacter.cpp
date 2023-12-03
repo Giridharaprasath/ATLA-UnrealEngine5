@@ -30,6 +30,7 @@ void AATLAPlayerCharacter::ClientSetUpCharacter_Implementation()
 	ClientSetCharacterName();
 	ServerSaveCharacterName();
 	ClientSetDiscordState();
+	OnCharacterSelected();
 }
 
 void AATLAPlayerCharacter::OnRep_PlayerState()

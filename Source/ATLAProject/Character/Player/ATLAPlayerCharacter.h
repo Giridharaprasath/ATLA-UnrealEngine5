@@ -74,6 +74,9 @@ public:
 
 	UFUNCTION(Client, Reliable, BlueprintCallable, Category = "ATLA")
 	void ClientSetUpCharacter();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "ATLA")
+	void OnCharacterSelected();
 	
 protected:
 
