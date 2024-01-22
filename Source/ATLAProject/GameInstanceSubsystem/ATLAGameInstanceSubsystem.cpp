@@ -2,13 +2,16 @@
 
 #include "ATLAGameInstanceSubsystem.h"
 #include "Kismet/GameplayStatics.h"
+#include "OnlineSessionSettings.h"
+#include "Online/OnlineSessionNames.h"
 
 UATLAGameInstanceSubsystem::UATLAGameInstanceSubsystem() :
 	OnCreateSessionCompleteDelegate(FOnCreateSessionCompleteDelegate::CreateUObject(this, &ThisClass::OnCreateSessionComplete)),
 	OnStartSessionCompleteDelegate(FOnStartSessionCompleteDelegate::CreateUObject(this, &ThisClass::OnStartSessionComplete)),
 	OnDestroySessionCompleteDelegate(FOnDestroySessionCompleteDelegate::CreateUObject(this, &ThisClass::OnDestroySessionComplete)),
 	OnSessionUserInviteAcceptedDelegate(FOnSessionUserInviteAcceptedDelegate::CreateUObject(this, &ThisClass::OnSessionInviteAccepted)),
-	OnJoinSessionCompleteDelegate(FOnJoinSessionCompleteDelegate::CreateUObject(this, &ThisClass::OnJoinSessionComplete))
+	OnJoinSessionCompleteDelegate(FOnJoinSessionCompleteDelegate::CreateUObject(this, &ThisClass::OnJoinSessionComplete)),
+	OnFindSessionsCompleteDelegate(FOnFindSessionsCompleteDelegate::CreateUObject(this, &ThisClass::OnFindSessionComplete))
 {
     IOnlineSubsystem* Subsystem = IOnlineSubsystem::Get();
 	if (Subsystem)
@@ -76,21 +79,27 @@ void UATLAGameInstanceSubsystem::CreateATLASession(ULocalPlayer* LocalPlayer, bo
 	SessionInterface->CreateSession(*LocalPlayer->GetPreferredUniqueNetId(), NAME_GameSession, *SessionSettings);
 }
 
-void UATLAGameInstanceSubsystem::DestroyATLASession()
+void UATLAGameInstanceSubsystem::FindATLASession(int32 MaxSearchResults, bool bUseLan)
 {
 	if (!SessionInterface.IsValid())
 	{
 		return;
 	}
-	
-	if (GEngine)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 100.f, FColor::Green, 
-			FString::Printf(TEXT("Destroy ATLA Session S: %s"), LexToString(NAME_GameSession)));
-	}
 
-	OnDestroySessionCompleteDelegateHandle = SessionInterface->AddOnDestroySessionCompleteDelegate_Handle(OnDestroySessionCompleteDelegate);
-	SessionInterface->DestroySession(NAME_GameSession);
+	OnFindSessionCompleteDelegateHandle = SessionInterface->AddOnFindSessionsCompleteDelegate_Handle(OnFindSessionsCompleteDelegate);
+
+	SessionSearch = MakeShareable(new FOnlineSessionSearch());
+	SessionSearch->MaxSearchResults = MaxSearchResults;
+	SessionSearch->bIsLanQuery = bUseLan;
+	SessionSearch->QuerySettings.Set(SEARCH_MINSLOTSAVAILABLE, 0, EOnlineComparisonOp::Equals);
+	SessionSearch->QuerySettings.Set(SEARCH_PRESENCE, true, EOnlineComparisonOp::Equals);
+	SessionSearch->QuerySettings.Set(SEARCH_LOBBIES, true, EOnlineComparisonOp::Equals);
+
+	const ULocalPlayer* LocalPlayer = GetWorld()->GetFirstLocalPlayerFromController();
+	if (!SessionInterface->FindSessions(*LocalPlayer->GetPreferredUniqueNetId(), SessionSearch.ToSharedRef()))
+	{
+		SessionInterface->ClearOnFindSessionsCompleteDelegate_Handle(OnFindSessionCompleteDelegateHandle);
+	}
 }
 
 void UATLAGameInstanceSubsystem::JoinATLASession(int32 LocalPlayer, const FOnlineSessionSearchResult& SessionSearchResult)
@@ -108,6 +117,23 @@ void UATLAGameInstanceSubsystem::JoinATLASession(int32 LocalPlayer, const FOnlin
 	
 	OnJoinSessionCompleteDelegateHandle = SessionInterface->AddOnJoinSessionCompleteDelegate_Handle(OnJoinSessionCompleteDelegate);
 	SessionInterface->JoinSession(LocalPlayer, NAME_GameSession, SessionSearchResult);
+}
+
+void UATLAGameInstanceSubsystem::DestroyATLASession()
+{
+	if (!SessionInterface.IsValid())
+	{
+		return;
+	}
+	
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 100.f, FColor::Green, 
+			FString::Printf(TEXT("Destroy ATLA Session S: %s"), LexToString(NAME_GameSession)));
+	}
+
+	OnDestroySessionCompleteDelegateHandle = SessionInterface->AddOnDestroySessionCompleteDelegate_Handle(OnDestroySessionCompleteDelegate);
+	SessionInterface->DestroySession(NAME_GameSession);
 }
 
 bool UATLAGameInstanceSubsystem::CheckIfPlayerInSession(ULocalPlayer* LocalPlayer)
@@ -207,5 +233,25 @@ void UATLAGameInstanceSubsystem::OnJoinSessionComplete(FName SessionName, EOnJoi
 		{
 			PlayerController->ClientTravel(TravelURL, TRAVEL_Absolute);
 		}
+	}
+}
+
+void UATLAGameInstanceSubsystem::OnFindSessionComplete(bool bWasSuccessful)
+{
+	if (SessionInterface)
+	{
+		SessionInterface->ClearOnFindSessionsCompleteDelegate_Handle(OnFindSessionCompleteDelegateHandle);
+	}
+	
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 100.f, FColor::Yellow, 
+		FString::Printf(TEXT("SESSIONS FOUND : %d"), SessionSearch->SearchResults.Num()));
+	}
+
+	for (auto Result : SessionSearch->SearchResults)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 100.f, FColor::Yellow, 
+		FString::Printf(TEXT("SESSIONS FOUND : %s"), *Result.GetSessionIdStr()));
 	}
 }

@@ -27,14 +27,16 @@ public:
 		FString LobbyPath = FString(TEXT("/Game/Maps/Testing/Testing_Level")));
 
 	UFUNCTION(BlueprintCallable, Category = "ATLA")
-	void DestroyATLASession();
+	void FindATLASession(int32 MaxSearchResults, bool bUseLan = true);
 
 	void JoinATLASession(int32 LocalPlayer, const FOnlineSessionSearchResult& SessionSearchResult);
+	
+	UFUNCTION(BlueprintCallable, Category = "ATLA")
+	void DestroyATLASession();
 
 	UFUNCTION(BlueprintCallable, Category = "ATLA")
 	bool CheckIfPlayerInSession(ULocalPlayer* LocalPlayer);
-
-
+	
 protected:
 
 	// Function fired when a session create request has completed
@@ -48,12 +50,15 @@ protected:
 		const FOnlineSessionSearchResult& SessionToJoin);
 	// Function fires when a session join request has completed
 	void OnJoinSessionComplete(FName SessionName, EOnJoinSessionCompleteResult::Type Result);
+	// Function fires when a session find request has completed
+	void OnFindSessionComplete(bool bWasSuccessful);
 
 private:
 	FString PathToLobby { TEXT("") };
 
 	IOnlineSessionPtr SessionInterface;
 	TSharedPtr<FOnlineSessionSettings> SessionSettings;
+	TSharedPtr<FOnlineSessionSearch> SessionSearch;
 
 	// Delegates called when session created
 	FOnCreateSessionCompleteDelegate OnCreateSessionCompleteDelegate;
@@ -65,6 +70,8 @@ private:
 	FOnSessionUserInviteAcceptedDelegate OnSessionUserInviteAcceptedDelegate;
 	// Delegates called when session joined
 	FOnJoinSessionCompleteDelegate OnJoinSessionCompleteDelegate;
+	// Delegates called when session found
+	FOnFindSessionsCompleteDelegate OnFindSessionsCompleteDelegate;
 
 	// Handles to registered delegates for creating a session
 	FDelegateHandle OnCreateSessionCompleteDelegateHandle;
@@ -76,4 +83,6 @@ private:
 	FDelegateHandle OnSessionInviteAcceptedDelegateHandle;
 	// Handles to registered delegates for joining a session
 	FDelegateHandle OnJoinSessionCompleteDelegateHandle;
+	// Handles to registered delegates for finding a session
+	FDelegateHandle OnFindSessionCompleteDelegateHandle;
 };

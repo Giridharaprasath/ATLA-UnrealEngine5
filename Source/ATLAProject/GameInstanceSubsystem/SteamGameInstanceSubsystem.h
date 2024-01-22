@@ -37,6 +37,37 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "ATLA|Steam")
 	void OpenSteamOverlayUI();
 
+	UFUNCTION(BlueprintCallable, Category = "ATLA|Steam")
+	void OpenSteamUserUI(int FriendIndex);
+
+	UFUNCTION(BlueprintCallable, Category = "ATLA|Steam")
+	int GetPlayerFriendsCount();
+
+	UFUNCTION(BlueprintCallable, Category = "ATLA|Steam")
+	int64 GetFriendSteamID(int FriendIndex);
+	
+	UFUNCTION(BlueprintCallable, Category = "ATLA|Steam")
+	FString GetFriendSteamName(int FriendIndex);
+
+	UFUNCTION(BlueprintCallable, Category = "ATLA|Steam")
+	UTexture2D* GetFriendSteamAvatar(int FriendIndex);
+
+	UFUNCTION(BlueprintCallable, Category = "ATLA|Steam")
+	bool GetFriendPersonaState(int FriendIndex);
+
+	UFUNCTION(BlueprintCallable, Category = "ATLA|Steam")
+	bool GetFriendGamePlayed(int FriendIndex);
+
+
+	UFUNCTION(BlueprintCallable, Category = "ATLA|Steam")
+	void SetRichPresence(FString Key, FString Value);
+
+	UFUNCTION(BlueprintCallable, Category = "ATLA|Steam")
+	FString GetFriendRichPresence(int FriendIndex, FString Key);
+
+	UFUNCTION(BlueprintCallable, Category = "ATLA|Steam")
+	void ClearRichPresence();
+
 private:
 	bool bSteamIsOnline { false };
 	IOnlineSubsystem* SteamSubsystem;
