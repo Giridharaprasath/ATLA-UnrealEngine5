@@ -67,15 +67,16 @@ void UATLAGameInstanceSubsystem::CreateATLASession(ULocalPlayer* LocalPlayer, bo
 	// FOR NOW ONLY 4 PLAYERS
 	SessionSettings->NumPublicConnections = 4;
 	SessionSettings->bAllowJoinInProgress = true;
-	SessionSettings->bAllowJoinViaPresenceFriendsOnly = true;
+	SessionSettings->bAllowJoinViaPresenceFriendsOnly = false;
 	SessionSettings->bAllowInvites = true;
 	SessionSettings->bUsesPresence = true;
 	SessionSettings->bShouldAdvertise = true;
 	SessionSettings->bUseLobbiesIfAvailable = true;
 	SessionSettings->bUsesStats = true;
+	SessionSettings->bIsDedicated = false;
+	SessionSettings->bAllowJoinViaPresence = true;
 
-	// SessionSettings->Set(FName("LobbyName"), LocalPlayer->GetNickname(), EOnlineDataAdvertisementType::ViaOnlineServiceAndPing);
-	
+	SessionSettings->Set(FName("LobbyName"), LocalPlayer->GetNickname(), EOnlineDataAdvertisementType::ViaOnlineServiceAndPing, 69);
 	if (GEngine)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 100.f, FColor::Green, 
@@ -84,7 +85,7 @@ void UATLAGameInstanceSubsystem::CreateATLASession(ULocalPlayer* LocalPlayer, bo
 	SessionInterface->CreateSession(*LocalPlayer->GetPreferredUniqueNetId(), NAME_GameSession, *SessionSettings);
 }
 
-void UATLAGameInstanceSubsystem::FindATLASession(bool UseLan)
+void UATLAGameInstanceSubsystem::FindATLASession(bool UseLan, FString LobbyName)
 {
 	if (!SessionInterface.IsValid())
 	{
@@ -99,7 +100,15 @@ void UATLAGameInstanceSubsystem::FindATLASession(bool UseLan)
 	SessionSearch->QuerySettings.Set(SEARCH_MINSLOTSAVAILABLE, 0, EOnlineComparisonOp::GreaterThanEquals);
 	SessionSearch->QuerySettings.Set(SEARCH_PRESENCE, true, EOnlineComparisonOp::Equals);
 	SessionSearch->QuerySettings.Set(SEARCH_LOBBIES, true, EOnlineComparisonOp::Equals);
-	// SessionSearch->QuerySettings.Set(FName("LobbyName"), FString("MelonLord"), EOnlineComparisonOp::Equals);
+	
+	SessionSearch->QuerySettings.Set(FName("LobbyName"), LobbyName, EOnlineComparisonOp::Equals);
+
+	FString name = LobbyName;
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 100.f, FColor::Green, 
+			FString::Printf(TEXT("ATLA CREATE SESSION NAME : %s"), *LobbyName));
+	}
 
 	const ULocalPlayer* LocalPlayer = GetWorld()->GetFirstLocalPlayerFromController();
 	if (!SessionInterface->FindSessions(*LocalPlayer->GetPreferredUniqueNetId(), SessionSearch.ToSharedRef()))
@@ -248,20 +257,27 @@ void UATLAGameInstanceSubsystem::OnFindSessionComplete(bool bWasSuccessful)
 	{
 		SessionInterface->ClearOnFindSessionsCompleteDelegate_Handle(OnFindSessionCompleteDelegateHandle);
 	}
-	
-	if (GEngine)
+
+	if (bWasSuccessful)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 100.f, FColor::Yellow, 
-		FString::Printf(TEXT("SESSIONS FOUND : %d"), SessionSearch->SearchResults.Num()));
+		for (auto Result : SessionSearch->SearchResults)
+		{
+			if (GEngine)
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 100.f, FColor::Yellow, 
+				FString::Printf(TEXT("ATLA SESSIONS FOUND : %s"), *Result.Session.OwningUserName));
+			}
+			JoinATLASession(0, Result);
+
+			return;
+		}
 	}
-
-	for (auto Result : SessionSearch->SearchResults)
+	else
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 100.f, FColor::Yellow, 
-		FString::Printf(TEXT("SESSIONS FOUND : %s"), *Result.Session.OwningUserName));
-
-		// JoinATLASession(0, Result);
-
-		// return;
+		if (GEngine)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 100.f, FColor::Red, 
+			FString::Printf(TEXT("NO ATLA SESSIONS FOUND")));
+		}
 	}
 }

@@ -27,7 +27,7 @@ public:
 		FString LobbyPath = FString(TEXT("/Game/Maps/Testing/Testing_Level")));
 
 	UFUNCTION(BlueprintCallable, Category = "ATLA")
-	void FindATLASession(bool UseLan = true);
+	void FindATLASession(bool UseLan = true, FString LobbyName = FString(TEXT("")));
 
 	void JoinATLASession(int32 LocalPlayer, const FOnlineSessionSearchResult& SessionSearchResult);
 	

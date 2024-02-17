@@ -32,13 +32,13 @@ public:
 	void ServerCreateTeamHUD();
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "HUD")
-	void OpenPauseMenu();
+	void OpenPauseMenu(bool bOpenPauseMenu);
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "HUD")
 	void OpenInteractionUI(bool bOpenInteractionUI);
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "HUD")
-	void OpenPlayerMenu();
+	void OpenPlayerMenu(bool bOpenPlayerMenu);
 
 	UFUNCTION(BlueprintGetter, Category = "ATLA")
 	AATLAHUD* GetATLAHUD() { return ATLAHUD; }
