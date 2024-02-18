@@ -210,6 +210,10 @@
 		{
 			"Name": "N10XSourceCodeAccess",
 			"Enabled": false
+		},
+		{
+			"Name": "CommonUI",
+			"Enabled": true
 		}
 	],
 	"TargetPlatforms": [
