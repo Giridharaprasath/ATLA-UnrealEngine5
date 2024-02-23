@@ -22,6 +22,8 @@ Project uses both Blueprints and C++.
 
 ## Features
 
+- Gameplay Ability System
+- Common UI
 - Added Discord Rich Presence Support
   
 ![image](https://github.com/Giridharaprasath/ATLA-UnrealEngine5/assets/83279100/565e50e7-d44b-4307-8f54-9a160fd12063)
