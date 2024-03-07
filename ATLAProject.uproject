@@ -13,7 +13,8 @@
 				"UMG",
 				"GameplayAbilities",
 				"GameplayTags",
-				"DeveloperSettings"
+				"DeveloperSettings",
+				"CommonUI"
 			]
 		}
 	],

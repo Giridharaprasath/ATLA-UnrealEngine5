@@ -7,20 +7,25 @@ public class ATLAProject : ModuleRules
 	public ATLAProject(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
-		
-		// Core dependencies
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput" });
-		
-		// UMG dependencies
+
+		// * Core dependencies
+		PublicDependencyModuleNames.AddRange(new string[]
+			{ "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput" });
+
+		// * UMG dependencies
 		PublicDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore", "UMG" });
-		
-		// Online Subsystem dependencies
-		PublicDependencyModuleNames.AddRange(new string[] { "OnlineSubsystem", "OnlineSubsystemSteam", "OnlineSubsystemUtils", "Steamworks" });
-		
-		// Gameplay Ability System dependencies
+
+		// * Online Subsystem dependencies
+		PublicDependencyModuleNames.AddRange(new string[]
+			{ "OnlineSubsystem", "OnlineSubsystemSteam", "OnlineSubsystemUtils", "Steamworks" });
+
+		// * Gameplay Ability System dependencies
 		PublicDependencyModuleNames.AddRange(new string[] { "GameplayAbilities", "GameplayTags", "GameplayTasks" });
-		
-		// Discord RPC Plugin
+
+		// * Discord RPC Plugin
 		PublicDependencyModuleNames.AddRange(new string[] { "DiscordRPC" });
+
+		// * Common UI
+		PublicDependencyModuleNames.AddRange(new string[] { "CommonInput", "CommonUI" });
 	}
 }
