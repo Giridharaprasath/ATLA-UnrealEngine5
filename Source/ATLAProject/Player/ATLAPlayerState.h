@@ -57,10 +57,19 @@ public:
 	FText GetCharacterName() const;
 
 	UFUNCTION(BlueprintCallable, Category = "ATLA|Character")
+	bool GetIsCharacterSelected() const;
+
+	UFUNCTION(BlueprintCallable, Category = "ATLA|Character")
 	void SetCharacterName(FText NewCharacterName);
+
+	UFUNCTION(BlueprintCallable, Category = "ATLA|Character")
+	void SetIsCharacterSelected(bool bNewCharacterSelected);
 	
 	UFUNCTION()
 	virtual void OnRep_CharacterName(const FText OldCharacterName);
+
+	UFUNCTION()
+	virtual void OnRep_IsCharacterSelected();
 	
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
@@ -86,12 +95,15 @@ protected:
 	virtual void OnMaxHealthChanged(const FOnAttributeChangeData& Data);
 	virtual void OnStaminaChanged(const FOnAttributeChangeData& Data);
 	virtual void OnMaxStaminaChanged(const FOnAttributeChangeData& Data);
-	virtual void OnCharacterlevelChanged(const FOnAttributeChangeData& Data);
+	virtual void OnCharacterLevelChanged(const FOnAttributeChangeData& Data);
 
 	virtual void OnStunTagChanged(const FGameplayTag CallbackTag, int32 NewCount);
 
 	UPROPERTY(BlueprintReadOnly, Category = "ATLA|Character", ReplicatedUsing = OnRep_CharacterName)
 	FText CharacterName;
+
+	UPROPERTY(BlueprintReadOnly, Category = "ATLA|Character", ReplicatedUsing = OnRep_IsCharacterSelected)
+	bool bIsCharacterSelected;
 
 	// Custom Delegates
 	

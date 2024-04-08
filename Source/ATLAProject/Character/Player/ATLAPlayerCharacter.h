@@ -77,6 +77,8 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "ATLA")
 	void OnCharacterSelected();
+
+	virtual void FinishDying() override;
 	
 protected:
 

@@ -33,6 +33,19 @@ void AATLAPlayerCharacter::ClientSetUpCharacter_Implementation()
 	OnCharacterSelected();
 }
 
+void AATLAPlayerCharacter::FinishDying()
+{
+	if (!HasAuthority())
+	{
+		if (ATLAPlayerController)
+		{
+			ATLAPlayerController->OnPlayerDied();
+		}
+	}
+	
+	Super::FinishDying();
+}
+
 void AATLAPlayerCharacter::OnRep_PlayerState()
 {
 	Super::OnRep_PlayerState();
@@ -169,6 +182,7 @@ void AATLAPlayerCharacter::ServerSaveCharacterName_Implementation()
 	if (ATLAPlayerState)
 	{
 		ATLAPlayerState->SetCharacterName(GetCharacterName());
+		ATLAPlayerState->SetIsCharacterSelected(true);
 	}
 }
 

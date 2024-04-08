@@ -24,7 +24,7 @@ void AATLAPlayerState::BeginPlay()
 			CharacterAttributeSetBase->GetMaxStaminaAttribute()).AddUObject(this, &ThisClass::OnMaxStaminaChanged);
 
 		CharacterLevelChangeDelegateHandle = ATLAAbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-			CharacterAttributeSetBase->GetCharacterLevelAttribute()).AddUObject(this, &ThisClass::OnCharacterlevelChanged);
+			CharacterAttributeSetBase->GetCharacterLevelAttribute()).AddUObject(this, &ThisClass::OnCharacterLevelChanged);
 
 		ATLAAbilitySystemComponent->RegisterGameplayTagEvent(FGameplayTag::RequestGameplayTag(FName("State.Debuff.Stun")),
 			EGameplayTagEventType::NewOrRemoved).AddUObject(this, &ThisClass::OnStunTagChanged);
@@ -62,6 +62,28 @@ void AATLAPlayerState::OnRep_CharacterName(const FText OldCharacterName)
 		OnCharacterSelected.Broadcast(false);
 	}
 
+	else
+	{
+		OnCharacterSelected.Broadcast(true);
+	}
+}
+
+bool AATLAPlayerState::GetIsCharacterSelected() const
+{
+	return bIsCharacterSelected;
+}
+
+void AATLAPlayerState::SetIsCharacterSelected(bool bNewCharacterSelected)
+{
+	bIsCharacterSelected = bNewCharacterSelected;
+}
+
+void AATLAPlayerState::OnRep_IsCharacterSelected()
+{
+	if (bIsCharacterSelected)
+	{
+		OnCharacterSelected.Broadcast(false);
+	}
 	else
 	{
 		OnCharacterSelected.Broadcast(true);
@@ -133,6 +155,10 @@ void AATLAPlayerState::OnHealthChanged(const FOnAttributeChangeData& Data)
 			ATLAHUD->SetPlayerHealthBar(Health / GetMaxHealth());
 		}
 	}
+	
+	OnHealth.Broadcast(Health / GetMaxHealth());
+
+	if (!bIsCharacterSelected) return;
 
 	/*if (!IsAlive() && !ATLAAbilitySystemComponent->HasMatchingGameplayTag(DeadTag))
 	{
@@ -142,7 +168,6 @@ void AATLAPlayerState::OnHealthChanged(const FOnAttributeChangeData& Data)
 			ATLAPlayerCharacter->Die();
 		}
 	}*/
-	OnHealth.Broadcast(Health / GetMaxHealth());
 }
 
 void AATLAPlayerState::OnMaxHealthChanged(const FOnAttributeChangeData& Data)
@@ -157,7 +182,7 @@ void AATLAPlayerState::OnMaxStaminaChanged(const FOnAttributeChangeData& Data)
 {
 }
 
-void AATLAPlayerState::OnCharacterlevelChanged(const FOnAttributeChangeData& Data)
+void AATLAPlayerState::OnCharacterLevelChanged(const FOnAttributeChangeData& Data)
 {
 }
 

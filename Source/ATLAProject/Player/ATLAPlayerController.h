@@ -63,6 +63,9 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "ATLA|Discord")
 	void SetDiscordCharacter(const FText& CurrentCharacter);
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "ATLA")
+	void OnPlayerDied();
 	
 protected:
 	
