@@ -23,7 +23,7 @@ class UGameplayEffect;
 /*
  *  ATLA Character Base Class.
  */
-UCLASS()
+UCLASS(Abstract)
 class ATLAPROJECT_API AATLACharacterBase : public ACharacter, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
