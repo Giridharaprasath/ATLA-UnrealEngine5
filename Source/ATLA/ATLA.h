@@ -1,6 +1,5 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
+// Copyright Melon Studios.
 
 #pragma once
 
 #include "CoreMinimal.h"
-
