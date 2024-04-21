@@ -7,7 +7,14 @@ public class ATLA : ModuleRules
 	public ATLA(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
-	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput" });
+
+		// * Core dependencies
+		PublicDependencyModuleNames.AddRange(new[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput" });
+
+		// * Gameplay Ability System dependencies
+		PublicDependencyModuleNames.AddRange(new[] { "GameplayAbilities", "GameplayTags", "GameplayTasks" });
+		
+		// * UMG dependencies
+		PublicDependencyModuleNames.AddRange(new [] { "UMG" });
 	}
 }

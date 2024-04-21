@@ -3,31 +3,30 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Character.h"
+#include "GameFramework/PlayerState.h"
 #include "AbilitySystemInterface.h"
 
-#include "ATLACharacterBase.generated.h"
+#include "ATLAPlayerState.generated.h"
 
 class UAbilitySystemComponent;
 class UAttributeSet;
 
 /**
- * ATLA Character Base Class.
+ * ATLA Player State Base Class.
  */
-UCLASS(Abstract)
-class ATLA_API AATLACharacterBase : public ACharacter, public IAbilitySystemInterface
+UCLASS()
+class ATLA_API AATLAPlayerState : public APlayerState, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
 
 public:
-	AATLACharacterBase();
+	AATLAPlayerState();
 
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const { return AttributeSet; }
 
 protected:
-	virtual void BeginPlay() override;
-
+	
 	UPROPERTY()
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 

@@ -1,20 +1,21 @@
 // Copyright Melon Studios.
 
-#include "Character/ATLAEnemy.h"
+#include "Player/ATLAPlayerState.h"
 #include "AbilitySystem/ATLAAbilitySystemComponent.h"
 #include "AbilitySystem/ATLAAttributeSet.h"
 
-AATLAEnemy::AATLAEnemy()
+AATLAPlayerState::AATLAPlayerState()
 {
 	AbilitySystemComponent = CreateDefaultSubobject<UATLAAbilitySystemComponent>("AbilitySystemComponent");
 	AbilitySystemComponent->SetIsReplicated(true);
-	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
+	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
 
 	AttributeSet = CreateDefaultSubobject<UATLAAttributeSet>("AttributeSet");
+
+	NetUpdateFrequency = 100.f;
 }
 
-void AATLAEnemy::BeginPlay()
+UAbilitySystemComponent* AATLAPlayerState::GetAbilitySystemComponent() const
 {
-	Super::BeginPlay();
-	AbilitySystemComponent->InitAbilityActorInfo(this, this);
+	return AbilitySystemComponent;
 }

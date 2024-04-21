@@ -14,5 +14,10 @@ UCLASS()
 class ATLA_API AATLAEnemy : public AATLACharacterBase
 {
 	GENERATED_BODY()
-	
+
+public:
+	AATLAEnemy();
+
+protected:
+	virtual void BeginPlay() override;
 };

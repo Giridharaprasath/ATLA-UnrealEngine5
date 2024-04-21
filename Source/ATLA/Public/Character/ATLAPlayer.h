@@ -17,4 +17,9 @@ class ATLA_API AATLAPlayer : public AATLACharacterBase
 
 public:
 	AATLAPlayer();
+	virtual void PossessedBy(AController* NewController) override;
+	virtual void OnRep_PlayerState() override;
+
+private:
+	void InitAbilityActorInfo();
 };
