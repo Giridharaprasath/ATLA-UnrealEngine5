@@ -1,46 +1,31 @@
 // Copyright Melon Studios.
 
 #include "Actor/ATLAEffectActor.h"
-#include "AbilitySystemInterface.h"
-#include "AbilitySystem/ATLAAttributeSet.h"
-#include "Components/BoxComponent.h"
+#include "AbilitySystemBlueprintLibrary.h"
+#include "AbilitySystemComponent.h"
+#include "GameplayEffect.h"
 
 AATLAEffectActor::AATLAEffectActor()
 {
 	PrimaryActorTick.bCanEverTick = false;
 
-	DefaultSceneComponent = CreateDefaultSubobject<USceneComponent>("DefaultSceneComponent");
-	SetRootComponent(DefaultSceneComponent);
-	
-	Box = CreateDefaultSubobject<UBoxComponent>("Box");
-	Box->SetupAttachment(GetRootComponent());
-}
-
-void AATLAEffectActor::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-                                 UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
-                                 const FHitResult& SweepResult)
-{
-	//TODO: Change this to apply a Gameplay Effect. For now, using const_cast as a hack!
-	if (IAbilitySystemInterface* ASCInterface = Cast<IAbilitySystemInterface>(OtherActor))
-	{
-		const UATLAAttributeSet* ATLAAttributeSet = Cast<UATLAAttributeSet>(
-			ASCInterface->GetAbilitySystemComponent()->GetAttributeSet(UATLAAttributeSet::StaticClass()));
-
-		UATLAAttributeSet* MutableATLAAttributeSet = const_cast<UATLAAttributeSet*>(ATLAAttributeSet);
-		MutableATLAAttributeSet->SetHealth(ATLAAttributeSet->GetHealth() + 25.f);
-	}
-}
-
-void AATLAEffectActor::EndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-                                  UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
-{
-	
+	SetRootComponent(CreateDefaultSubobject<USceneComponent>("DefaultSceneComponent"));
 }
 
 void AATLAEffectActor::BeginPlay()
 {
 	Super::BeginPlay();
+}
 
-	Box->OnComponentBeginOverlap.AddDynamic(this, &ThisClass::OnOverlap);
-	Box->OnComponentEndOverlap.AddDynamic(this, &ThisClass::EndOverlap);
+void AATLAEffectActor::ApplyEffectToTarget(AActor* Target, TSubclassOf<UGameplayEffect> GameplayEffectClass)
+{
+	UAbilitySystemComponent* TargetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(Target);
+	if (TargetASC == nullptr) return;
+
+	check(GameplayEffectClass);
+	FGameplayEffectContextHandle EffectContextHandle = TargetASC->MakeEffectContext();
+	EffectContextHandle.AddSourceObject(this);
+	const FGameplayEffectSpecHandle EffectSpecHandle = TargetASC->MakeOutgoingSpec(
+		GameplayEffectClass, 1.f, EffectContextHandle);
+	TargetASC->ApplyGameplayEffectSpecToSelf(*EffectSpecHandle.Data.Get());
 }

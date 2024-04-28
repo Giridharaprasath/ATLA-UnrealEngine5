@@ -3,6 +3,8 @@
 #include "Character/ATLAPlayer.h"
 #include "AbilitySystemComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "HUD/ATLAHUD.h"
+#include "Player/ATLAPlayerController.h"
 #include "Player/ATLAPlayerState.h"
 
 AATLAPlayer::AATLAPlayer()
@@ -40,4 +42,13 @@ void AATLAPlayer::InitAbilityActorInfo()
 	ATLAPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(ATLAPlayerState, this);
 	AbilitySystemComponent = ATLAPlayerState->GetAbilitySystemComponent();
 	AttributeSet = ATLAPlayerState->GetAttributeSet();
+
+	// TODO : FIND ANOTHER METHOD TO INIT PLAYER HUD
+	if (AATLAPlayerController* ATLAPlayerController = Cast<AATLAPlayerController>(GetController()))
+	{
+		if (AATLAHUD* ATLAHUD = Cast<AATLAHUD>(ATLAPlayerController->GetHUD()))
+		{
+			ATLAHUD->InitPlayerHUD(ATLAPlayerController, ATLAPlayerState, AbilitySystemComponent, AttributeSet);
+		}
+	}
 }

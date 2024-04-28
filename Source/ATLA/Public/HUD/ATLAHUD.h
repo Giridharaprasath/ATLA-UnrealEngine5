@@ -8,6 +8,10 @@
 #include "ATLAHUD.generated.h"
 
 class UATLAUserWidget;
+class UPlayerHUDWidgetController;
+struct FWidgetController;
+class UAbilitySystemComponent;
+class UAttributeSet;
 
 /**
  * ATLA HUD Base Class.
@@ -19,12 +23,20 @@ class ATLA_API AATLAHUD : public AHUD
 
 public:
 	UPROPERTY()
-	TObjectPtr<UATLAUserWidget> OverlayWidget;
+	TObjectPtr<UATLAUserWidget> PlayerHUDWidget;
 
-protected:
-	virtual void BeginPlay() override;
+	UPlayerHUDWidgetController* GetPlayerHUDWidgetController(const FWidgetController& WidgetController);
+
+	// TODO : CALL INIT PLAYER HUD TO CREATE PLAYER HUD, CALL THIS FUNCTION AFTER SELECTING CHARACTER 
+	void InitPlayerHUD(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* ASC, UAttributeSet* AS);
 
 private:
 	UPROPERTY(EditAnywhere)
-	TSubclassOf<UATLAUserWidget> OverlayWidgetClass;
+	TSubclassOf<UATLAUserWidget> PlayerHUDWidgetClass;
+
+	UPROPERTY()
+	TObjectPtr<UPlayerHUDWidgetController> PlayerHUDWidgetController;
+	
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UPlayerHUDWidgetController> PlayerHUDWidgetControllerClass;
 };
