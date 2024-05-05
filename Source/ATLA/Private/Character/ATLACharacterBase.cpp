@@ -16,3 +16,7 @@ void AATLACharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
 }
+
+void AATLACharacterBase::InitAbilityActorInfo()
+{
+}

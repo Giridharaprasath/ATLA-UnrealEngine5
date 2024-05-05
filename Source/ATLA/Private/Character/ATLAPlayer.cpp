@@ -2,6 +2,7 @@
 
 #include "Character/ATLAPlayer.h"
 #include "AbilitySystemComponent.h"
+#include "AbilitySystem/ATLAAbilitySystemComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "HUD/ATLAHUD.h"
 #include "Player/ATLAPlayerController.h"
@@ -40,6 +41,7 @@ void AATLAPlayer::InitAbilityActorInfo()
 	check(ATLAPlayerState);
 
 	ATLAPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(ATLAPlayerState, this);
+	Cast<UATLAAbilitySystemComponent>(ATLAPlayerState->GetAbilitySystemComponent())->AbilityActorInfoSet();
 	AbilitySystemComponent = ATLAPlayerState->GetAbilitySystemComponent();
 	AttributeSet = ATLAPlayerState->GetAttributeSet();
 

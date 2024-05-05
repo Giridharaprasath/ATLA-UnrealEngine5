@@ -16,5 +16,11 @@ AATLAEnemy::AATLAEnemy()
 void AATLAEnemy::BeginPlay()
 {
 	Super::BeginPlay();
+	InitAbilityActorInfo();
+}
+
+void AATLAEnemy::InitAbilityActorInfo()
+{
 	AbilitySystemComponent->InitAbilityActorInfo(this, this);
+	Cast<UATLAAbilitySystemComponent>(AbilitySystemComponent)->AbilityActorInfoSet();
 }
