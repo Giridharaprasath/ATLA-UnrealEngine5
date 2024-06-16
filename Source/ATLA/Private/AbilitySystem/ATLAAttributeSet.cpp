@@ -7,20 +7,34 @@
 
 UATLAAttributeSet::UATLAAttributeSet()
 {
-	InitHealth(50.f);
-	InitMaxHealth(100.f);
-	InitStamina(100.f);
-	InitMaxStamina(100.f);
+	
 }
 
 void UATLAAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME_CONDITION_NOTIFY(UATLAAttributeSet, Health, COND_None, REPNOTIFY_Always);
+	// * Primary Attributes
+	DOREPLIFETIME_CONDITION_NOTIFY(UATLAAttributeSet, Strength, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UATLAAttributeSet, Intelligence, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UATLAAttributeSet, Resilience, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UATLAAttributeSet, Vigor, COND_None, REPNOTIFY_Always);
+
+	// * Secondary Attributes
+	DOREPLIFETIME_CONDITION_NOTIFY(UATLAAttributeSet, Armor, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UATLAAttributeSet, ArmorPenetration, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UATLAAttributeSet, BlockChance, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UATLAAttributeSet, CriticalHitChance, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UATLAAttributeSet, CriticalHitDamage, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UATLAAttributeSet, CriticalHitResistance, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UATLAAttributeSet, HealthRegeneration, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UATLAAttributeSet, StaminaRegeneration, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UATLAAttributeSet, MaxHealth, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(UATLAAttributeSet, Stamina, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UATLAAttributeSet, MaxStamina, COND_None, REPNOTIFY_Always);
+
+	// * Vital Attributes
+	DOREPLIFETIME_CONDITION_NOTIFY(UATLAAttributeSet, Health, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UATLAAttributeSet, Stamina, COND_None, REPNOTIFY_Always);
 }
 
 void UATLAAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue)
@@ -58,9 +72,64 @@ void UATLAAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 	}
 }
 
-void UATLAAttributeSet::OnRep_Health(const FGameplayAttributeData& OldHealth) const
+void UATLAAttributeSet::OnRep_Strength(const FGameplayAttributeData& OldStrength) const
 {
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UATLAAttributeSet, Health, OldHealth);
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UATLAAttributeSet, Strength, OldStrength);
+}
+
+void UATLAAttributeSet::OnRep_Intelligence(const FGameplayAttributeData& OldIntelligence) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UATLAAttributeSet, Intelligence, OldIntelligence);
+}
+
+void UATLAAttributeSet::OnRep_Vigor(const FGameplayAttributeData& OldVigor) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UATLAAttributeSet, Vigor, OldVigor);
+}
+
+void UATLAAttributeSet::OnRep_Resilience(const FGameplayAttributeData& OldResilience) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UATLAAttributeSet, Resilience, OldResilience);
+}
+
+void UATLAAttributeSet::OnRep_Armor(const FGameplayAttributeData& OldArmor) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UATLAAttributeSet, Armor, OldArmor);
+}
+
+void UATLAAttributeSet::OnRep_ArmorPenetration(const FGameplayAttributeData& OldArmorPenetration) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UATLAAttributeSet, ArmorPenetration, OldArmorPenetration);
+}
+
+void UATLAAttributeSet::OnRep_BlockChance(const FGameplayAttributeData& OldBlockChance) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UATLAAttributeSet, BlockChance, OldBlockChance);
+}
+
+void UATLAAttributeSet::OnRep_CriticalHitChance(const FGameplayAttributeData& OldCriticalHitChance) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UATLAAttributeSet, CriticalHitChance, OldCriticalHitChance);
+}
+
+void UATLAAttributeSet::OnRep_CriticalHitDamage(const FGameplayAttributeData& OldCriticalHitDamage) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UATLAAttributeSet, CriticalHitDamage, OldCriticalHitDamage);
+}
+
+void UATLAAttributeSet::OnRep_CriticalHitResistance(const FGameplayAttributeData& OldCriticalHitResistance) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UATLAAttributeSet, CriticalHitResistance, OldCriticalHitResistance);
+}
+
+void UATLAAttributeSet::OnRep_HealthRegeneration(const FGameplayAttributeData& OldHealthRegeneration) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UATLAAttributeSet, HealthRegeneration, OldHealthRegeneration);
+}
+
+void UATLAAttributeSet::OnRep_StaminaRegeneration(const FGameplayAttributeData& OldStaminaRegeneration) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UATLAAttributeSet, StaminaRegeneration, OldStaminaRegeneration);
 }
 
 void UATLAAttributeSet::OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth) const
@@ -68,14 +137,19 @@ void UATLAAttributeSet::OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHeal
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UATLAAttributeSet, MaxHealth, OldMaxHealth);
 }
 
-void UATLAAttributeSet::OnRep_Stamina(const FGameplayAttributeData& OldStamina) const
-{
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UATLAAttributeSet, Stamina, OldStamina);
-}
-
 void UATLAAttributeSet::OnRep_MaxStamina(const FGameplayAttributeData& OldMaxStamina) const
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UATLAAttributeSet, MaxStamina, OldMaxStamina);
+}
+
+void UATLAAttributeSet::OnRep_Health(const FGameplayAttributeData& OldHealth) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UATLAAttributeSet, Health, OldHealth);
+}
+
+void UATLAAttributeSet::OnRep_Stamina(const FGameplayAttributeData& OldStamina) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UATLAAttributeSet, Stamina, OldStamina);
 }
 
 void UATLAAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props) const

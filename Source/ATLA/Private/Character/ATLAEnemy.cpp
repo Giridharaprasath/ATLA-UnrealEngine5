@@ -13,6 +13,11 @@ AATLAEnemy::AATLAEnemy()
 	AttributeSet = CreateDefaultSubobject<UATLAAttributeSet>("AttributeSet");
 }
 
+int32 AATLAEnemy::GetPlayerLevel()
+{
+	return Level;
+}
+
 void AATLAEnemy::BeginPlay()
 {
 	Super::BeginPlay();

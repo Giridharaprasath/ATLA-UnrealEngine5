@@ -35,6 +35,14 @@ void AATLAPlayer::OnRep_PlayerState()
 	InitAbilityActorInfo();
 }
 
+int32 AATLAPlayer::GetPlayerLevel()
+{
+	AATLAPlayerState* ATLAPlayerState = GetPlayerState<AATLAPlayerState>();
+	check(ATLAPlayerState);
+	
+	return ATLAPlayerState->GetPlayerLevel();
+}
+
 void AATLAPlayer::InitAbilityActorInfo()
 {
 	AATLAPlayerState* ATLAPlayerState = GetPlayerState<AATLAPlayerState>();
@@ -53,4 +61,6 @@ void AATLAPlayer::InitAbilityActorInfo()
 			ATLAHUD->InitPlayerHUD(ATLAPlayerController, ATLAPlayerState, AbilitySystemComponent, AttributeSet);
 		}
 	}
+
+	InitializeDefaultAttributes();
 }
