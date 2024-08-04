@@ -49,6 +49,8 @@ class ATLA_API UATLAWidgetController : public UObject
 public:
 	UFUNCTION(BlueprintCallable)
 	void SetWidgetController(const FWidgetController& WidgetController);
+
+	UFUNCTION(BlueprintCallable)
 	virtual void BroadcastInitialValues();
 	virtual void BindCallbacksToDependencies();
 

@@ -3,6 +3,7 @@
 #include "HUD/ATLAHUD.h"
 #include "UI/Widget/ATLAUserWidget.h"
 #include "UI/WidgetController/PlayerHUDWidgetController.h"
+#include "UI/WidgetController/AttributeMenuWidgetController.h"
 
 UPlayerHUDWidgetController* AATLAHUD::GetPlayerHUDWidgetController(const FWidgetController& WidgetController)
 {
@@ -11,11 +12,21 @@ UPlayerHUDWidgetController* AATLAHUD::GetPlayerHUDWidgetController(const FWidget
 		PlayerHUDWidgetController = NewObject<UPlayerHUDWidgetController>(this, PlayerHUDWidgetControllerClass);
 		PlayerHUDWidgetController->SetWidgetController(WidgetController);
 		PlayerHUDWidgetController->BindCallbacksToDependencies();
- 
-		return PlayerHUDWidgetController;
 	}
 
 	return PlayerHUDWidgetController;
+}
+
+UAttributeMenuWidgetController* AATLAHUD::GetAttributeMenuWidgetController(const FWidgetController& WidgetController)
+{
+	if (AttributeMenuWidgetController == nullptr)
+	{
+		AttributeMenuWidgetController = NewObject<UAttributeMenuWidgetController>(this, AttributeMenuWidgetControllerClass);
+		AttributeMenuWidgetController->SetWidgetController(WidgetController);
+		AttributeMenuWidgetController->BindCallbacksToDependencies();
+	}
+
+	return AttributeMenuWidgetController;
 }
 
 void AATLAHUD::InitPlayerHUD(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* ASC, UAttributeSet* AS)

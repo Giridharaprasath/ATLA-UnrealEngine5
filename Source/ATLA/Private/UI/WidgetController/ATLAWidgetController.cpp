@@ -1,6 +1,5 @@
 // Copyright Melon Studios.
 
-
 #include "UI/WidgetController/ATLAWidgetController.h"
 
 void UATLAWidgetController::SetWidgetController(const FWidgetController& WidgetController)
@@ -13,10 +12,8 @@ void UATLAWidgetController::SetWidgetController(const FWidgetController& WidgetC
 
 void UATLAWidgetController::BroadcastInitialValues()
 {
-	
 }
 
 void UATLAWidgetController::BindCallbacksToDependencies()
 {
-	
 }
