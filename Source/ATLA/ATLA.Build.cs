@@ -16,5 +16,8 @@ public class ATLA : ModuleRules
 		
 		// * UMG dependencies
 		PublicDependencyModuleNames.AddRange(new [] { "UMG" });
+		
+		// * Discord dependencies - Discord Game SDK Plugin
+		PublicDependencyModuleNames.AddRange(new string[] { "DiscordGameSDK" });
 	}
 }
