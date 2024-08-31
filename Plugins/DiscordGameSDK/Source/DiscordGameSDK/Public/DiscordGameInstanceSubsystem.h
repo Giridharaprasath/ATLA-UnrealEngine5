@@ -10,6 +10,47 @@
 
 #include "DiscordGameInstanceSubsystem.generated.h"
 
+USTRUCT(BlueprintType)
+struct FDiscordActivity
+{
+	GENERATED_BODY()
+
+	FDiscordActivity()
+	{
+		State = "";
+		Details = "";
+		LargeImage = "";
+		LargeText = "";
+		SmallImage = "";
+		SmallText = "";
+		PartyID = "";
+		PartyCurrentSize = 0;
+		PartyMaxSize = 0;
+		Join = "";
+	}
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Discord")
+	FString State;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Discord")
+	FString Details;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Discord")
+	FString LargeImage;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Discord")
+	FString LargeText;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Discord")
+	FString SmallImage;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Discord")
+	FString SmallText;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Discord")
+	FString PartyID;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Discord")
+	int32 PartyCurrentSize;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Discord")
+	int32 PartyMaxSize;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Discord")
+	FString Join;
+};
+
 /**
  *	Discord Game Instance Subsystem Class.
  */
@@ -28,8 +69,6 @@ public:
 	//~End of USubsystem interface
 
 	bool IsDiscordSDKLoaded() const { return DiscordGameSDKModule && DiscordGameSDKModule->IsDiscordSDKLoaded(); }
-
-	UFUNCTION(BlueprintCallable)
 	bool IsDiscordRunning() const { return DiscordCorePtr != nullptr; }
 
 	FORCEINLINE_DEBUGGABLE discord::Core& DiscordCore() const
@@ -38,40 +77,8 @@ public:
 		return *DiscordCorePtr;
 	}
 
-	UFUNCTION(BlueprintCallable, Category = "Discord|Set")
-	void UpdateActivityState(const FString& NewState, const bool bUpdateNow = false);
-
-	UFUNCTION(BlueprintCallable, Category = "Discord|Set")
-	void UpdateActivityDetails(const FString& NewDetails, const bool bUpdateNow = false);
-
-	UFUNCTION(BlueprintCallable, Category = "Discord|Set")
-	void UpdateActivityAssetLargeImage(const FString& NewLargeImage, const bool bUpdateNow = false);
-
-	UFUNCTION(BlueprintCallable, Category = "Discord|Set")
-	void UpdateActivityAssetLargeText(const FString& NewLargeText, const bool bUpdateNow = false);
-	
-	UFUNCTION(BlueprintCallable, Category = "Discord|Set")
-	void UpdateActivityAssetSmallImage(const FString& NewSmallImage, const bool bUpdateNow = false);
-
-	UFUNCTION(BlueprintCallable, Category = "Discord|Set")
-	void UpdateActivityAssetSmallText(const FString& NewSmallText, const bool bUpdateNow = false);
-
-	UFUNCTION(BlueprintCallable, Category = "Discord|Set")
-	void UpdateActivityPartyID(const FString& NewPartyID, const bool bUpdateNow = false);
-
-	UFUNCTION(BlueprintCallable, Category = "Discord|Set")
-	void UpdateActivityPartyCurrentSize(int NewPartySize, const bool bUpdateNow = false);
-
-	UFUNCTION(BlueprintCallable, Category = "Discord|Set")
-	void UpdateActivityPartyMaxSize(int NewPartyMaxSize, const bool bUpdateNow = false);
-
-	UFUNCTION(BlueprintCallable, Category = "Discord|Set")
-	void UpdateActivitySecretJoin(const FString& NewSecretJoin, const bool bUpdateNow = false);
-
-	UFUNCTION(BlueprintCallable, Category = "Discord|Set")
-	void ResetActivity(const bool bUpdateNow = false);
-
-	UFUNCTION(BlueprintCallable, Category = "Discord")
+	void SetActivity(const FDiscordActivity& Activity);
+	void ResetActivity();
 	void ClearActivity();
 
 protected:

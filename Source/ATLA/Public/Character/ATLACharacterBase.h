@@ -12,6 +12,7 @@
 class UAbilitySystemComponent;
 class UAttributeSet;
 class UGameplayEffect;
+class UGameplayAbility;
 
 /**
  * ATLA Character Base Class.
@@ -46,7 +47,13 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "ATLA|Attributes")
 	TSubclassOf<UGameplayEffect> DefaultVitalAttributes;
-	
+
 	void ApplyEffectToSelf(TSubclassOf<UGameplayEffect> GameplayEffectClass, float Level) const;
 	void InitializeDefaultAttributes() const;
+
+	void AddCharacterAbilities();
+
+private:
+	UPROPERTY(EditAnywhere, Category = "ATLA|Abilities")
+	TArray<TSubclassOf<UGameplayAbility>> StartupAbilities;
 };

@@ -9,6 +9,7 @@
 
 class UPlayerHUDWidgetController;
 class UAttributeMenuWidgetController;
+
 /**
  *	ATLA Ability System Blueprint Library Class.
  */
@@ -18,10 +19,11 @@ class ATLA_API UATLAAbilitySystemLibrary : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
-	
-	UFUNCTION(BlueprintPure, Category = "ATLA|Ability System|Widget Controller")
+	UFUNCTION(BlueprintPure, Category = "ATLA|Ability System|Widget Controller",
+		meta = ( WorldContext = "WorldContextObject" ))
 	static UPlayerHUDWidgetController* GetPlayerHUDWidgetController(const UObject* WorldContextObject);
-	
-	UFUNCTION(BlueprintPure, Category = "ATLA|Ability System|Widget Controller")
+
+	UFUNCTION(BlueprintPure, Category = "ATLA|Ability System|Widget Controller",
+		meta = ( WorldContext = "WorldContextObject" ))
 	static UAttributeMenuWidgetController* GetAttributeMenuWidgetController(const UObject* WorldContextObject);
 };

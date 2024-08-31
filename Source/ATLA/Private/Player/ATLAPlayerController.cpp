@@ -2,10 +2,21 @@
 
 #include "Player/ATLAPlayerController.h"
 #include "EnhancedInputSubsystems.h"
+#include "ATLA/ATLA.h"
 
 AATLAPlayerController::AATLAPlayerController()
 {
 	bReplicates = true;
+}
+
+void AATLAPlayerController::OnPlayerJoined_Implementation()
+{
+	UE_LOG(LogATLA, Display, TEXT("New Player Joined"));
+}
+
+void AATLAPlayerController::OnPlayerLeft_Implementation()
+{
+	UE_LOG(LogATLA, Display, TEXT("A Player Left"));
 }
 
 void AATLAPlayerController::BeginPlay()

@@ -2,6 +2,7 @@
 
 #include "Character/ATLACharacterBase.h"
 #include "AbilitySystemComponent.h"
+#include "AbilitySystem/ATLAAbilitySystemComponent.h"
 
 AATLACharacterBase::AATLACharacterBase()
 {
@@ -39,4 +40,12 @@ void AATLACharacterBase::InitializeDefaultAttributes() const
 	ApplyEffectToSelf(DefaultPrimaryAttributes, 1.f);
 	ApplyEffectToSelf(DefaultSecondaryAttributes, 1.f);
 	ApplyEffectToSelf(DefaultVitalAttributes, 1.f);
+}
+
+void AATLACharacterBase::AddCharacterAbilities()
+{
+	UATLAAbilitySystemComponent* ATLAASC = CastChecked<UATLAAbilitySystemComponent>(AbilitySystemComponent);
+	if (!HasAuthority()) return;
+
+	ATLAASC->AddCharacterAbilities(StartupAbilities);
 }

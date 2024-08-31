@@ -40,117 +40,50 @@ void UDiscordGameInstanceSubsystem::Deinitialize()
 	Super::Deinitialize();
 }
 
-void UDiscordGameInstanceSubsystem::UpdateActivityState(const FString& CurrentState, const bool bUpdateNow)
+void UDiscordGameInstanceSubsystem::SetActivity(const FDiscordActivity& Activity)
 {
 	if (IsDiscordRunning())
 	{
-		CurrentActivity.SetState(TCHAR_TO_ANSI(*CurrentState));
+		discord::ActivityAssets& Assets = CurrentActivity.GetAssets();
+		discord::ActivityParty& Party = CurrentActivity.GetParty();
+		discord::PartySize& PartySize = Party.GetSize();
+		discord::ActivitySecrets& Secrets = CurrentActivity.GetSecrets();
 
-		if (bUpdateNow)
-			UpdateActivity();
+		if (!Activity.State.IsEmpty())
+			CurrentActivity.SetState(TCHAR_TO_ANSI(*Activity.State));
+
+		if (!Activity.Details.IsEmpty())
+			CurrentActivity.SetDetails(TCHAR_TO_ANSI(*Activity.Details));
+
+		if (!Activity.LargeImage.IsEmpty())
+			Assets.SetLargeImage(TCHAR_TO_ANSI(*Activity.LargeImage));
+
+		if (!Activity.LargeText.IsEmpty())
+			Assets.SetLargeText(TCHAR_TO_ANSI(*Activity.LargeText));
+
+		if (!Activity.SmallImage.IsEmpty())
+			Assets.SetSmallImage(TCHAR_TO_ANSI(*Activity.SmallImage));
+
+		if (!Activity.SmallText.IsEmpty())
+			Assets.SetSmallText(TCHAR_TO_ANSI(*Activity.SmallText));
+
+		if (!Activity.PartyID.IsEmpty())
+			Party.SetId(TCHAR_TO_ANSI(*Activity.PartyID));
+
+		if (PartySize.GetCurrentSize() != Activity.PartyCurrentSize)
+			PartySize.SetCurrentSize(Activity.PartyCurrentSize);
+
+		if (PartySize.GetMaxSize() != Activity.PartyMaxSize)
+			PartySize.SetMaxSize(Activity.PartyMaxSize);
+
+		if (!Activity.Join.IsEmpty())
+			Secrets.SetJoin(TCHAR_TO_ANSI(*Activity.Join));
+		
+		UpdateActivity();
 	}
 }
 
-void UDiscordGameInstanceSubsystem::UpdateActivityDetails(const FString& NewDetails, const bool bUpdateNow)
-{
-	if (IsDiscordRunning())
-	{
-		CurrentActivity.SetDetails(TCHAR_TO_ANSI(*NewDetails));
-
-		if (bUpdateNow)
-			UpdateActivity();
-	}
-}
-
-void UDiscordGameInstanceSubsystem::UpdateActivityAssetLargeImage(const FString& NewLargeImage, const bool bUpdateNow)
-{
-	if (IsDiscordRunning())
-	{
-		CurrentActivity.GetAssets().SetLargeImage(TCHAR_TO_ANSI(*NewLargeImage));
-
-		if (bUpdateNow)
-			UpdateActivity();
-	}
-}
-
-void UDiscordGameInstanceSubsystem::UpdateActivityAssetLargeText(const FString& NewLargeText, const bool bUpdateNow)
-{
-	if (IsDiscordRunning())
-	{
-		CurrentActivity.GetAssets().SetLargeText(TCHAR_TO_ANSI(*NewLargeText));
-
-		if (bUpdateNow)
-			UpdateActivity();
-	}
-}
-
-void UDiscordGameInstanceSubsystem::UpdateActivityAssetSmallImage(const FString& NewSmallImage, const bool bUpdateNow)
-{
-	if (IsDiscordRunning())
-	{
-		CurrentActivity.GetAssets().SetSmallImage(TCHAR_TO_ANSI(*NewSmallImage));
-
-		if (bUpdateNow)
-			UpdateActivity();
-	}
-}
-
-void UDiscordGameInstanceSubsystem::UpdateActivityAssetSmallText(const FString& NewSmallText, const bool bUpdateNow)
-{
-	if (IsDiscordRunning())
-	{
-		CurrentActivity.GetAssets().SetSmallText(TCHAR_TO_ANSI(*NewSmallText));
-
-		if (bUpdateNow)
-			UpdateActivity();
-	}
-}
-
-void UDiscordGameInstanceSubsystem::UpdateActivityPartyID(const FString& NewPartyID, const bool bUpdateNow)
-{
-	if (IsDiscordRunning())
-	{
-		CurrentActivity.GetParty().SetId(TCHAR_TO_ANSI(*NewPartyID));
-
-		if (bUpdateNow)
-			UpdateActivity();
-	}
-}
-
-void UDiscordGameInstanceSubsystem::UpdateActivityPartyCurrentSize(int NewPartySize, const bool bUpdateNow)
-{
-	if (IsDiscordRunning())
-	{
-		CurrentActivity.GetParty().GetSize().SetCurrentSize(NewPartySize);
-
-		if (bUpdateNow)
-			UpdateActivity();
-	}
-}
-
-void UDiscordGameInstanceSubsystem::UpdateActivityPartyMaxSize(int NewPartyMaxSize, const bool bUpdateNow)
-{
-	if (IsDiscordRunning())
-	{
-		CurrentActivity.GetParty().GetSize().SetMaxSize(NewPartyMaxSize);
-
-		if (bUpdateNow)
-			UpdateActivity();
-	}
-}
-
-void UDiscordGameInstanceSubsystem::UpdateActivitySecretJoin(const FString& NewSecretJoin, const bool bUpdateNow)
-{
-	if (IsDiscordRunning())
-	{
-		CurrentActivity.GetSecrets().SetJoin(TCHAR_TO_ANSI(*NewSecretJoin));
-
-		if (bUpdateNow)
-			UpdateActivity();
-	}
-}
-
-void UDiscordGameInstanceSubsystem::ResetActivity(const bool bUpdateNow)
+void UDiscordGameInstanceSubsystem::ResetActivity()
 {
 	if (IsDiscordRunning())
 	{
@@ -171,8 +104,7 @@ void UDiscordGameInstanceSubsystem::ResetActivity(const bool bUpdateNow)
 		discord::ActivitySecrets& Secrets = CurrentActivity.GetSecrets();
 		Secrets.SetJoin("");
 
-		if (bUpdateNow)
-			UpdateActivity();
+		UpdateActivity();
 	}
 }
 
@@ -324,8 +256,7 @@ bool UDiscordGameInstanceSubsystem::Tick(float DeltaTime)
 {
 	if (IsDiscordRunning())
 	{
-		const discord::Result Result = DiscordCorePtr->RunCallbacks();
-		switch (Result)
+		switch (const discord::Result Result = DiscordCorePtr->RunCallbacks())
 		{
 		case discord::Result::Ok:
 			// The expected result; Discord is functioning normally

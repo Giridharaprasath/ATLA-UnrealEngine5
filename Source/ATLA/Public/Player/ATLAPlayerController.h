@@ -20,6 +20,12 @@ class ATLA_API AATLAPlayerController : public APlayerController
 public:
 	AATLAPlayerController();
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ATLA|Player")
+	void OnPlayerJoined();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ATLA|Player")
+	void OnPlayerLeft();
+
 protected:
 	virtual void BeginPlay() override;
 
