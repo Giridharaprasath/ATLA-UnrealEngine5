@@ -36,6 +36,9 @@ public:
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ATLA|HUD")
 	void OpenPauseMenu();
+	
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ATLA|HUD")
+	void OpenCharacterSelectUIWidget();
 
 protected:
 	virtual void BeginPlay() override;
@@ -73,5 +76,8 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "ATLA|HUD|Pause Menu")
 	TSubclassOf<UATLACommonActivatableWidget> PauseMenuWidget;
+
+	UPROPERTY(EditAnywhere, Category = "ATLA|HUD|Character Select")
+	TSubclassOf<UATLACommonActivatableWidget> CharacterSelectWidget;
 	
 };

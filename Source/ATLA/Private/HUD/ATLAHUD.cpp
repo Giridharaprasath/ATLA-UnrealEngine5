@@ -55,11 +55,19 @@ void AATLAHUD::OpenPauseMenu_Implementation()
 	PlayerUIWidgetBase->PushToMenuUIStack(PauseMenuWidget);
 }
 
+void AATLAHUD::OpenCharacterSelectUIWidget_Implementation()
+{
+	checkf(CharacterSelectWidget, TEXT("Character Select Widget Not Set in BP_HUD_ATLA"));
+
+	PlayerUIWidgetBase->PushToMenuUIStack(CharacterSelectWidget);
+}
+
 void AATLAHUD::BeginPlay()
 {
 	Super::BeginPlay();
 
 	CreatePlayerUIBaseWidget();
+	OpenCharacterSelectUIWidget();
 }
 
 void AATLAHUD::CreatePlayerUIBaseWidget_Implementation()
