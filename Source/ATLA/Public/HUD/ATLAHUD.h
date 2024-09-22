@@ -32,6 +32,17 @@ public:
 	// TODO : CALL INIT PLAYER HUD TO CREATE PLAYER HUD, CALL THIS FUNCTION AFTER SELECTING CHARACTER 
 	void InitPlayerHUD(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* ASC, UAttributeSet* AS);
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ATLA|HUD")
+	void OpenPauseMenu();
+
+protected:
+	UFUNCTION(BlueprintPure, Category = "ATLA|HUD|Debug")
+	FString GetGameName();
+	UFUNCTION(BlueprintPure, Category = "ATLA|HUD|Debug")
+	FString GetGameVersion();
+	UFUNCTION(BlueprintPure, Category = "ATLA|HUD|Debug")
+	FString GetCompanyName();
+
 private:
 	
 	UPROPERTY()
@@ -47,4 +58,5 @@ private:
 	TObjectPtr<UAttributeMenuWidgetController> AttributeMenuWidgetController;
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UAttributeMenuWidgetController> AttributeMenuWidgetControllerClass;
+
 };

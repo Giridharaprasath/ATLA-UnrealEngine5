@@ -7,6 +7,8 @@
 
 #include "ATLAPlayerController.generated.h"
 
+class AATLAHUD;
+class AATLAPlayerState;
 class UInputMappingContext;
 
 /**
@@ -26,10 +28,27 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ATLA|Player")
 	void OnPlayerLeft();
 
+	UFUNCTION(BlueprintGetter, Category = "ATLA")
+	AATLAHUD* GetATLAHUD() { return ATLAHUD; }
+
+	UFUNCTION(BlueprintGetter, Category = "ATLA")
+	AATLAPlayerState* GetATLAPlayerState() { return ATLAPlayerState; }
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ATLA|HUD")
+	void OpenPauseMenu();
+
 protected:
 	virtual void BeginPlay() override;
 
+	UPROPERTY(BlueprintGetter = GetATLAHUD, VisibleInstanceOnly, Category = "ATLA")
+	AATLAHUD* ATLAHUD;
+
+	UPROPERTY(BlueprintGetter = GetATLAPlayerState, VisibleInstanceOnly, Category = "ATLA")
+	AATLAPlayerState* ATLAPlayerState;
+
 private:
+	UPROPERTY(EditAnywhere, Category = "ATLA|Controls")
+	TObjectPtr<UInputMappingContext> UIGenericControls;
 	UPROPERTY(EditAnywhere, Category = "ATLA|Controls")
 	TObjectPtr<UInputMappingContext> ATLAPlayerControls;
 };
