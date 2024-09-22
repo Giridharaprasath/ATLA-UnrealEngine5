@@ -8,6 +8,8 @@
 
 #include "ATLAHUD.generated.h"
 
+class UATLACommonActivatableWidget;
+class UATLACommonUserWidget;
 class UATLAUserWidget;
 class UPlayerHUDWidgetController;
 class UAttributeMenuWidgetController;
@@ -36,6 +38,11 @@ public:
 	void OpenPauseMenu();
 
 protected:
+	virtual void BeginPlay() override;
+
+	UFUNCTION(BlueprintNativeEvent, Category = "ATLA|HUD")
+	void CreatePlayerUIBaseWidget();
+	
 	UFUNCTION(BlueprintPure, Category = "ATLA|HUD|Debug")
 	FString GetGameName();
 	UFUNCTION(BlueprintPure, Category = "ATLA|HUD|Debug")
@@ -47,16 +54,24 @@ private:
 	
 	UPROPERTY()
 	TObjectPtr<UATLAUserWidget> PlayerHUDWidget;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "ATLA|HUD")
 	TSubclassOf<UATLAUserWidget> PlayerHUDWidgetClass;
 	UPROPERTY()
 	TObjectPtr<UPlayerHUDWidgetController> PlayerHUDWidgetController;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "ATLA|HUD")
 	TSubclassOf<UPlayerHUDWidgetController> PlayerHUDWidgetControllerClass;
 
 	UPROPERTY()
 	TObjectPtr<UAttributeMenuWidgetController> AttributeMenuWidgetController;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "ATLA|HUD")
 	TSubclassOf<UAttributeMenuWidgetController> AttributeMenuWidgetControllerClass;
 
+	UPROPERTY()
+	TObjectPtr<UATLACommonUserWidget> PlayerUIWidgetBase;
+	UPROPERTY(EditAnywhere, Category = "ATLA|HUD")
+	TSubclassOf<UATLACommonUserWidget> PlayerUIWidgetBaseClass;
+
+	UPROPERTY(EditAnywhere, Category = "ATLA|HUD|Pause Menu")
+	TSubclassOf<UATLACommonActivatableWidget> PauseMenuWidget;
+	
 };

@@ -1,7 +1,9 @@
 // Copyright Melon Studios.
 
 #include "HUD/ATLAHUD.h"
+#include "UI/Widget/ATLACommonActivatableWidget.h"
 #include "UI/Widget/ATLAUserWidget.h"
+#include "UI/Widget/ATLACommonUserWidget.h"
 #include "UI/WidgetController/PlayerHUDWidgetController.h"
 #include "UI/WidgetController/AttributeMenuWidgetController.h"
 
@@ -48,6 +50,26 @@ void AATLAHUD::InitPlayerHUD(APlayerController* PC, APlayerState* PS, UAbilitySy
 
 void AATLAHUD::OpenPauseMenu_Implementation()
 {
+	checkf(PauseMenuWidget, TEXT("Pause Menu Widget Not Set in BP_HUD_ATLA"));
+	
+	PlayerUIWidgetBase->PushToMenuUIStack(PauseMenuWidget);
+}
+
+void AATLAHUD::BeginPlay()
+{
+	Super::BeginPlay();
+
+	CreatePlayerUIBaseWidget();
+}
+
+void AATLAHUD::CreatePlayerUIBaseWidget_Implementation()
+{
+	checkf(PlayerUIWidgetBaseClass, TEXT("Player UI Widget Base Class Not Set in BP_HUD_ATLA"));
+
+	UCommonUserWidget* CommonUserWidget = CreateWidget<UCommonUserWidget>(GetWorld(), PlayerUIWidgetBaseClass);
+	PlayerUIWidgetBase = Cast<UATLACommonUserWidget>(CommonUserWidget);
+
+	CommonUserWidget->AddToViewport();
 }
 
 FString AATLAHUD::GetGameName()
