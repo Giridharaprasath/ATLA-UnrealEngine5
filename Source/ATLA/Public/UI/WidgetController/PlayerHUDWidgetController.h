@@ -7,6 +7,8 @@
 
 #include "PlayerHUDWidgetController.generated.h"
 
+class UATLAUserWidget;
+
 USTRUCT(BlueprintType)
 struct FUIWidgetRow : public FTableRowBase
 {
@@ -19,10 +21,8 @@ struct FUIWidgetRow : public FTableRowBase
 	FText Message = FText();
 	
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
-	TSubclassOf<class UATLAUserWidget> MessageWidget;
+	TSubclassOf<UATLAUserWidget> MessageWidget;
 };
-
-class UATLAUserWidget;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributeChangedSignature, float, NewValue);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMessageWidgetRowSignature, FUIWidgetRow, Row);

@@ -1,7 +1,6 @@
 // Copyright Melon Studios.
 
 #include "UI/WidgetController/PlayerHUDWidgetController.h"
-
 #include "AbilitySystem/ATLAAbilitySystemComponent.h"
 #include "AbilitySystem/ATLAAttributeSet.h"
 

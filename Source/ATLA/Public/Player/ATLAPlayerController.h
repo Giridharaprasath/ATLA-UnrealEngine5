@@ -37,6 +37,9 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ATLA|HUD")
 	void OpenPauseMenu();
 
+	UFUNCTION(Client, Reliable, BlueprintCallable, Category = "ATLA|Character")
+	void ClientSpawnSelectedPlayer(int32 PlayerIndex);
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -47,6 +50,10 @@ protected:
 	AATLAPlayerState* ATLAPlayerState;
 
 private:
+
+	UFUNCTION(Server, Reliable)
+	void ServerSpawnSelectedPlayer(int32 PlayerIndex);
+	
 	UPROPERTY(EditAnywhere, Category = "ATLA|Controls")
 	TObjectPtr<UInputMappingContext> UIGenericControls;
 	UPROPERTY(EditAnywhere, Category = "ATLA|Controls")
