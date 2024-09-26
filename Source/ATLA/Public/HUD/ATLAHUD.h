@@ -71,7 +71,7 @@ private:
 
 	UPROPERTY()
 	TObjectPtr<UATLACommonUserWidget> PlayerUIWidgetBase;
-	UPROPERTY(EditAnywhere, Category = "ATLA|HUD")
+	UPROPERTY(EditAnywhere, Category = "ATLA|HUD|UI Base")
 	TSubclassOf<UATLACommonUserWidget> PlayerUIWidgetBaseClass;
 
 	UPROPERTY(EditAnywhere, Category = "ATLA|HUD|Pause Menu")

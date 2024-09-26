@@ -30,16 +30,16 @@ void AATLAPlayerController::OpenPauseMenu_Implementation()
 	GetATLAHUD()->OpenPauseMenu();
 }
 
-void AATLAPlayerController::ClientSpawnSelectedPlayer_Implementation(const int32 PlayerIndex)
+void AATLAPlayerController::ClientSpawnSelectedPlayer_Implementation(const FName CharacterName)
 {
 	if (!IsLocalPlayerController())
 	{
 		return;
 	}
 
-	UE_LOG(LogATLA, Display, TEXT("PC : On Client Spawn Selected Player Character Index: %d"), PlayerIndex);
+	UE_LOG(LogATLA, Display, TEXT("PC : On Client Spawn Selected Player Character Name: %s"), *CharacterName.ToString());
 
-	ServerSpawnSelectedPlayer(PlayerIndex);
+	ServerSpawnSelectedPlayer(CharacterName);
 }
 
 void AATLAPlayerController::BeginPlay()
@@ -71,12 +71,12 @@ void AATLAPlayerController::BeginPlay()
 	SetInputMode(InputModeData);
 }
 
-void AATLAPlayerController::ServerSpawnSelectedPlayer_Implementation(int32 PlayerIndex)
+void AATLAPlayerController::ServerSpawnSelectedPlayer_Implementation(const FName CharacterName)
 {
-	UE_LOG(LogATLA, Display, TEXT("PC : On Server Spawn Selected Player Character Index: %d"), PlayerIndex);
+	UE_LOG(LogATLA, Display, TEXT("PC : On Server Spawn Selected Player Character Name: %s"), *CharacterName.ToString());
 
 	if (AATLAGameMode* ATLAGameMode = Cast<AATLAGameMode>(UGameplayStatics::GetGameMode(GetWorld())))
 	{
-		ATLAGameMode->SpawnSelectedCharacter(this, PlayerIndex);
+		ATLAGameMode->SpawnSelectedCharacter(this, CharacterName);
 	}
 }

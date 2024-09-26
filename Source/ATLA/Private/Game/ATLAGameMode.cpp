@@ -4,29 +4,29 @@
 #include "ATLA/ATLA.h"
 #include "Character/ATLAPlayer.h"
 #include "Player/ATLAPlayerController.h"
+#include "ATLABlueprintFunctionLibrary.h"
 
 void AATLAGameMode::SpawnSelectedCharacter_Implementation(AATLAPlayerController* ATLAPlayerController,
-                                                          int32 PlayerIndex)
+                                                          const FName CharacterName)
 {
-	UE_LOG(LogATLA, Display, TEXT("GM : On Spawn Selected Character Index: %i For %s"), PlayerIndex,
+	UE_LOG(LogATLA, Display, TEXT("GM : On Spawn Selected Character Name: %s For %s"), *CharacterName.ToString(),
 	       *ATLAPlayerController->GetName());
 
 	if (APawn* Pawn = ATLAPlayerController->GetPawn(); Pawn != nullptr)
 	{
 		Pawn->Destroy();
 	}
-	
-	if (const FATLACharacters* Row = GetDataTableRowByName<FATLACharacters>(CharacterDataTable, FName(*FString::FromInt(PlayerIndex)));
-		Row != nullptr)
-	{
-		FActorSpawnParameters PlayerSpawnParameters;
-		PlayerSpawnParameters.Owner = ATLAPlayerController;
 
-		const AActor* PlayerStart = FindPlayerStart(ATLAPlayerController, Row->CharacterName);
-	
-		AATLAPlayer* SpawnCharacter = GetWorld()->SpawnActor<AATLAPlayer>(Row->CharacterClass, PlayerStart->GetTransform(), PlayerSpawnParameters);
-		ATLAPlayerController->Possess(SpawnCharacter);
-	}
+	const FATLACharacters Row = UATLABlueprintFunctionLibrary::GetCharacterData(CharacterDataTable, CharacterName);
+
+	FActorSpawnParameters PlayerSpawnParameters;
+	PlayerSpawnParameters.Owner = ATLAPlayerController;
+
+	const AActor* PlayerStart = FindPlayerStart(ATLAPlayerController, Row.CharacterName);
+
+	AATLAPlayer* SpawnCharacter = GetWorld()->SpawnActor<AATLAPlayer>(Row.CharacterClass, PlayerStart->GetTransform(),
+	                                                                  PlayerSpawnParameters);
+	ATLAPlayerController->Possess(SpawnCharacter);
 }
 
 void AATLAGameMode::OnPostLogin(AController* NewPlayer)

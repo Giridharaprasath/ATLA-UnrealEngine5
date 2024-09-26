@@ -21,6 +21,7 @@ void AATLAPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(AATLAPlayerState, Level);
+	DOREPLIFETIME(AATLAPlayerState, CharacterName);
 }
 
 UAbilitySystemComponent* AATLAPlayerState::GetAbilitySystemComponent() const
@@ -28,6 +29,15 @@ UAbilitySystemComponent* AATLAPlayerState::GetAbilitySystemComponent() const
 	return AbilitySystemComponent;
 }
 
+void AATLAPlayerState::SetCharacterName(FText InCharacterName)
+{
+	CharacterName = InCharacterName;
+}
+
 void AATLAPlayerState::OnRep_Level(int32 OldLevel)
+{
+}
+
+void AATLAPlayerState::OnRep_CharacterName(FText OldCharacterName)
 {
 }

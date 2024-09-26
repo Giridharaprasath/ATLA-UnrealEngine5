@@ -3,6 +3,7 @@
 #include "UI/WidgetController/PlayerHUDWidgetController.h"
 #include "AbilitySystem/ATLAAbilitySystemComponent.h"
 #include "AbilitySystem/ATLAAttributeSet.h"
+#include "Player/ATLAPlayerState.h"
 
 void UPlayerHUDWidgetController::BroadcastInitialValues()
 {
@@ -12,6 +13,10 @@ void UPlayerHUDWidgetController::BroadcastInitialValues()
 	OnMaxHealthChanged.Broadcast(ATLAAttributeSet->GetMaxHealth());
 	OnStaminaChanged.Broadcast(ATLAAttributeSet->GetHealth());
 	OnMaxStaminaChanged.Broadcast(ATLAAttributeSet->GetMaxStamina());
+
+	const AATLAPlayerState* ATLAPlayerState = CastChecked<AATLAPlayerState>(PlayerState);
+
+	OnCharacterNameChanged.Broadcast(ATLAPlayerState->GetCharacterName());
 }
 
 void UPlayerHUDWidgetController::BindCallbacksToDependencies()

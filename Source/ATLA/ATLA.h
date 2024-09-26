@@ -18,4 +18,10 @@ struct FATLACharacters : public FTableRowBase
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 	TSubclassOf<class AATLAPlayer> CharacterClass;
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere)
+	UTexture2D* CharacterImage;
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere)
+	FColor CharacterColor;
 };

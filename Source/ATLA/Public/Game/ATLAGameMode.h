@@ -24,7 +24,7 @@ public:
 	TArray<AATLAPlayerController*> ATLAPlayerControllers;
 
 	UFUNCTION(BlueprintNativeEvent, Category = "Spawn")
-	void SpawnSelectedCharacter(AATLAPlayerController* ATLAPlayerController, int32 PlayerIndex);
+	void SpawnSelectedCharacter(AATLAPlayerController* ATLAPlayerController, const FName CharacterName);
 
 protected:
 	virtual void OnPostLogin(AController* NewPlayer) override;
@@ -32,13 +32,4 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "ATLA|Character Data")
 	TObjectPtr<UDataTable> CharacterDataTable;
-
-	template<typename T>
-	T* GetDataTableRowByName(UDataTable* DataTable, const FName& RowName);
 };
-
-template <typename T>
-T* AATLAGameMode::GetDataTableRowByName(UDataTable* DataTable, const FName& RowName)
-{
-	return DataTable->FindRow<T>(RowName, TEXT(""));
-}

@@ -27,6 +27,9 @@ public:
 	UAttributeSet* GetAttributeSet() const { return AttributeSet; }
 
 	FORCEINLINE int32 GetPlayerLevel() const { return Level; }
+	FORCEINLINE FText GetCharacterName() const { return CharacterName; }
+
+	void SetCharacterName(FText InCharacterName);
 
 protected:
 	UPROPERTY(VisibleAnywhere)
@@ -36,9 +39,15 @@ protected:
 	TObjectPtr<UAttributeSet> AttributeSet;
 
 private:
-	UPROPERTY(VisibleAnywhere, ReplicatedUsing = OnRep_Level)
+	UPROPERTY(VisibleAnywhere, ReplicatedUsing = OnRep_Level, Category = "ATLA|Player State")
 	int32 Level = 1;
+
+	UPROPERTY(VisibleAnywhere, ReplicatedUsing = OnRep_CharacterName, Category = "ATLA|Player State")
+	FText CharacterName;
 
 	UFUNCTION()
 	void OnRep_Level(int32 OldLevel);
+	
+	UFUNCTION()
+	void OnRep_CharacterName(FText OldCharacterName);
 };
