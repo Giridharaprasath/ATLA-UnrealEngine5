@@ -23,7 +23,10 @@ public:
 	/** Combat Interface **/
 	virtual int32 GetPlayerLevel() override;
 	/** End Combat Interface **/
-
+	
+	UFUNCTION(BlueprintNativeEvent, Category = "ATLA|Character")
+	void OnCharacterSelected();
+	
 protected:
 	virtual void InitAbilityActorInfo() override;
 };

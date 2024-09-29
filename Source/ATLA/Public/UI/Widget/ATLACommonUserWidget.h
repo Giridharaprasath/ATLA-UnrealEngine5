@@ -19,5 +19,8 @@ class ATLA_API UATLACommonUserWidget : public UCommonUserWidget
 
 public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "ATLA|UI")
-	void PushToMenuUIStack(TSubclassOf<UATLACommonActivatableWidget> ActivatableWidgetClass);	
+	void PushToMenuUIStack(TSubclassOf<UATLACommonActivatableWidget> ActivatableWidgetClass);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "ATLA|UI")
+	void PushToPopUpUIStack(const FText& TitleText);
 };

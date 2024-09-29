@@ -18,5 +18,7 @@ class ATLA_API UATLACommonActivatableWidget : public UCommonActivatableWidget
 public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ATLA|UI")
 	void ReturnFocusBackToGame();
-	
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ATLA|UI")
+	void SetMouseCursorState(bool bShowMouseCursor);
 };

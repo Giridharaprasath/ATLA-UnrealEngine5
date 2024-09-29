@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/HUD.h"
+#include "Interface/UIPopUpInterface.h"
 #include "UI/WidgetController/ATLAWidgetController.h"
 
 #include "ATLAHUD.generated.h"
@@ -16,6 +17,7 @@ class UAttributeMenuWidgetController;
 struct FWidgetController;
 class UAbilitySystemComponent;
 class UAttributeSet;
+class UUIPopUpComponent;
 
 /**
  * ATLA HUD Base Class.
@@ -26,7 +28,11 @@ class ATLA_API AATLAHUD : public AHUD
 	GENERATED_BODY()
 
 public:
+	AATLAHUD();
 
+	UPROPERTY()
+	UUIPopUpComponent* UIPopUpComponent;
+	
 	UPlayerHUDWidgetController* GetPlayerHUDWidgetController(const FWidgetController& WidgetController);
 
 	UAttributeMenuWidgetController* GetAttributeMenuWidgetController(const FWidgetController& WidgetController);
@@ -36,7 +42,7 @@ public:
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ATLA|HUD")
 	void OpenPauseMenu();
-	
+
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ATLA|HUD")
 	void OpenCharacterSelectUIWidget();
 
@@ -45,7 +51,7 @@ protected:
 
 	UFUNCTION(BlueprintNativeEvent, Category = "ATLA|HUD")
 	void CreatePlayerUIBaseWidget();
-	
+
 	UFUNCTION(BlueprintPure, Category = "ATLA|HUD|Debug")
 	FString GetGameName();
 	UFUNCTION(BlueprintPure, Category = "ATLA|HUD|Debug")
@@ -54,7 +60,6 @@ protected:
 	FString GetCompanyName();
 
 private:
-	
 	UPROPERTY()
 	TObjectPtr<UATLAUserWidget> PlayerHUDWidget;
 	UPROPERTY(EditAnywhere, Category = "ATLA|HUD")
@@ -71,7 +76,7 @@ private:
 
 	UPROPERTY()
 	TObjectPtr<UATLACommonUserWidget> PlayerUIWidgetBase;
-	UPROPERTY(EditAnywhere, Category = "ATLA|HUD|UI Base")
+	UPROPERTY(EditAnywhere, Category = "ATLA|UI|Widget Base")
 	TSubclassOf<UATLACommonUserWidget> PlayerUIWidgetBaseClass;
 
 	UPROPERTY(EditAnywhere, Category = "ATLA|HUD|Pause Menu")
@@ -79,5 +84,4 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "ATLA|HUD|Character Select")
 	TSubclassOf<UATLACommonActivatableWidget> CharacterSelectWidget;
-	
 };

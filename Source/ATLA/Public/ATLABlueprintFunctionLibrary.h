@@ -3,11 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "ATLA/ATLA.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "Engine/DataTable.h"
 
 #include "ATLABlueprintFunctionLibrary.generated.h"
+
+enum class EUIPopUpWidget : uint8;
+class UATLAGameInstance;
+struct FATLACharacters;
 
 /**
  *	ATLA Blueprint Function Library Class.
@@ -18,9 +21,22 @@ class ATLA_API UATLABlueprintFunctionLibrary : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintPure, Category = "ATLA", meta = ( WorldContext="WorldContextObject" ))
+	static UATLAGameInstance* GetATLAGameInstance(const UObject* WorldContextObject);
+
+	/** UI Pop Up Interface Functions **/
+	UFUNCTION(BlueprintCallable, Category = "ATLA|UI", meta = ( WorldContext="WorldContextObject" ))
+	static void ShowPopUpUI(const UObject* WorldContextObject, EUIPopUpWidget PopUpWidget);
+	
+	UFUNCTION(BlueprintCallable, Category = "ATLA|UI", meta = ( WorldContext="WorldContextObject" ))
+	static void PopUpUIYes(const UObject* WorldContextObject);
+	
+	UFUNCTION(BlueprintCallable, Category = "ATLA|UI", meta = ( WorldContext="WorldContextObject" ))
+	static void PopUpUINo(const UObject* WorldContextObject);
+	
 	UFUNCTION(BlueprintPure, Category = "ATLA|Character Data")
 	static FATLACharacters GetCharacterData(UDataTable* DataTable, const FName RowName);
-	
+
 	template <typename T>
 	static T* GetDataTableRowByName(UDataTable* DataTable, const FName& RowName);
 };

@@ -6,6 +6,12 @@
 #include "UI/Widget/ATLACommonUserWidget.h"
 #include "UI/WidgetController/PlayerHUDWidgetController.h"
 #include "UI/WidgetController/AttributeMenuWidgetController.h"
+#include "Component/UIPopUpComponent.h"
+
+AATLAHUD::AATLAHUD()
+{
+	UIPopUpComponent = CreateDefaultSubobject<UUIPopUpComponent>("UI Pop Up Component");
+}
 
 UPlayerHUDWidgetController* AATLAHUD::GetPlayerHUDWidgetController(const FWidgetController& WidgetController)
 {
@@ -23,7 +29,8 @@ UAttributeMenuWidgetController* AATLAHUD::GetAttributeMenuWidgetController(const
 {
 	if (AttributeMenuWidgetController == nullptr)
 	{
-		AttributeMenuWidgetController = NewObject<UAttributeMenuWidgetController>(this, AttributeMenuWidgetControllerClass);
+		AttributeMenuWidgetController = NewObject<UAttributeMenuWidgetController>(
+			this, AttributeMenuWidgetControllerClass);
 		AttributeMenuWidgetController->SetWidgetController(WidgetController);
 		AttributeMenuWidgetController->BindCallbacksToDependencies();
 	}
@@ -51,7 +58,7 @@ void AATLAHUD::InitPlayerHUD(APlayerController* PC, APlayerState* PS, UAbilitySy
 void AATLAHUD::OpenPauseMenu_Implementation()
 {
 	checkf(PauseMenuWidget, TEXT("Pause Menu Widget Not Set in BP_HUD_ATLA"));
-	
+
 	PlayerUIWidgetBase->PushToMenuUIStack(PauseMenuWidget);
 }
 
@@ -74,10 +81,10 @@ void AATLAHUD::CreatePlayerUIBaseWidget_Implementation()
 {
 	checkf(PlayerUIWidgetBaseClass, TEXT("Player UI Widget Base Class Not Set in BP_HUD_ATLA"));
 
-	UCommonUserWidget* CommonUserWidget = CreateWidget<UCommonUserWidget>(GetWorld(), PlayerUIWidgetBaseClass);
-	PlayerUIWidgetBase = Cast<UATLACommonUserWidget>(CommonUserWidget);
+	PlayerUIWidgetBase = CreateWidget<UATLACommonUserWidget>(GetWorld(), PlayerUIWidgetBaseClass);
+	PlayerUIWidgetBase->AddToViewport(10);
 
-	CommonUserWidget->AddToViewport();
+	UIPopUpComponent->SetWidgetBase(PlayerUIWidgetBase);
 }
 
 FString AATLAHUD::GetGameName()

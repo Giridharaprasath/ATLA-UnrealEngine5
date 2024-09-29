@@ -14,3 +14,13 @@ void UATLACommonActivatableWidget::ReturnFocusBackToGame_Implementation()
 		UE_LOG(LogATLA, Display, TEXT("Returning Focus Back to Game"));
 	}
 }
+
+void UATLACommonActivatableWidget::SetMouseCursorState_Implementation(bool bShowMouseCursor)
+{
+	if (APlayerController* Controller = GetOwningPlayer(); Controller != nullptr)
+	{
+		Controller->bShowMouseCursor = bShowMouseCursor;
+
+		UE_LOG(LogATLA, Display, TEXT("Set Show Mouse Cursor State : %hhd"), bShowMouseCursor);
+	}
+}

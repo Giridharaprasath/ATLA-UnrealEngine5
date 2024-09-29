@@ -2,6 +2,7 @@
 
 #include "Character/ATLAPlayer.h"
 #include "AbilitySystemComponent.h"
+#include "DiscordSDKBlueprintLibrary.h"
 #include "AbilitySystem/ATLAAbilitySystemComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "HUD/ATLAHUD.h"
@@ -40,7 +41,7 @@ int32 AATLAPlayer::GetPlayerLevel()
 {
 	AATLAPlayerState* ATLAPlayerState = GetPlayerState<AATLAPlayerState>();
 	check(ATLAPlayerState);
-	
+
 	return ATLAPlayerState->GetPlayerLevel();
 }
 
@@ -66,4 +67,8 @@ void AATLAPlayer::InitAbilityActorInfo()
 	}
 
 	InitializeDefaultAttributes();
+}
+
+void AATLAPlayer::OnCharacterSelected_Implementation()
+{
 }

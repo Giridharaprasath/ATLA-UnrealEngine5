@@ -1,10 +1,11 @@
 // Copyright Melon Studios.
 
 #include "Game/ATLAGameMode.h"
-#include "ATLA/ATLA.h"
 #include "Character/ATLAPlayer.h"
 #include "Player/ATLAPlayerController.h"
 #include "ATLABlueprintFunctionLibrary.h"
+#include "ATLA/ATLA.h"
+#include "Structure/FATLACharacters.h"
 
 void AATLAGameMode::SpawnSelectedCharacter_Implementation(AATLAPlayerController* ATLAPlayerController,
                                                           const FName CharacterName)
@@ -27,6 +28,7 @@ void AATLAGameMode::SpawnSelectedCharacter_Implementation(AATLAPlayerController*
 	AATLAPlayer* SpawnCharacter = GetWorld()->SpawnActor<AATLAPlayer>(Row.CharacterClass, PlayerStart->GetTransform(),
 	                                                                  PlayerSpawnParameters);
 	ATLAPlayerController->Possess(SpawnCharacter);
+	SpawnCharacter->OnCharacterSelected();
 }
 
 void AATLAGameMode::OnPostLogin(AController* NewPlayer)
