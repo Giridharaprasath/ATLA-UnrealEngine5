@@ -88,7 +88,7 @@ UTexture2D* USteamGameInstanceSubsystem::GetPlayerSteamAvatar() const
 
 void USteamGameInstanceSubsystem::OpenSteamOverlayUI() const
 {
-	if (SteamSubsystem)
+	if (bSteamIsOnline)
 	{
 		SteamFriends()->ActivateGameOverlay("Friends");
 	}
@@ -96,8 +96,16 @@ void USteamGameInstanceSubsystem::OpenSteamOverlayUI() const
 
 void USteamGameInstanceSubsystem::OpenSteamInviteUI() const
 {
-	if (SteamSubsystem)
+	if (bSteamIsOnline)
 	{
 		SteamFriends()->ActivateGameOverlay("LobbyInvite");
+	}
+}
+
+void USteamGameInstanceSubsystem::SetRichPresence(const FString& Key, const FString& Value) const
+{
+	if (bSteamIsOnline)
+	{
+		SteamFriends()->SetRichPresence(TCHAR_TO_ANSI(*Key), TCHAR_TO_ANSI(*Value));
 	}
 }

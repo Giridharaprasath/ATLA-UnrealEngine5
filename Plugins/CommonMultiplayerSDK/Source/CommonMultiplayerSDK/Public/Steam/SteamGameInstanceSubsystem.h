@@ -25,9 +25,11 @@ public:
 	void OpenSteamOverlayUI() const;
 	void OpenSteamInviteUI() const;
 
+	void SetRichPresence(const FString& Key, const FString& Value) const;
+	
 private:
 	bool bSteamIsOnline{false};
-	const IOnlineSubsystem* SteamSubsystem;
+	IOnlineSubsystem* SteamSubsystem;
 	uint64 PlayerSteamID;
 	FString PlayerSteamName;
 };

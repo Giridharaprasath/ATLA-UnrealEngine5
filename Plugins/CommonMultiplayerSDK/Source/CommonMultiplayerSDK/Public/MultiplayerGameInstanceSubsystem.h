@@ -10,6 +10,8 @@
 
 #include "MultiplayerGameInstanceSubsystem.generated.h"
 
+struct FSessionSettingsInfo;
+
 /**
  *	Multiplayer Game Instance Subsystem Class.
  */
@@ -22,8 +24,21 @@ public:
 	UMultiplayerGameInstanceSubsystem();
 	virtual void Deinitialize() override;
 
+	void CreateMultiplayerSession(ULocalPlayer* LocalPlayer, FSessionSettingsInfo SessionSettingsInfo);
+
+protected:
+	void OnCreateSessionComplete(FName SessionName, bool bWasSuccessful);
+	void OnStartSessionComplete(FName SessionName, bool bWasSuccessful);
+
 private:
-	TWeakPtr<IOnlineSession> SessionInterface;
+	FString PathToLobby{TEXT("")};
+	IOnlineSessionPtr SessionInterface;
 	TSharedPtr<FOnlineSessionSettings> SessionSettings;
 	TSharedPtr<FOnlineSessionSearch> SessionSearch;
+
+	FOnCreateSessionCompleteDelegate OnCreateSessionCompleteDelegate;
+	FOnStartSessionCompleteDelegate OnStartSessionCompleteDelegate;
+
+	FDelegateHandle OnCreateSessionCompleteDelegateHandle;
+	FDelegateHandle OnStartSessionCompleteDelegateHandle;
 };
