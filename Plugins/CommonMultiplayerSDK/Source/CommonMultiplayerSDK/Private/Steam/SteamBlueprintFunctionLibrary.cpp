@@ -29,6 +29,21 @@ void USteamBlueprintFunctionLibrary::OpenSteamInviteUI(const UObject* WorldConte
 	return GetSteamGameInstanceSubsystem(WorldContextObject)->OpenSteamInviteUI();
 }
 
+int USteamBlueprintFunctionLibrary::GetPlayerFriendsCount(const UObject* WorldContextObject)
+{
+	return GetSteamGameInstanceSubsystem(WorldContextObject)->GetPlayerFriendsCount();
+}
+
+FString USteamBlueprintFunctionLibrary::GetFriendSteamName(const UObject* WorldContextObject, int FriendIndex)
+{
+	return GetSteamGameInstanceSubsystem(WorldContextObject)->GetFriendSteamName(FriendIndex);
+}
+
+UTexture2D* USteamBlueprintFunctionLibrary::GetFriendSteamAvatar(const UObject* WorldContextObject, int FriendIndex)
+{
+	return GetSteamGameInstanceSubsystem(WorldContextObject)->GetFriendSteamAvatar(FriendIndex);
+}
+
 USteamGameInstanceSubsystem* USteamBlueprintFunctionLibrary::GetSteamGameInstanceSubsystem(
 	const UObject* WorldContextObject)
 {

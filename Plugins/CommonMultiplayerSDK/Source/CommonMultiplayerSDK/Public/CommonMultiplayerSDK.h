@@ -37,7 +37,7 @@ struct FSessionSettingsInfo
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	bool bUseLobbiesIfAvailable = true;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	bool bShouldAdvertise = false;
+	bool bShouldAdvertise = true;
 };
 
 class FCommonMultiplayerSDKModule : public IModuleInterface
