@@ -26,7 +26,15 @@ public:
 	void OpenSteamInviteUI() const;
 
 	void SetRichPresence(const FString& Key, const FString& Value) const;
+
+	int GetPlayerFriendsCount() const;
 	
+	int64 GetFriendSteamID(int FriendIndex) const;
+	FString GetFriendSteamName(int FriendIndex) const;
+	UTexture2D* GetFriendSteamAvatar(int FriendIndex) const;
+	bool GetFriendPersonaState(int FriendIndex) const;
+	bool GetFriendGamePlayed(int FriendIndex) const;
+
 private:
 	bool bSteamIsOnline{false};
 	IOnlineSubsystem* SteamSubsystem;

@@ -23,13 +23,23 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ATLA|Level")
 	void ExitToDesktop();
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ATLA|Multiplayer")
+	void CreateATLASession(ULocalPlayer* LocalPlayer);
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ATLA|Multiplayer")
+	void DestroyATLASession();
+	// UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ATLA|Multiplayer")
+	// void FindATLASession(FString LobbyName);
+
+protected:
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "ATLA|Level")
+	FString MainMenuLevelPath = FString(TEXT("/Game/ATLA/Maps/MainMenu_Level"));
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "ATLA|Level")
+	FString TestingLevelPath = FString(TEXT("/Game/ATLA/Maps/Testing/Testing_Level"));
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "ATLA|Level")
+	FString LobbyLevelPath = FString(TEXT("/Game/ATLA/Maps/Lobby_Level"));
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "ATLA|Level")
+	bool bUseTestingLevel = true;
+
 private:
-	UPROPERTY(EditDefaultsOnly, Category = "ATLA|Level")
-	const TSoftObjectPtr<UWorld> MainMenuLevel;
-	UPROPERTY(EditAnywhere, Category = "ATLA|Level")
-	const TSoftObjectPtr<UWorld> TestingLevel;
-	UPROPERTY(EditAnywhere, Category = "ATLA|Level")
-	const TSoftObjectPtr<UWorld> LobbyLevel;
-	UPROPERTY(EditAnywhere, Category = "ATLA|Level")
-	bool bUseTestingLevel{true};
+	FString GetLevelPathToOpen();
 };

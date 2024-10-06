@@ -28,6 +28,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Multiplayer|Steam", meta = ( WorldContext="WorldContextObject" ))
 	static void OpenSteamInviteUI(const UObject* WorldContextObject);
 
+	UFUNCTION(BlueprintPure, Category = "Multiplayer|Steam", meta = ( WorldContext="WorldContextObject" ))
+	static int GetPlayerFriendsCount(const UObject* WorldContextObject);
+	UFUNCTION(BlueprintPure, Category = "Multiplayer|Steam", meta = ( WorldContext="WorldContextObject" ))
+	static FString GetFriendSteamName(const UObject* WorldContextObject, int FriendIndex);
+	UFUNCTION(BlueprintPure, Category = "Multiplayer|Steam", meta = ( WorldContext="WorldContextObject" ))
+	static UTexture2D* GetFriendSteamAvatar(const UObject* WorldContextObject, int FriendIndex);
 private:
 	static USteamGameInstanceSubsystem* GetSteamGameInstanceSubsystem(const UObject* WorldContextObject);
 };
