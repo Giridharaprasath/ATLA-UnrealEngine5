@@ -34,6 +34,11 @@ public:
 	static FString GetFriendSteamName(const UObject* WorldContextObject, int FriendIndex);
 	UFUNCTION(BlueprintPure, Category = "Multiplayer|Steam", meta = ( WorldContext="WorldContextObject" ))
 	static UTexture2D* GetFriendSteamAvatar(const UObject* WorldContextObject, int FriendIndex);
+	UFUNCTION(BlueprintPure, Category = "Multiplayer|Steam", meta = ( WorldContext="WorldContextObject" ))
+	static bool GetFriendSteamPersonaState(const UObject* WorldContextObject, int FriendIndex);
+	UFUNCTION(BlueprintPure, Category = "Multiplayer|Steam", meta = ( WorldContext="WorldContextObject" ))
+	static bool GetFriendSteamGamePlayed(const UObject* WorldContextObject, int FriendIndex);
+	
 private:
 	static USteamGameInstanceSubsystem* GetSteamGameInstanceSubsystem(const UObject* WorldContextObject);
 };
