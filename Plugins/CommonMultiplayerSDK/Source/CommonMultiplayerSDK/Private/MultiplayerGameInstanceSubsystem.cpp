@@ -4,6 +4,7 @@
 #include "CommonMultiplayerSDK.h"
 #include "Kismet/GameplayStatics.h"
 #include "Online/OnlineSessionNames.h"
+#include "OnlineSessionSettings.h"
 
 UMultiplayerGameInstanceSubsystem::UMultiplayerGameInstanceSubsystem() :
 	OnCreateSessionCompleteDelegate(
@@ -114,12 +115,14 @@ void UMultiplayerGameInstanceSubsystem::FindMultiplayerSession(bool bUseLan, FSt
 		OnFindSessionsCompleteDelegate);
 
 	SessionSearch = MakeShareable(new FOnlineSessionSearch());
-	SessionSearch->MaxSearchResults = 1000;
+	SessionSearch->MaxSearchResults = 1000000;
 	SessionSearch->bIsLanQuery = bUseLan;
 	SessionSearch->QuerySettings.Set(SEARCH_MINSLOTSAVAILABLE, 0, EOnlineComparisonOp::GreaterThanEquals);
 	SessionSearch->QuerySettings.Set(SEARCH_PRESENCE, true, EOnlineComparisonOp::Equals);
 	SessionSearch->QuerySettings.Set(SEARCH_LOBBIES, true, EOnlineComparisonOp::Equals);
-	SessionSearch->QuerySettings.Set(FName("LobbyName"), LobbyName, EOnlineComparisonOp::Equals);
+
+	if (!bUseLan)
+		SessionSearch->QuerySettings.Set(FName("LobbyName"), LobbyName, EOnlineComparisonOp::Equals);
 
 	const ULocalPlayer* LocalPlayer = GetWorld()->GetFirstLocalPlayerFromController();
 	if (!SessionInterface->FindSessions(*LocalPlayer->GetPreferredUniqueNetId(), SessionSearch.ToSharedRef()))
@@ -205,6 +208,9 @@ void UMultiplayerGameInstanceSubsystem::OnJoinSessionComplete(FName SessionName,
 
 void UMultiplayerGameInstanceSubsystem::OnFindSessionComplete(bool bWasSuccessful)
 {
+	UE_LOG(LogCommonMultiplayerSDK, Display, TEXT("On Find Session Complete b : %hhd, C : %d"), bWasSuccessful,
+	       SessionSearch->SearchResults.Num());
+	
 	if (SessionInterface)
 	{
 		SessionInterface->ClearOnFindSessionsCompleteDelegate_Handle(OnFindSessionCompleteDelegateHandle);

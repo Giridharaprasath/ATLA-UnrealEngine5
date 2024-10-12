@@ -30,7 +30,7 @@ void UATLAGameInstance::GoToMainMenuLevel_Implementation()
 {
 	UE_LOG(LogATLA, Display, TEXT("Going To Main Menu Level"));
 
-	UGameplayStatics::OpenLevel(GetWorld(), FName(*FString(MainMenuLevelPath)), true, "?listen");
+	UGameplayStatics::OpenLevel(GetWorld(), FName(*FString(MainMenuLevelPath)));
 }
 
 void UATLAGameInstance::CreateATLASession_Implementation(ULocalPlayer* LocalPlayer)
@@ -43,7 +43,7 @@ void UATLAGameInstance::CreateATLASession_Implementation(ULocalPlayer* LocalPlay
 	// TODO : FOR NOW SET NUMBER OF PLAYERS TO 4
 	SessionSettingsInfo.NumberOfPlayers = 4;
 	SessionSettingsInfo.bAllowJoinInProgress = true;
-	SessionSettingsInfo.bAllowJoinViaPresenceFriendsOnly = true;
+	SessionSettingsInfo.bAllowJoinViaPresenceFriendsOnly = false;
 	SessionSettingsInfo.bAllowInvites = true;
 	SessionSettingsInfo.bUsesPresence = true;
 	SessionSettingsInfo.bIsDedicated = false;
@@ -51,23 +51,24 @@ void UATLAGameInstance::CreateATLASession_Implementation(ULocalPlayer* LocalPlay
 	SessionSettingsInfo.bAllowJoinViaPresence = true;
 	SessionSettingsInfo.bUseLobbiesIfAvailable = true;
 	SessionSettingsInfo.bShouldAdvertise = true;
-	
+
 	UCommonMultiplayerLibrary::CreateMultiplayerSession(GetWorld(), LocalPlayer, SessionSettingsInfo);
 }
 
 void UATLAGameInstance::DestroyATLASession_Implementation()
 {
+	UE_LOG(LogATLA, Display, TEXT("Destroying ATLA Session"));
+
 	UCommonMultiplayerLibrary::DestroyMultiplayerSession(GetWorld());
 }
 
-// void UATLAGameInstance::FindATLASession_Implementation(FString LobbyName)
-// {
-// 	UE_LOG(LogATLA, Display, TEXT("Finding ATLA Session :  %s"), *LobbyName);
-//
-// 	bool bUseLan = UCommonMultiplayerLibrary::UseLanMode(GetWorld());
-//
-// 	UCommonMultiplayerLibrary::FindMultiplayerSession(GetWorld(), bUseLan, LobbyName);
-// }
+void UATLAGameInstance::FindATLASession_Implementation(const FString& LobbyName)
+{
+	UE_LOG(LogATLA, Display, TEXT("Finding ATLA Session %s"), *LobbyName);
+
+	const bool bUseLan = UCommonMultiplayerLibrary::UseLanMode(GetWorld());
+	UCommonMultiplayerLibrary::FindMultiplayerSession(GetWorld(), bUseLan, LobbyName);
+}
 
 FString UATLAGameInstance::GetLevelPathToOpen()
 {

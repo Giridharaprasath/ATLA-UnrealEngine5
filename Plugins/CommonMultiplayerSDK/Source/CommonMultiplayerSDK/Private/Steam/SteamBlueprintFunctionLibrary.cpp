@@ -44,6 +44,16 @@ UTexture2D* USteamBlueprintFunctionLibrary::GetFriendSteamAvatar(const UObject* 
 	return GetSteamGameInstanceSubsystem(WorldContextObject)->GetFriendSteamAvatar(FriendIndex);
 }
 
+bool USteamBlueprintFunctionLibrary::GetFriendSteamPersonaState(const UObject* WorldContextObject, int FriendIndex)
+{
+	return GetSteamGameInstanceSubsystem(WorldContextObject)->GetFriendPersonaState(FriendIndex);
+}
+
+bool USteamBlueprintFunctionLibrary::GetFriendSteamGamePlayed(const UObject* WorldContextObject, int FriendIndex)
+{
+	return GetSteamGameInstanceSubsystem(WorldContextObject)->GetFriendGamePlayed(FriendIndex);
+}
+
 USteamGameInstanceSubsystem* USteamBlueprintFunctionLibrary::GetSteamGameInstanceSubsystem(
 	const UObject* WorldContextObject)
 {

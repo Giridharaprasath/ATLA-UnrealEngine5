@@ -27,8 +27,8 @@ public:
 	void CreateATLASession(ULocalPlayer* LocalPlayer);
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ATLA|Multiplayer")
 	void DestroyATLASession();
-	// UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ATLA|Multiplayer")
-	// void FindATLASession(FString LobbyName);
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ATLA|Multiplayer")
+	void FindATLASession(const FString& LobbyName);
 
 protected:
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "ATLA|Level")
