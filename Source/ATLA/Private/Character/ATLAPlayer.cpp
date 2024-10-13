@@ -45,6 +45,11 @@ int32 AATLAPlayer::GetPlayerLevel()
 	return ATLAPlayerState->GetPlayerLevel();
 }
 
+void AATLAPlayer::ClientSetUpCharacter_Implementation()
+{
+	OnCharacterSelected();
+}
+
 void AATLAPlayer::InitAbilityActorInfo()
 {
 	AATLAPlayerState* ATLAPlayerState = GetPlayerState<AATLAPlayerState>();

@@ -23,6 +23,9 @@ public:
 	/** Combat Interface **/
 	virtual int32 GetPlayerLevel() override;
 	/** End Combat Interface **/
+
+	UFUNCTION(Client, Reliable)
+	void ClientSetUpCharacter();
 	
 	UFUNCTION(BlueprintNativeEvent, Category = "ATLA|Character")
 	void OnCharacterSelected();

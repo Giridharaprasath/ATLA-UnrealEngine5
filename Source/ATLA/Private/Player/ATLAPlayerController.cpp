@@ -13,6 +13,26 @@ AATLAPlayerController::AATLAPlayerController()
 	bReplicates = true;
 }
 
+void AATLAPlayerController::ClientOnPlayerLeft_Implementation()
+{
+	if (!IsLocalPlayerController())
+	{
+		return;
+	}
+
+	OnPlayerJoined();
+}
+
+void AATLAPlayerController::ClientOnPlayerJoined_Implementation()
+{
+	if (!IsLocalPlayerController())
+	{
+		return;
+	}
+
+	OnPlayerLeft();
+}
+
 void AATLAPlayerController::OnPlayerJoined_Implementation()
 {
 	UE_LOG(LogATLA, Display, TEXT("PC : On New Player Joined"));

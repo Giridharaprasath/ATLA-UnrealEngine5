@@ -28,7 +28,7 @@ void AATLAGameMode::SpawnSelectedCharacter_Implementation(AATLAPlayerController*
 	AATLAPlayer* SpawnCharacter = GetWorld()->SpawnActor<AATLAPlayer>(Row.CharacterClass, PlayerStart->GetTransform(),
 	                                                                  PlayerSpawnParameters);
 	ATLAPlayerController->Possess(SpawnCharacter);
-	SpawnCharacter->OnCharacterSelected();
+	SpawnCharacter->ClientSetUpCharacter();
 }
 
 void AATLAGameMode::OnPostLogin(AController* NewPlayer)
@@ -39,7 +39,10 @@ void AATLAGameMode::OnPostLogin(AController* NewPlayer)
 
 	ATLAPlayerControllers.Add(NewATLAPlayerController);
 
-	NewATLAPlayerController->OnPlayerJoined();
+	for (const auto PC : ATLAPlayerControllers)
+	{
+		PC->ClientOnPlayerJoined();
+	}
 }
 
 void AATLAGameMode::Logout(AController* Exiting)
@@ -50,5 +53,8 @@ void AATLAGameMode::Logout(AController* Exiting)
 
 	ATLAPlayerControllers.Remove(ExitingATLAPlayerController);
 
-	ExitingATLAPlayerController->OnPlayerLeft();
+	for (const auto PC : ATLAPlayerControllers)
+	{
+		PC->ClientOnPlayerLeft();
+	}
 }

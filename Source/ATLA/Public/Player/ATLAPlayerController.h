@@ -22,10 +22,16 @@ class ATLA_API AATLAPlayerController : public APlayerController
 public:
 	AATLAPlayerController();
 
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ATLA|Player")
+	UFUNCTION(Client, Reliable)
+	void ClientOnPlayerJoined();
+
+	UFUNCTION(Client, Reliable)
+	void ClientOnPlayerLeft();
+
+	UFUNCTION(BlueprintNativeEvent, Category = "ATLA|Player")
 	void OnPlayerJoined();
 
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ATLA|Player")
+	UFUNCTION(BlueprintNativeEvent, Category = "ATLA|Player")
 	void OnPlayerLeft();
 
 	UFUNCTION(BlueprintGetter, Category = "ATLA")
