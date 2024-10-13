@@ -70,10 +70,10 @@ void UDiscordGameInstanceSubsystem::SetActivity(const FDiscordActivity& Activity
 		if (!Activity.PartyID.IsEmpty())
 			Party.SetId(TCHAR_TO_ANSI(*Activity.PartyID));
 
-		if (PartySize.GetCurrentSize() != Activity.PartyCurrentSize)
+		if (PartySize.GetCurrentSize() != Activity.PartyCurrentSize && Activity.PartyCurrentSize != 0)
 			PartySize.SetCurrentSize(Activity.PartyCurrentSize);
 
-		if (PartySize.GetMaxSize() != Activity.PartyMaxSize)
+		if (PartySize.GetMaxSize() != Activity.PartyMaxSize && Activity.PartyMaxSize != 0)
 			PartySize.SetMaxSize(Activity.PartyMaxSize);
 
 		if (!Activity.Join.IsEmpty())
