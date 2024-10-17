@@ -14,5 +14,4 @@ UCLASS()
 class ATLA_API AATLAGameState : public AGameState
 {
 	GENERATED_BODY()
-	
 };

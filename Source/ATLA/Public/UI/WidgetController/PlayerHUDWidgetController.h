@@ -62,6 +62,9 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "ATLA|Widget Data")
 	TObjectPtr<UDataTable> MessageWidgetDataTable;
+
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "ATLA|Widget Data")
+	TObjectPtr<UDataTable> CharacterInfoDataTable;
 	
 	template<typename T>
 	T* GetDataTableRowByTag(UDataTable* DataTable, const FGameplayTag& Tag);

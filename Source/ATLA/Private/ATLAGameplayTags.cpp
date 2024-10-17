@@ -56,4 +56,19 @@ void FATLAGameplayTags::InitializeNativeGameplayTags()
 
 	GameplayTags.Attributes_Secondary_MaxStamina = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Attributes.Secondary.MaxStamina"), FString("Maximum amount of Stamina"));
+
+	/*
+	 *	Input Tags
+	 */
+	GameplayTags.InputTag_Ability1 = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("InputTag.Ability1"), FString("Input Tag for Ability 1"));
+	
+	GameplayTags.InputTag_Ability2 = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("InputTag.Ability2"), FString("Input Tag for Ability 2"));
+	
+	GameplayTags.InputTag_Ability3 = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("InputTag.Ability3"), FString("Input Tag for Ability 3"));
+	
+	GameplayTags.InputTag_Ability4 = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("InputTag.Ability4"), FString("Input Tag for Ability 4"));
 }
