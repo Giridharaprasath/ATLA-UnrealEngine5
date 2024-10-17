@@ -33,7 +33,10 @@ public:
 	FGameplayTag Attributes_Secondary_MaxHealth;
 	FGameplayTag Attributes_Secondary_MaxStamina;
 
-protected:
+	FGameplayTag InputTag_Ability1;
+	FGameplayTag InputTag_Ability2;
+	FGameplayTag InputTag_Ability3;
+	FGameplayTag InputTag_Ability4;
 
 private:
 	static FATLAGameplayTags GameplayTags;

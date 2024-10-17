@@ -3,6 +3,7 @@
 #include "UI/WidgetController/PlayerHUDWidgetController.h"
 #include "AbilitySystem/ATLAAbilitySystemComponent.h"
 #include "AbilitySystem/ATLAAttributeSet.h"
+#include "ATLA/ATLA.h"
 #include "Player/ATLAPlayerState.h"
 
 void UPlayerHUDWidgetController::BroadcastInitialValues()
@@ -45,7 +46,7 @@ void UPlayerHUDWidgetController::BindCallbacksToDependencies()
 		{
 			OnStaminaChanged.Broadcast(Data.NewValue);
 		}
-		);
+	);
 
 	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
 		ATLAAttributeSet->GetMaxStaminaAttribute()).AddLambda(
@@ -57,12 +58,9 @@ void UPlayerHUDWidgetController::BindCallbacksToDependencies()
 
 	Cast<UATLAAbilitySystemComponent>(AbilitySystemComponent)->EffectAssetTags.AddLambda(
 		[this](const FGameplayTagContainer& AssetTags)
-		{
+		{			
 			for (const FGameplayTag& Tag : AssetTags)
 			{
-				const FString Msg = FString::Printf(TEXT("GE Tag : %s"), *Tag.ToString());
-				GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Cyan, Msg);
-
 				FGameplayTag MessageTag = FGameplayTag::RequestGameplayTag(FName("Message"));
 				if (Tag.MatchesTagExact(MessageTag))
 				{

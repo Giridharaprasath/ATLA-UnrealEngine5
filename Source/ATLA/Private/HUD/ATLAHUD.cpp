@@ -2,7 +2,7 @@
 
 #include "HUD/ATLAHUD.h"
 #include "UI/Widget/ATLACommonActivatableWidget.h"
-#include "UI/Widget/ATLAUserWidget.h"
+#include "UI/Widget/PlayerHUD/ATLAPlayerHUD.h"
 #include "UI/Widget/ATLACommonUserWidget.h"
 #include "UI/WidgetController/PlayerHUDWidgetController.h"
 #include "UI/WidgetController/AttributeMenuWidgetController.h"
@@ -44,7 +44,7 @@ void AATLAHUD::InitPlayerHUD(APlayerController* PC, APlayerState* PS, UAbilitySy
 	checkf(PlayerHUDWidgetControllerClass, TEXT("Player HUD Widget Controller Class Not Set in BP_HUD_ATLA"));
 
 	UUserWidget* UserWidget = CreateWidget<UUserWidget>(GetWorld(), PlayerHUDWidgetClass);
-	PlayerHUDWidget = Cast<UATLAUserWidget>(UserWidget);
+	PlayerHUDWidget = Cast<UATLAPlayerHUD>(UserWidget);
 
 	const FWidgetController WidgetController(PC, PS, ASC, AS);
 	UPlayerHUDWidgetController* PlayerWidgetController = GetPlayerHUDWidgetController(WidgetController);

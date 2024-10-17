@@ -9,9 +9,9 @@
 
 #include "ATLAHUD.generated.h"
 
+class UATLAPlayerHUD;
 class UATLACommonActivatableWidget;
 class UATLACommonUserWidget;
-class UATLAUserWidget;
 class UPlayerHUDWidgetController;
 class UAttributeMenuWidgetController;
 struct FWidgetController;
@@ -34,7 +34,6 @@ public:
 	UUIPopUpComponent* UIPopUpComponent;
 	
 	UPlayerHUDWidgetController* GetPlayerHUDWidgetController(const FWidgetController& WidgetController);
-
 	UAttributeMenuWidgetController* GetAttributeMenuWidgetController(const FWidgetController& WidgetController);
 
 	// TODO : CALL INIT PLAYER HUD TO CREATE PLAYER HUD, CALL THIS FUNCTION AFTER SELECTING CHARACTER 
@@ -60,10 +59,10 @@ protected:
 	FString GetCompanyName();
 
 private:
-	UPROPERTY()
-	TObjectPtr<UATLAUserWidget> PlayerHUDWidget;
+	UPROPERTY(BlueprintReadOnly, meta = ( AllowPrivateAccess = true ), Category = "ATLA|HUD")
+	TObjectPtr<UATLAPlayerHUD> PlayerHUDWidget;
 	UPROPERTY(EditAnywhere, Category = "ATLA|HUD")
-	TSubclassOf<UATLAUserWidget> PlayerHUDWidgetClass;
+	TSubclassOf<UATLAPlayerHUD> PlayerHUDWidgetClass;
 	UPROPERTY()
 	TObjectPtr<UPlayerHUDWidgetController> PlayerHUDWidgetController;
 	UPROPERTY(EditAnywhere, Category = "ATLA|HUD")

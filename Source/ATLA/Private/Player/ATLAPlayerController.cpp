@@ -13,7 +13,7 @@ AATLAPlayerController::AATLAPlayerController()
 	bReplicates = true;
 }
 
-void AATLAPlayerController::ClientOnPlayerLeft_Implementation()
+void AATLAPlayerController::ClientOnPlayerJoined_Implementation()
 {
 	if (!IsLocalPlayerController())
 	{
@@ -23,7 +23,7 @@ void AATLAPlayerController::ClientOnPlayerLeft_Implementation()
 	OnPlayerJoined();
 }
 
-void AATLAPlayerController::ClientOnPlayerJoined_Implementation()
+void AATLAPlayerController::ClientOnPlayerLeft_Implementation()
 {
 	if (!IsLocalPlayerController())
 	{
@@ -57,7 +57,8 @@ void AATLAPlayerController::ClientSpawnSelectedPlayer_Implementation(const FName
 		return;
 	}
 
-	UE_LOG(LogATLA, Display, TEXT("PC : On Client Spawn Selected Player Character Name: %s"), *CharacterName.ToString());
+	UE_LOG(LogATLA, Display, TEXT("PC : On Client Spawn Selected Player Character Name: %s"),
+	       *CharacterName.ToString());
 
 	ServerSpawnSelectedPlayer(CharacterName);
 }
@@ -93,7 +94,8 @@ void AATLAPlayerController::BeginPlay()
 
 void AATLAPlayerController::ServerSpawnSelectedPlayer_Implementation(const FName CharacterName)
 {
-	UE_LOG(LogATLA, Display, TEXT("PC : On Server Spawn Selected Player Character Name: %s"), *CharacterName.ToString());
+	UE_LOG(LogATLA, Display, TEXT("PC : On Server Spawn Selected Player Character Name: %s"),
+	       *CharacterName.ToString());
 
 	if (AATLAGameMode* ATLAGameMode = Cast<AATLAGameMode>(UGameplayStatics::GetGameMode(GetWorld())))
 	{
