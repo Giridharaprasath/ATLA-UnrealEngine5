@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Abilities/GameplayAbility.h"
+
 #include "ATLAGameplayAbility.generated.h"
 
 /**
@@ -13,4 +14,8 @@ UCLASS()
 class ATLA_API UATLAGameplayAbility : public UGameplayAbility
 {
 	GENERATED_BODY()
+
+public:
+	UPROPERTY(EditDefaultsOnly, Category = "ATLA|Input")
+	FGameplayTag StartUpInputTag;
 };
