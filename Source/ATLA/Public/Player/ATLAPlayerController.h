@@ -4,12 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
+#include "GameplayTagContainer.h"
 
 #include "ATLAPlayerController.generated.h"
 
+struct FGameplayTag;
 class AATLAHUD;
 class AATLAPlayerState;
 class UInputMappingContext;
+class UATLAInputConfig;
+class UATLAAbilitySystemComponent;
 
 /**
  * ATLA Player Controller Base Class.
@@ -48,6 +52,7 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+	virtual void SetupInputComponent() override;
 
 	UPROPERTY(BlueprintGetter = GetATLAHUD, VisibleInstanceOnly, Category = "ATLA")
 	AATLAHUD* ATLAHUD;
@@ -60,8 +65,20 @@ private:
 	UFUNCTION(Server, Reliable)
 	void ServerSpawnSelectedPlayer(const FName CharacterName);
 	
-	UPROPERTY(EditAnywhere, Category = "ATLA|Controls")
+	UPROPERTY(EditAnywhere, Category = "ATLA|Input|Controls")
 	TObjectPtr<UInputMappingContext> UIGenericControls;
-	UPROPERTY(EditAnywhere, Category = "ATLA|Controls")
+	UPROPERTY(EditAnywhere, Category = "ATLA|Input|Controls")
 	TObjectPtr<UInputMappingContext> ATLAPlayerControls;
+
+	void AbilityInputTagPressed(FGameplayTag InputTag);
+	void AbilityInputTagReleased(FGameplayTag InputTag);
+	void AbilityInputTagHeld(FGameplayTag InputTag);
+
+	UPROPERTY(EditDefaultsOnly, Category = "ATLA|Input")
+	TObjectPtr<UATLAInputConfig> InputConfig;
+
+	UPROPERTY()
+	TObjectPtr<UATLAAbilitySystemComponent> ATLAAbilitySystemComponent;
+
+	UATLAAbilitySystemComponent* GetATLAASC();
 };

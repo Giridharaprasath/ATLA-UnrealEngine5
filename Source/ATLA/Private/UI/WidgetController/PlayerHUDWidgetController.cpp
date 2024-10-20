@@ -62,7 +62,7 @@ void UPlayerHUDWidgetController::BindCallbacksToDependencies()
 			for (const FGameplayTag& Tag : AssetTags)
 			{
 				FGameplayTag MessageTag = FGameplayTag::RequestGameplayTag(FName("Message"));
-				if (Tag.MatchesTagExact(MessageTag))
+				if (Tag.MatchesTag(MessageTag))
 				{
 					const FUIWidgetRow* Row = GetDataTableRowByTag<FUIWidgetRow>(MessageWidgetDataTable, Tag);
 					MessageWidgetRowDelegate.Broadcast(*Row);
