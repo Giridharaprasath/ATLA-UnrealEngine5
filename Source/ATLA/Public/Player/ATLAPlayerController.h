@@ -44,9 +44,6 @@ public:
 	UFUNCTION(BlueprintGetter, Category = "ATLA")
 	AATLAPlayerState* GetATLAPlayerState() { return ATLAPlayerState; }
 
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ATLA|HUD")
-	void OpenPauseMenu();
-
 	UFUNCTION(Client, Reliable, BlueprintCallable, Category = "ATLA|Character")
 	void ClientSpawnSelectedPlayer(const FName CharacterName);
 
@@ -60,6 +57,12 @@ protected:
 	UPROPERTY(BlueprintGetter = GetATLAPlayerState, VisibleInstanceOnly, Category = "ATLA")
 	AATLAPlayerState* ATLAPlayerState;
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ATLA|HUD")
+	void OpenPauseMenu();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ATLA|HUD")
+	void OpenAttributesMenu();
+	
 private:
 
 	UFUNCTION(Server, Reliable)

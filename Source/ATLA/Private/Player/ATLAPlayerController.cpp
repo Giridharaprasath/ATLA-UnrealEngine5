@@ -46,13 +46,6 @@ void AATLAPlayerController::OnPlayerLeft_Implementation()
 	UE_LOG(LogATLA, Display, TEXT("PC : On A Player Left"));
 }
 
-void AATLAPlayerController::OpenPauseMenu_Implementation()
-{
-	UE_LOG(LogATLA, Display, TEXT("PC : On Open Pause Menu"));
-
-	GetATLAHUD()->OpenPauseMenu();
-}
-
 void AATLAPlayerController::ClientSpawnSelectedPlayer_Implementation(const FName CharacterName)
 {
 	if (!IsLocalPlayerController())
@@ -102,6 +95,20 @@ void AATLAPlayerController::SetupInputComponent()
 	UATLAInputComponent* ATLAInputComponent = CastChecked<UATLAInputComponent>(InputComponent);
 	ATLAInputComponent->BindAbilityActions(InputConfig, this, &ThisClass::AbilityInputTagPressed,
 	                                       &ThisClass::AbilityInputTagReleased, &ThisClass::AbilityInputTagHeld);
+}
+
+void AATLAPlayerController::OpenPauseMenu_Implementation()
+{
+	UE_LOG(LogATLA, Display, TEXT("PC : On Open Pause Menu"));
+
+	GetATLAHUD()->OpenPauseMenu();
+}
+
+void AATLAPlayerController::OpenAttributesMenu_Implementation()
+{
+	UE_LOG(LogATLA, Display, TEXT("PC : On Open Attributes Menu"));
+
+	GetATLAHUD()->OpenAttributesMenu();
 }
 
 void AATLAPlayerController::ServerSpawnSelectedPlayer_Implementation(const FName CharacterName)
