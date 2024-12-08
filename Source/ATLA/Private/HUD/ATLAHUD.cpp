@@ -7,6 +7,7 @@
 #include "UI/WidgetController/PlayerHUDWidgetController.h"
 #include "UI/WidgetController/AttributeMenuWidgetController.h"
 #include "Component/UIPopUpComponent.h"
+#include "UI/Widget/ATLACommonActivatableUserWidget.h"
 
 AATLAHUD::AATLAHUD()
 {
@@ -60,6 +61,13 @@ void AATLAHUD::OpenPauseMenu_Implementation()
 	checkf(PauseMenuWidget, TEXT("Pause Menu Widget Not Set in BP_HUD_ATLA"));
 
 	PlayerUIWidgetBase->PushToMenuUIStack(PauseMenuWidget);
+}
+
+void AATLAHUD::OpenAttributesMenu_Implementation()
+{
+	checkf(AttributesMenuWidget, TEXT("Attributes Menu Widget Not Set in BP_HUD_ATLA"));
+
+	PlayerUIWidgetBase->PushToMenuUIStack(AttributesMenuWidget);
 }
 
 void AATLAHUD::OpenCharacterSelectUIWidget_Implementation()

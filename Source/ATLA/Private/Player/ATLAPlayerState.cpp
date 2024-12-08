@@ -13,7 +13,7 @@ AATLAPlayerState::AATLAPlayerState()
 
 	AttributeSet = CreateDefaultSubobject<UATLAAttributeSet>("AttributeSet");
 
-	NetUpdateFrequency = 100.f;
+	SetNetUpdateFrequency(100.f);
 }
 
 void AATLAPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

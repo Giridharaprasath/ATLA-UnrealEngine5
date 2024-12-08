@@ -9,6 +9,7 @@
 
 #include "ATLAHUD.generated.h"
 
+class UATLACommonActivatableUserWidget;
 class UATLAPlayerHUD;
 class UATLACommonActivatableWidget;
 class UATLACommonUserWidget;
@@ -41,7 +42,10 @@ public:
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ATLA|HUD")
 	void OpenPauseMenu();
-
+	
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ATLA|HUD")
+	void OpenAttributesMenu();
+	
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ATLA|HUD")
 	void OpenCharacterSelectUIWidget();
 
@@ -63,6 +67,7 @@ private:
 	TObjectPtr<UATLAPlayerHUD> PlayerHUDWidget;
 	UPROPERTY(EditAnywhere, Category = "ATLA|HUD")
 	TSubclassOf<UATLAPlayerHUD> PlayerHUDWidgetClass;
+
 	UPROPERTY()
 	TObjectPtr<UPlayerHUDWidgetController> PlayerHUDWidgetController;
 	UPROPERTY(EditAnywhere, Category = "ATLA|HUD")
@@ -80,6 +85,9 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "ATLA|HUD|Pause Menu")
 	TSubclassOf<UATLACommonActivatableWidget> PauseMenuWidget;
+
+	UPROPERTY(EditAnywhere, Category = "ATLA|HUD|Attributes Menu")
+	TSubclassOf<UATLACommonActivatableUserWidget> AttributesMenuWidget;
 
 	UPROPERTY(EditAnywhere, Category = "ATLA|HUD|Character Select")
 	TSubclassOf<UATLACommonActivatableWidget> CharacterSelectWidget;

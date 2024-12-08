@@ -5,7 +5,7 @@
 
 void UATLAAbilitySystemComponent::AbilityActorInfoSet()
 {
-	OnActiveGameplayEffectAddedDelegateToSelf.AddUObject(this, &ThisClass::EffectApplied);
+	OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &ThisClass::ClientEffectApplied);
 }
 
 void UATLAAbilitySystemComponent::AddCharacterAbilities(const TArray<TSubclassOf<UGameplayAbility>>& StartupAbilities)
@@ -16,7 +16,7 @@ void UATLAAbilitySystemComponent::AddCharacterAbilities(const TArray<TSubclassOf
 
 		if (const UATLAGameplayAbility* ATLAAbility = Cast<UATLAGameplayAbility>(AbilitySpec.Ability))
 		{
-			AbilitySpec.DynamicAbilityTags.AddTag(ATLAAbility->StartUpInputTag);
+			AbilitySpec.GetDynamicSpecSourceTags().AddTag(ATLAAbility->StartUpInputTag);
 			GiveAbility(AbilitySpec);
 		}
 	}
@@ -28,7 +28,7 @@ void UATLAAbilitySystemComponent::AbilityInputTagHeld(const FGameplayTag& InputT
 
 	for (FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
 	{
-		if (AbilitySpec.DynamicAbilityTags.HasTag(InputTag))
+		if (AbilitySpec.GetDynamicSpecSourceTags().HasTag(InputTag))
 		{
 			AbilitySpecInputPressed(AbilitySpec);
 			if (!AbilitySpec.IsActive())
@@ -45,14 +45,14 @@ void UATLAAbilitySystemComponent::AbilityInputTagReleased(const FGameplayTag& In
 
 	for (FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
 	{
-		if (AbilitySpec.DynamicAbilityTags.HasTag(InputTag))
+		if (AbilitySpec.GetDynamicSpecSourceTags().HasTag(InputTag))
 		{
 			AbilitySpecInputReleased(AbilitySpec);
 		}
 	}
 }
 
-void UATLAAbilitySystemComponent::EffectApplied(UAbilitySystemComponent* AbilitySystemComponent,
+void UATLAAbilitySystemComponent::ClientEffectApplied_Implementation(UAbilitySystemComponent* AbilitySystemComponent,
                                                 const FGameplayEffectSpec& EffectSpec,
                                                 FActiveGameplayEffectHandle ActiveEffectHandle)
 {
