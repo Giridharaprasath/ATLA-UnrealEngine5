@@ -1,6 +1,8 @@
 // Copyright Melon Studios.
 
 #include "ATLABlueprintFunctionLibrary.h"
+
+#include "Blueprint/WidgetLayoutLibrary.h"
 #include "Component/UIPopUpComponent.h"
 #include "Game/ATLAGameInstance.h"
 #include "GameFramework/HUD.h"
@@ -42,4 +44,30 @@ void UATLABlueprintFunctionLibrary::PopUpUINo(const UObject* WorldContextObject)
 FATLACharacters UATLABlueprintFunctionLibrary::GetCharacterData(UDataTable* DataTable, const FName RowName)
 {
 	return *GetDataTableRowByName<FATLACharacters>(DataTable, RowName);
+}
+
+FString UATLABlueprintFunctionLibrary::GetGameInfoDetails()
+{
+	FString GameName;
+	GConfig->GetString(
+		TEXT("/Script/EngineSettings.GeneralProjectSettings"),
+		TEXT("ProjectName"),
+		GameName,
+		GGameIni);
+	
+	FString GameVersion;
+	GConfig->GetString(
+		TEXT("/Script/EngineSettings.GeneralProjectSettings"),
+		TEXT("ProjectVersion"),
+		GameVersion,
+		GGameIni);
+
+	FString CompanyName;
+	GConfig->GetString(
+		TEXT("/Script/EngineSettings.GeneralProjectSettings"),
+		TEXT("CompanyName"),
+		CompanyName,
+		GGameIni);
+
+	return CompanyName + "-" + GameName + "-v" + GameVersion;
 }

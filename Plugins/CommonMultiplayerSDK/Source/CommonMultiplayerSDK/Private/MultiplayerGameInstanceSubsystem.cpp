@@ -102,7 +102,12 @@ void UMultiplayerGameInstanceSubsystem::JoinMultiplayerSession(int32 LocalPlayer
 
 	OnJoinSessionCompleteDelegateHandle = SessionInterface->AddOnJoinSessionCompleteDelegate_Handle(
 		OnJoinSessionCompleteDelegate);
-	SessionInterface->JoinSession(LocalPlayer, NAME_GameSession, SessionSearchResult);
+
+	FOnlineSessionSearchResult ModResult = SessionSearchResult;
+	ModResult.Session.SessionSettings.bUsesPresence = true;
+	ModResult.Session.SessionSettings.bUseLobbiesIfAvailable = true;
+
+	SessionInterface->JoinSession(LocalPlayer, NAME_GameSession, ModResult);
 }
 
 void UMultiplayerGameInstanceSubsystem::FindMultiplayerSession(bool bUseLan, FString LobbyName)
@@ -118,7 +123,6 @@ void UMultiplayerGameInstanceSubsystem::FindMultiplayerSession(bool bUseLan, FSt
 	SessionSearch->MaxSearchResults = 1000000;
 	SessionSearch->bIsLanQuery = bUseLan;
 	SessionSearch->QuerySettings.Set(SEARCH_MINSLOTSAVAILABLE, 0, EOnlineComparisonOp::GreaterThanEquals);
-	SessionSearch->QuerySettings.Set(SEARCH_PRESENCE, true, EOnlineComparisonOp::Equals);
 	SessionSearch->QuerySettings.Set(SEARCH_LOBBIES, true, EOnlineComparisonOp::Equals);
 
 	if (!bUseLan)
@@ -210,7 +214,7 @@ void UMultiplayerGameInstanceSubsystem::OnFindSessionComplete(bool bWasSuccessfu
 {
 	UE_LOG(LogCommonMultiplayerSDK, Display, TEXT("On Find Session Complete b : %hhd, C : %d"), bWasSuccessful,
 	       SessionSearch->SearchResults.Num());
-	
+
 	if (SessionInterface)
 	{
 		SessionInterface->ClearOnFindSessionsCompleteDelegate_Handle(OnFindSessionCompleteDelegateHandle);
