@@ -55,13 +55,6 @@ protected:
 	UFUNCTION(BlueprintNativeEvent, Category = "ATLA|HUD")
 	void CreatePlayerUIBaseWidget();
 
-	UFUNCTION(BlueprintPure, Category = "ATLA|HUD|Debug")
-	FString GetGameName();
-	UFUNCTION(BlueprintPure, Category = "ATLA|HUD|Debug")
-	FString GetGameVersion();
-	UFUNCTION(BlueprintPure, Category = "ATLA|HUD|Debug")
-	FString GetCompanyName();
-
 private:
 	UPROPERTY(BlueprintReadOnly, meta = ( AllowPrivateAccess = true ), Category = "ATLA|HUD")
 	TObjectPtr<UATLAPlayerHUD> PlayerHUDWidget;

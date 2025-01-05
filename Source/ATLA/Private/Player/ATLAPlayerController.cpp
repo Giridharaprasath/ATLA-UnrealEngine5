@@ -81,9 +81,6 @@ void AATLAPlayerController::BeginPlay()
 	Subsystem->AddMappingContext(UIGenericControls, 0);
 	Subsystem->AddMappingContext(ATLAPlayerControls, 0);
 
-	// TODO : REMOVE THIS WHEN ADDING CHARACTER SELECTION AT FIRST
-	bShowMouseCursor = false;
-
 	const FInputModeGameOnly InputModeData;
 	SetInputMode(InputModeData);
 }
