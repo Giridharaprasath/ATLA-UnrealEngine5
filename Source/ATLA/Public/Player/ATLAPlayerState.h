@@ -11,6 +11,8 @@
 class UAbilitySystemComponent;
 class UAttributeSet;
 
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnCharacterSelectedSignature, const FText&);
+
 /**
  * ATLA Player State Base Class.
  */
@@ -30,7 +32,9 @@ public:
 	FORCEINLINE FText GetCharacterName() const { return CharacterName; }
 
 	void SetCharacterName(FText InCharacterName);
-
+	
+	FOnCharacterSelectedSignature OnCharacterSelected;
+	
 protected:
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;

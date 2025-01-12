@@ -39,7 +39,7 @@ UAttributeMenuWidgetController* AATLAHUD::GetAttributeMenuWidgetController(const
 	return AttributeMenuWidgetController;
 }
 
-void AATLAHUD::InitPlayerHUD(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* ASC, UAttributeSet* AS)
+void AATLAHUD::CreatePlayerHUDWidget(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* ASC, UAttributeSet* AS)
 {
 	checkf(PlayerHUDWidgetClass, TEXT("Player HUD Widget Class Not Set in BP_HUD_ATLA"));
 	checkf(PlayerHUDWidgetControllerClass, TEXT("Player HUD Widget Controller Class Not Set in BP_HUD_ATLA"));
@@ -54,6 +54,13 @@ void AATLAHUD::InitPlayerHUD(APlayerController* PC, APlayerState* PS, UAbilitySy
 	PlayerWidgetController->BroadcastInitialValues();
 
 	UserWidget->AddToViewport();
+}
+
+void AATLAHUD::CreateOtherPlayerInfoHUD() const
+{
+	if (PlayerHUDWidget == nullptr) return;
+
+	PlayerHUDWidget->CreateOtherPlayerInfoWidget();
 }
 
 void AATLAHUD::OpenPauseMenu_Implementation()

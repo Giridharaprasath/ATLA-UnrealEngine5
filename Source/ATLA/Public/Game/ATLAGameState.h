@@ -14,4 +14,8 @@ UCLASS()
 class ATLA_API AATLAGameState : public AGameState
 {
 	GENERATED_BODY()
+
+public:
+	UFUNCTION(BlueprintCallable, NetMulticast, Reliable, Category = "ATLA|HUD")
+	void MulticastCreateOtherPlayerInfoHUD();
 };

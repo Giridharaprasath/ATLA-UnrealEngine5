@@ -6,6 +6,7 @@
 #include "AbilitySystem/ATLAAbilitySystemComponent.h"
 #include "ATLA/ATLA.h"
 #include "Game/ATLAGameMode.h"
+#include "Game/ATLAGameState.h"
 #include "HUD/ATLAHUD.h"
 #include "Input/ATLAInputComponent.h"
 #include "Kismet/GameplayStatics.h"
@@ -39,11 +40,21 @@ void AATLAPlayerController::ClientOnPlayerLeft_Implementation()
 void AATLAPlayerController::OnPlayerJoined_Implementation()
 {
 	UE_LOG(LogATLA, Display, TEXT("PC : On New Player Joined"));
+
+	if (AATLAGameState* ATLAGameState = Cast<AATLAGameState>(UGameplayStatics::GetGameState(GetWorld())))
+	{
+		ATLAGameState->MulticastCreateOtherPlayerInfoHUD();
+	}
 }
 
 void AATLAPlayerController::OnPlayerLeft_Implementation()
 {
 	UE_LOG(LogATLA, Display, TEXT("PC : On A Player Left"));
+	
+	if (AATLAGameState* ATLAGameState = Cast<AATLAGameState>(UGameplayStatics::GetGameState(GetWorld())))
+	{
+		ATLAGameState->MulticastCreateOtherPlayerInfoHUD();
+	}
 }
 
 void AATLAPlayerController::ClientSpawnSelectedPlayer_Implementation(const FName CharacterName)

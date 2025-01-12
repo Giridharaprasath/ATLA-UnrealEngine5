@@ -32,6 +32,7 @@ UAbilitySystemComponent* AATLAPlayerState::GetAbilitySystemComponent() const
 void AATLAPlayerState::SetCharacterName(FText InCharacterName)
 {
 	CharacterName = InCharacterName;
+	OnCharacterSelected.Broadcast(CharacterName);
 }
 
 void AATLAPlayerState::OnRep_Level(int32 OldLevel)

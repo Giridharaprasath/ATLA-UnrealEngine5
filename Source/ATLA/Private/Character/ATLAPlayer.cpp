@@ -66,7 +66,7 @@ void AATLAPlayer::InitAbilityActorInfo()
 	{
 		if (AATLAHUD* ATLAHUD = Cast<AATLAHUD>(ATLAPlayerController->GetHUD()))
 		{
-			ATLAHUD->InitPlayerHUD(ATLAPlayerController, ATLAPlayerState, AbilitySystemComponent, AttributeSet);
+			ATLAHUD->CreatePlayerHUDWidget(ATLAPlayerController, ATLAPlayerState, AbilitySystemComponent, AttributeSet);
 		}
 	}
 
