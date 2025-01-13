@@ -62,6 +62,9 @@ protected:
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ATLA|HUD")
 	void OpenAttributesMenu();
+
+	UFUNCTION(Server, Reliable, BlueprintCallable, Category = "ATLA|HUD")
+	void ServerCreateOtherPlayerInfoHUD();
 	
 private:
 

@@ -18,16 +18,16 @@ public class ATLA : ModuleRules
 		PublicDependencyModuleNames.AddRange(new[] { "UMG" });
 
 		// * Common UI
-		PublicDependencyModuleNames.AddRange(new string[] { "CommonInput", "CommonUI" });
+		PublicDependencyModuleNames.AddRange(new[] { "CommonInput", "CommonUI" });
 
 		// * Online Subsystem dependencies
-		PublicDependencyModuleNames.AddRange(new string[]
+		PublicDependencyModuleNames.AddRange(new[]
 			{ "OnlineSubsystem", "OnlineSubsystemSteam", "OnlineSubsystemUtils", "Steamworks" });
 
 		// * Discord Game SDK Plugin
-		PublicDependencyModuleNames.AddRange(new string[] { "DiscordGameSDK" });
+		PublicDependencyModuleNames.AddRange(new[] { "DiscordGameSDK" });
 
 		// * Common Multiplayer SDK Plugin
-		PublicDependencyModuleNames.AddRange(new string[] { "CommonMultiplayerSDK" });
+		PublicDependencyModuleNames.AddRange(new[] { "CommonMultiplayerSDK" });
 	}
 }
