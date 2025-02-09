@@ -2,13 +2,13 @@
 
 #include "UI/WidgetController/AttributeMenuWidgetController.h"
 #include "AbilitySystem/ATLAAttributeSet.h"
-#include "AbilitySystem/Data/AttributeInfo.h"
+#include "Data/Asset/ATLAAttributeSetInfo.h"
 
 void UAttributeMenuWidgetController::BroadcastInitialValues()
 {
 	UATLAAttributeSet* AS = CastChecked<UATLAAttributeSet>(AttributeSet);
 
-	check(AttributeInfo);
+	check(ATLAAttributeSetInfo);
 
 	for (auto& Pair : AS->TagsToAttributes)
 	{
@@ -20,7 +20,7 @@ void UAttributeMenuWidgetController::BindCallbacksToDependencies()
 {
 	UATLAAttributeSet* AS = CastChecked<UATLAAttributeSet>(AttributeSet);
 
-	check(AttributeInfo);
+	check(ATLAAttributeSetInfo);
 
 	for (auto& Pair : AS->TagsToAttributes)
 	{
@@ -36,7 +36,7 @@ void UAttributeMenuWidgetController::BindCallbacksToDependencies()
 void UAttributeMenuWidgetController::BroadcastAttributeInfo(const FGameplayTag& AttributeTag,
                                                             const FGameplayAttribute& Attribute) const
 {
-	FATLAAttributeInfo Info = AttributeInfo->FindAttributeInfoForTag(AttributeTag);
+	FAttributeSetInfo Info = ATLAAttributeSetInfo->FindAttributeInfoForTag(AttributeTag);
 	Info.AttributeValue = Attribute.GetNumericValue(AttributeSet);
 	AttributeInfoDelegate.Broadcast(Info);
 }

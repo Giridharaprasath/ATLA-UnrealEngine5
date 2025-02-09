@@ -6,6 +6,10 @@
 
 #include "FATLACharacters.generated.h"
 
+enum class ECharacterType : uint8;
+enum class ECharacterElement : uint8;
+class AATLAPlayer;
+
 /**
  *	ATLA Character Structure Class.
  */
@@ -18,7 +22,13 @@ struct FATLACharacters : public FTableRowBase
 	FString CharacterName;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
-	TSubclassOf<class AATLAPlayer> CharacterClass;
+	ECharacterElement CharacterElement;
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere)
+	ECharacterType CharacterType;
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere)
+	TSubclassOf<AATLAPlayer> CharacterClass;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 	UTexture2D* CharacterImage = nullptr;

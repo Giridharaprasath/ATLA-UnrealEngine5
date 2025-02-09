@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "AbilitySystemInterface.h"
+#include "Enum/ECharacterElement.h"
 #include "Interface/CombatInterface.h"
 
 #include "ATLACharacterBase.generated.h"
@@ -41,20 +42,13 @@ protected:
 	TObjectPtr<UAttributeSet> AttributeSet;
 
 	virtual void InitAbilityActorInfo();
-
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "ATLA|Attributes")
-	TSubclassOf<UGameplayEffect> DefaultPrimaryAttributes;
-
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "ATLA|Attributes")
-	TSubclassOf<UGameplayEffect> DefaultSecondaryAttributes;
-
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "ATLA|Attributes")
-	TSubclassOf<UGameplayEffect> DefaultVitalAttributes;
-
-	void ApplyEffectToSelf(TSubclassOf<UGameplayEffect> GameplayEffectClass, float Level) const;
-	void InitializeDefaultAttributes() const;
-
+	virtual void InitializeDefaultAttributes() const;
 	void AddCharacterAbilities();
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "ATLA|Character")
+	ECharacterElement CharacterElement;
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "ATLA|Character")
+	ECharacterType CharacterType;
 
 private:
 	UPROPERTY(EditAnywhere, Category = "ATLA|Abilities")

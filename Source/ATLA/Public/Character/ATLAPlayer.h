@@ -32,4 +32,5 @@ public:
 	
 protected:
 	virtual void InitAbilityActorInfo() override;
+	virtual void InitializeDefaultAttributes() const override;
 };

@@ -7,10 +7,10 @@
 
 #include "AttributeMenuWidgetController.generated.h"
 
-struct FATLAAttributeInfo;
-class UAttributeInfo;
+class UATLAAttributeSetInfo;
+struct FAttributeSetInfo;
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FAttributeInfoSignature, const FATLAAttributeInfo&, Info);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FAttributeInfoSignature, const FAttributeSetInfo&, Info);
 
 /**
  *	Attribute Menu Widget Controller Class.
@@ -29,7 +29,7 @@ public:
 
 protected:
 	UPROPERTY(EditDefaultsOnly)
-	TObjectPtr<UAttributeInfo> AttributeInfo;
+	TObjectPtr<UATLAAttributeSetInfo> ATLAAttributeSetInfo;
 
 private:
 	void BroadcastAttributeInfo(const FGameplayTag& AttributeTag, const FGameplayAttribute& Attribute) const;

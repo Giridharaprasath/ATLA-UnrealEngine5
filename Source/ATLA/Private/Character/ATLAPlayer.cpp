@@ -3,6 +3,7 @@
 #include "Character/ATLAPlayer.h"
 #include "AbilitySystemComponent.h"
 #include "AbilitySystem/ATLAAbilitySystemComponent.h"
+#include "AbilitySystem/ATLAAbilitySystemLibrary.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "HUD/ATLAHUD.h"
 #include "Player/ATLAPlayerController.h"
@@ -71,6 +72,14 @@ void AATLAPlayer::InitAbilityActorInfo()
 	}
 
 	InitializeDefaultAttributes();
+}
+
+void AATLAPlayer::InitializeDefaultAttributes() const
+{	
+	if (!HasAuthority()) return;
+	
+	UATLAAbilitySystemLibrary::InitializeATLACharacterInfo(this, CharacterElement, CharacterType, 1.f, true,
+	                                                       GetAbilitySystemComponent());
 }
 
 void AATLAPlayer::OnCharacterSelected_Implementation()

@@ -6,13 +6,13 @@
 #include "GameplayTagContainer.h"
 #include "Engine/DataAsset.h"
 
-#include "AttributeInfo.generated.h"
+#include "ATLAAttributeSetInfo.generated.h"
 
 USTRUCT(BlueprintType)
-struct FATLAAttributeInfo
+struct FAttributeSetInfo
 {
 	GENERATED_BODY()
-
+	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	FGameplayTag AttributeTag = FGameplayTag();
 
@@ -27,16 +27,16 @@ struct FATLAAttributeInfo
 };
 
 /**
- *	Attribute Info Data Asset Class.
+ *	ATLA Attribute Info Data Asset Class.
  */
 UCLASS()
-class ATLA_API UAttributeInfo : public UDataAsset
+class ATLA_API UATLAAttributeSetInfo : public UDataAsset
 {
 	GENERATED_BODY()
 
 public:
-	FATLAAttributeInfo FindAttributeInfoForTag(const FGameplayTag& AttributeTag, bool bLogNotFound = false) const;
+	FAttributeSetInfo FindAttributeInfoForTag(const FGameplayTag& AttributeTag, bool bLogNotFound = false) const;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	TArray<FATLAAttributeInfo> AttributeInformation;
+	TArray<FAttributeSetInfo> AttributeInformation;
 };

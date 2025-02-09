@@ -13,7 +13,6 @@
 
 struct FATLAGameplayTags
 {
-public:
 	static const FATLAGameplayTags& Get() { return GameplayTags; }
 	static void InitializeNativeGameplayTags();
 
@@ -37,6 +36,7 @@ public:
 	FGameplayTag InputTag_Ability2;
 	FGameplayTag InputTag_Ability3;
 	FGameplayTag InputTag_Ability4;
+	FGameplayTag InputTag_AbilityVision;
 
 private:
 	static FATLAGameplayTags GameplayTags;

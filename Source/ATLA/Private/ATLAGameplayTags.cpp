@@ -71,4 +71,7 @@ void FATLAGameplayTags::InitializeNativeGameplayTags()
 	
 	GameplayTags.InputTag_Ability4 = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("InputTag.Ability4"), FString("Input Tag for Ability 4"));
+
+	GameplayTags.InputTag_AbilityVision = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("InputTag.AbilityVision"), FString("Input Tag for Ability Vision"));
 }

@@ -8,6 +8,7 @@
 
 #include "ATLAGameMode.generated.h"
 
+class UATLACharacterInfo;
 class AATLAPlayerController;
 
 /**
@@ -25,7 +26,13 @@ public:
 
 	UFUNCTION(BlueprintNativeEvent, Category = "Spawn")
 	void SpawnSelectedCharacter(AATLAPlayerController* ATLAPlayerController, const FName CharacterName);
+	
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "ATLA|Character Data")
+	TObjectPtr<UATLACharacterInfo> PlayerCharacterInfo;
 
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "ATLA|Character Data")
+	TObjectPtr<UATLACharacterInfo> EnemyCharacterInfo;
+	
 protected:
 	virtual void OnPostLogin(AController* NewPlayer) override;
 	virtual void Logout(AController* Exiting) override;
