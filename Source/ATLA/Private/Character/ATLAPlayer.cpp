@@ -26,7 +26,6 @@ void AATLAPlayer::PossessedBy(AController* NewController)
 
 	// * Init Ability Actor Info for the Sever
 	InitAbilityActorInfo();
-	AddCharacterAbilities();
 }
 
 void AATLAPlayer::OnRep_PlayerState()

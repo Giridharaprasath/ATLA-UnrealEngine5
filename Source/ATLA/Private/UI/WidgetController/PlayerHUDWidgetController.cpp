@@ -25,7 +25,7 @@ void UPlayerHUDWidgetController::BindCallbacksToDependencies()
 		{
 			OnCharacterNameChanged.Broadcast(CharacterName);
 		});
-	
+
 	const UATLAAttributeSet* ATLAAttributeSet = CastChecked<UATLAAttributeSet>(AttributeSet);
 
 	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
@@ -60,18 +60,45 @@ void UPlayerHUDWidgetController::BindCallbacksToDependencies()
 		}
 	);
 
-	Cast<UATLAAbilitySystemComponent>(AbilitySystemComponent)->EffectAssetTags.AddLambda(
-		[this](const FGameplayTagContainer& AssetTags)
-		{			
-			for (const FGameplayTag& Tag : AssetTags)
+	if (UATLAAbilitySystemComponent* ATLAASC = Cast<UATLAAbilitySystemComponent>(AbilitySystemComponent))
+	{
+		if (ATLAASC->bStartupAbilitiesGiven)
+		{
+			OnInitializeStartupAbilitiesGiven(ATLAASC);
+		}
+		else
+		{
+			ATLAASC->AbilitiesGiven.AddUObject(this, &ThisClass::OnInitializeStartupAbilitiesGiven);
+		}
+
+		ATLAASC->EffectAssetTags.AddLambda(
+			[this](const FGameplayTagContainer& AssetTags)
 			{
-				FGameplayTag MessageTag = FGameplayTag::RequestGameplayTag(FName("Message"));
-				if (Tag.MatchesTag(MessageTag))
+				for (const FGameplayTag& Tag : AssetTags)
 				{
-					const FUIWidgetRow* Row = GetDataTableRowByTag<FUIWidgetRow>(MessageWidgetDataTable, Tag);
-					MessageWidgetRowDelegate.Broadcast(*Row);
+					FGameplayTag MessageTag = FGameplayTag::RequestGameplayTag(FName("Message"));
+					if (Tag.MatchesTag(MessageTag))
+					{
+						const FUIWidgetRow* Row = GetDataTableRowByTag<FUIWidgetRow>(MessageWidgetDataTable, Tag);
+						MessageWidgetRowDelegate.Broadcast(*Row);
+					}
 				}
 			}
-		}
-	);
+		);
+	}
+}
+
+void UPlayerHUDWidgetController::OnInitializeStartupAbilitiesGiven(UATLAAbilitySystemComponent* ATLAASC)
+{
+	if (!ATLAASC->bStartupAbilitiesGiven) return;
+
+	FForEachAbility BroadcastDelegate;
+	BroadcastDelegate.BindLambda([this, ATLAASC](const FGameplayAbilitySpec& AbilitySpec)
+	{
+		FAbilityInfo Info = AbilityInfo->FindAbilityInfoForTag(ATLAASC->GetAbilityTagFromSpec(AbilitySpec));
+		Info.InputTag = ATLAASC->GetInputTagFromSpec(AbilitySpec);
+		AbilityInfoDelegate.Broadcast(Info);
+	});
+
+	ATLAASC->ForEachAbility(BroadcastDelegate);
 }

@@ -19,23 +19,26 @@ struct FCharacterInfo
 	UPROPERTY(EditDefaultsOnly, Category = "Primary Attributes")
 	bool bUseCustomPrimaryAttributes;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Primary Attributes")
-	bool bUseCustomSecondaryAttributes;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Primary Attributes")
-	bool bUseCustomVitalAttributes;
-
 	UPROPERTY(EditDefaultsOnly, Category = "Primary Attributes",
 		meta = (EditCondition = "bUseCustomPrimaryAttributes", EditConditionHides))
 	TSubclassOf<UGameplayEffect> PrimaryAttributes;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Primary Attributes",
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Secondary Attributes")
+	bool bUseCustomSecondaryAttributes;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Secondary Attributes",
 		meta = (EditCondition = "bUseCustomSecondaryAttributes", EditConditionHides))
 	TSubclassOf<UGameplayEffect> SecondaryAttributes;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Primary Attributes",
+	UPROPERTY(EditDefaultsOnly, Category = "Vital Attributes")
+	bool bUseCustomVitalAttributes;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Vital Attributes",
 		meta = (EditCondition = "bUseCustomVitalAttributes", EditConditionHides))
 	TSubclassOf<UGameplayEffect> VitalAttributes;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Abilities")
+	TArray<TSubclassOf<UGameplayAbility>> CharacterAbilities;
 };
 
 USTRUCT(BlueprintType)

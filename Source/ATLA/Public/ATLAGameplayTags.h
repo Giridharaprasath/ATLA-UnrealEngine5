@@ -36,7 +36,15 @@ struct FATLAGameplayTags
 	FGameplayTag InputTag_Ability2;
 	FGameplayTag InputTag_Ability3;
 	FGameplayTag InputTag_Ability4;
+	FGameplayTag InputTag_Jump;
+	FGameplayTag InputTag_Sprint;
 	FGameplayTag InputTag_AbilityVision;
+
+	FGameplayTag Abilities_Common_Jump;
+	FGameplayTag Abilities_Common_Sprint;
+	FGameplayTag Abilities_Common_Vision;
+
+	FGameplayTag Abilities_Earth_SeismicSense;
 
 private:
 	static FATLAGameplayTags GameplayTags;

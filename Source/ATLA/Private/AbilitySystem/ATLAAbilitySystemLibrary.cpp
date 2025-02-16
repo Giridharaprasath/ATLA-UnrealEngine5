@@ -1,7 +1,7 @@
 // Copyright Melon Studios.
 
 #include "AbilitySystem/ATLAAbilitySystemLibrary.h"
-
+#include "AbilitySystem/ATLAAbilitySystemComponent.h"
 #include "AbilitySystem/Abilities/ATLAGameplayAbility.h"
 #include "Game/ATLAGameMode.h"
 #include "Kismet/GameplayStatics.h"
@@ -88,7 +88,7 @@ void UATLAAbilitySystemLibrary::InitializeATLACharacterInfo(const UObject* World
 		SecondaryAttributeContextHandle.AddSourceObject(AvatarActor);
 		const FGameplayEffectSpecHandle SecondaryAttributeSpecHandle = ASC->MakeOutgoingSpec(
 			SecondaryAttribute, Level, SecondaryAttributeContextHandle);
-		ASC->ApplyGameplayEffectSpecToSelf(*SecondaryAttributeSpecHandle.Data.Get());		
+		ASC->ApplyGameplayEffectSpecToSelf(*SecondaryAttributeSpecHandle.Data.Get());
 	}
 
 	if (VitalAttribute != nullptr)
@@ -100,22 +100,12 @@ void UATLAAbilitySystemLibrary::InitializeATLACharacterInfo(const UObject* World
 		ASC->ApplyGameplayEffectSpecToSelf(*VitalAttributeSpecHandle.Data.Get());
 	}
 
-	for (const TSubclassOf Attribute : ATLACharacterInfo->CommonAttributes)
+	if (UATLAAbilitySystemComponent* ATLAASC = Cast<UATLAAbilitySystemComponent>(ASC))
 	{
-		FGameplayEffectContextHandle CommonAttributeContextHandle = ASC->MakeEffectContext();
-		CommonAttributeContextHandle.AddSourceObject(AvatarActor);
-		const FGameplayEffectSpecHandle CommonAttributeSpecHandle = ASC->MakeOutgoingSpec(
-			Attribute, Level, CommonAttributeContextHandle);
-		ASC->ApplyGameplayEffectSpecToSelf(*CommonAttributeSpecHandle.Data.Get());
-	}
-
-	for (TSubclassOf Ability : ATLACharacterInfo->CommonAbilities)
-	{
-		FGameplayAbilitySpec AbilitySpec = FGameplayAbilitySpec(Ability, Level);
-		if (const UATLAGameplayAbility* ATLAAbility = Cast<UATLAGameplayAbility>(AbilitySpec.Ability))
-		{
-			AbilitySpec.GetDynamicSpecSourceTags().AddTag(ATLAAbility->StartUpInputTag);
-			ASC->GiveAbility(AbilitySpec);
-		}
+		ATLAASC->AddCharacterAbilities(ATLACharacterInfo->CommonAbilities, Level);
+		ATLAASC->AddCharacterAbilities(CharacterInfo.CharacterAbilities, Level);
+		
+		ATLAASC->bStartupAbilitiesGiven = true;
+		ATLAASC->AbilitiesGiven.Broadcast(ATLAASC);
 	}
 }

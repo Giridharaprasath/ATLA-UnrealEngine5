@@ -1,6 +1,7 @@
 // Copyright Melon Studios.
 
 #include "Data/Asset/ATLAAttributeSetInfo.h"
+#include "ATLA/ATLA.h"
 
 FAttributeSetInfo UATLAAttributeSetInfo::FindAttributeInfoForTag(const FGameplayTag& AttributeTag,
                                                                  bool bLogNotFound) const
@@ -15,7 +16,7 @@ FAttributeSetInfo UATLAAttributeSetInfo::FindAttributeInfoForTag(const FGameplay
 
 	if (bLogNotFound)
 	{
-		UE_LOG(LogTemp, Error, TEXT("Can't find Info for AttributeTag [%s] on AttributeInfo [%s]"),
+		UE_LOG(LogATLA, Error, TEXT("Can't find Info for AttributeTag [%s] on AttributeInfo [%s]"),
 		       *AttributeTag.ToString(), *GetNameSafe(this));
 	}
 

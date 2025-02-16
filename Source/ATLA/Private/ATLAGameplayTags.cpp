@@ -62,16 +62,37 @@ void FATLAGameplayTags::InitializeNativeGameplayTags()
 	 */
 	GameplayTags.InputTag_Ability1 = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("InputTag.Ability1"), FString("Input Tag for Ability 1"));
-	
+
 	GameplayTags.InputTag_Ability2 = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("InputTag.Ability2"), FString("Input Tag for Ability 2"));
-	
+
 	GameplayTags.InputTag_Ability3 = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("InputTag.Ability3"), FString("Input Tag for Ability 3"));
-	
+
 	GameplayTags.InputTag_Ability4 = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("InputTag.Ability4"), FString("Input Tag for Ability 4"));
 
+	GameplayTags.InputTag_Jump = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("InputTag.Jump"), FString("Input Tag for Jump"));
+
+	GameplayTags.InputTag_Sprint = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("InputTag.Sprint"), FString("Input Tag for Sprint"));
+
 	GameplayTags.InputTag_AbilityVision = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("InputTag.AbilityVision"), FString("Input Tag for Ability Vision"));
+
+	/*
+	 *	Abilities Tag
+	 */
+	GameplayTags.Abilities_Common_Jump = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Abilities.Common.Jump"), FString("Abilities Tag for Ability Common Jump"));
+
+	GameplayTags.Abilities_Common_Sprint = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Abilities.Common.Sprint"), FString("Abilities Tag for Ability Common Sprint"));
+
+	GameplayTags.Abilities_Common_Vision = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Abilities.Common.Vision"), FString("Abilities Tag for Ability Common Vision"));
+
+	GameplayTags.Abilities_Earth_SeismicSense = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Abilities.Earth.SeismicSense"), FString("Abilities Tag for Ability Earth Seismic Sense"));
 }

@@ -26,11 +26,3 @@ void AATLACharacterBase::InitAbilityActorInfo()
 void AATLACharacterBase::InitializeDefaultAttributes() const
 {
 }
-
-void AATLACharacterBase::AddCharacterAbilities()
-{
-	// UATLAAbilitySystemComponent* ATLAASC = CastChecked<UATLAAbilitySystemComponent>(AbilitySystemComponent);
-	// if (!HasAuthority()) return;
-	//
-	// ATLAASC->AddCharacterAbilities(StartupAbilities);
-}

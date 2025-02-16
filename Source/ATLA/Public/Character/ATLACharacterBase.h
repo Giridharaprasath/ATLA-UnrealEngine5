@@ -43,14 +43,9 @@ protected:
 
 	virtual void InitAbilityActorInfo();
 	virtual void InitializeDefaultAttributes() const;
-	void AddCharacterAbilities();
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "ATLA|Character")
 	ECharacterElement CharacterElement;
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "ATLA|Character")
 	ECharacterType CharacterType;
-
-private:
-	UPROPERTY(EditAnywhere, Category = "ATLA|Abilities")
-	TArray<TSubclassOf<UGameplayAbility>> StartupAbilities;
 };
