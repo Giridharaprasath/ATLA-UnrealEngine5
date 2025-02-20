@@ -10,6 +10,7 @@
 
 #include "ATLACharacterBase.generated.h"
 
+class UATLAAbilitySystemComponent;
 class UAbilitySystemComponent;
 class UAttributeSet;
 class UGameplayEffect;
@@ -24,8 +25,9 @@ class ATLA_API AATLACharacterBase : public ACharacter, public IAbilitySystemInte
 	GENERATED_BODY()
 
 public:
-	AATLACharacterBase();
+	AATLACharacterBase(const FObjectInitializer& ObjectInitializer);
 
+	UATLAAbilitySystemComponent* GetATLAAbilitySystemComponent() const;
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const { return AttributeSet; }
 
@@ -43,6 +45,9 @@ protected:
 
 	virtual void InitAbilityActorInfo();
 	virtual void InitializeDefaultAttributes() const;
+
+	virtual void OnMovementModeChanged(EMovementMode PrevMovementMode, uint8 PreviousCustomMode = 0) override;
+	void SetMovementModeTag(EMovementMode MovementMode, uint8 CustomMovementMode, bool bTagEnabled) const;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "ATLA|Character")
 	ECharacterElement CharacterElement;

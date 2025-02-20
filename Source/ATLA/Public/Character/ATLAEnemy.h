@@ -16,7 +16,7 @@ class ATLA_API AATLAEnemy : public AATLACharacterBase
 	GENERATED_BODY()
 
 public:
-	AATLAEnemy();
+	AATLAEnemy(const FObjectInitializer& ObjectInitializer);
 
 	/** Combat Interface **/
 	virtual int32 GetPlayerLevel() override;

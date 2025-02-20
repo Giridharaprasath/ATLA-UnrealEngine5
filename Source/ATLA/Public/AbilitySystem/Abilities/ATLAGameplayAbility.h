@@ -7,6 +7,8 @@
 
 #include "ATLAGameplayAbility.generated.h"
 
+class AATLACharacterBase;
+
 /**
  *	ATLA Gameplay Ability Class.			
  */
@@ -18,4 +20,7 @@ class ATLA_API UATLAGameplayAbility : public UGameplayAbility
 public:
 	UPROPERTY(EditDefaultsOnly, Category = "ATLA|Input")
 	FGameplayTag StartUpInputTag;
+
+	UFUNCTION(BlueprintCallable, Category = "ATLA|Abilities")
+	AATLACharacterBase* GetATLACharacterFromActorInfo() const;
 };

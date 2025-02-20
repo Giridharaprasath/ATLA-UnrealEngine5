@@ -58,6 +58,15 @@ void FATLAGameplayTags::InitializeNativeGameplayTags()
 		FName("Attributes.Secondary.MaxStamina"), FString("Maximum amount of Stamina"));
 
 	/*
+	 *	Movement Mode Tags
+	 */
+	GameplayTags.MovementMode_Walking = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Movement.Mode.Walking"), FString("Movement Mode Tag for Walking"));
+
+	GameplayTags.MovementMode_Falling = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Movement.Mode.Falling"), FString("Movement Mode Tag for Falling"));
+
+	/*
 	 *	Input Tags
 	 */
 	GameplayTags.InputTag_Ability1 = UGameplayTagsManager::Get().AddNativeGameplayTag(
@@ -78,11 +87,14 @@ void FATLAGameplayTags::InitializeNativeGameplayTags()
 	GameplayTags.InputTag_Sprint = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("InputTag.Sprint"), FString("Input Tag for Sprint"));
 
+	GameplayTags.InputTag_Dodge = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("InputTag.Dodge"), FString("Input Tag for Dodge"));
+
 	GameplayTags.InputTag_AbilityVision = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("InputTag.AbilityVision"), FString("Input Tag for Ability Vision"));
 
 	/*
-	 *	Abilities Tag
+	 *	Common Abilities Tag
 	 */
 	GameplayTags.Abilities_Common_Jump = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Abilities.Common.Jump"), FString("Abilities Tag for Ability Common Jump"));
@@ -93,6 +105,12 @@ void FATLAGameplayTags::InitializeNativeGameplayTags()
 	GameplayTags.Abilities_Common_Vision = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Abilities.Common.Vision"), FString("Abilities Tag for Ability Common Vision"));
 
+	GameplayTags.Abilities_Common_Dodge = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Abilities.Common.Dodge"), FString("Abilities Tag for Ability Dodge"));
+
+	/*
+	 *	EARTH Abilities Tag
+	 */
 	GameplayTags.Abilities_Earth_SeismicSense = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Abilities.Earth.SeismicSense"), FString("Abilities Tag for Ability Earth Seismic Sense"));
 }

@@ -33,4 +33,8 @@ public:
 	static void InitializeATLACharacterInfo(const UObject* WorldContextObject, ECharacterElement CharacterElement,
 	                                        ECharacterType CharacterType, float Level, bool bIsPlayer,
 	                                        UAbilitySystemComponent* ASC);
+
+private:
+	static void ApplyGameplayEffectToTarget(const TSubclassOf<UGameplayEffect>& Attribute, UAbilitySystemComponent* ASC,
+	                                        const AActor* AvatarActor, const int32 Level);
 };

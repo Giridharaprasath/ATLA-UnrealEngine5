@@ -75,29 +75,22 @@ void UATLAAbilitySystemLibrary::InitializeATLACharacterInfo(const UObject* World
 
 	if (PrimaryAttribute != nullptr)
 	{
-		FGameplayEffectContextHandle PrimaryAttributeContextHandle = ASC->MakeEffectContext();
-		PrimaryAttributeContextHandle.AddSourceObject(AvatarActor);
-		const FGameplayEffectSpecHandle PrimaryAttributeSpecHandle = ASC->MakeOutgoingSpec(
-			PrimaryAttribute, Level, PrimaryAttributeContextHandle);
-		ASC->ApplyGameplayEffectSpecToSelf(*PrimaryAttributeSpecHandle.Data.Get());
+		ApplyGameplayEffectToTarget(PrimaryAttribute, ASC, AvatarActor, Level);
 	}
 
 	if (SecondaryAttribute != nullptr)
 	{
-		FGameplayEffectContextHandle SecondaryAttributeContextHandle = ASC->MakeEffectContext();
-		SecondaryAttributeContextHandle.AddSourceObject(AvatarActor);
-		const FGameplayEffectSpecHandle SecondaryAttributeSpecHandle = ASC->MakeOutgoingSpec(
-			SecondaryAttribute, Level, SecondaryAttributeContextHandle);
-		ASC->ApplyGameplayEffectSpecToSelf(*SecondaryAttributeSpecHandle.Data.Get());
+		ApplyGameplayEffectToTarget(SecondaryAttribute, ASC, AvatarActor, Level);
 	}
 
 	if (VitalAttribute != nullptr)
+	{		
+		ApplyGameplayEffectToTarget(VitalAttribute, ASC, AvatarActor, Level);
+	}
+
+	for (TSubclassOf Attribute : ATLACharacterInfo->CommonAttributes)
 	{
-		FGameplayEffectContextHandle VitalAttributeContextHandle = ASC->MakeEffectContext();
-		VitalAttributeContextHandle.AddSourceObject(AvatarActor);
-		const FGameplayEffectSpecHandle VitalAttributeSpecHandle = ASC->MakeOutgoingSpec(
-			VitalAttribute, Level, VitalAttributeContextHandle);
-		ASC->ApplyGameplayEffectSpecToSelf(*VitalAttributeSpecHandle.Data.Get());
+		ApplyGameplayEffectToTarget(Attribute, ASC, AvatarActor, Level);
 	}
 
 	if (UATLAAbilitySystemComponent* ATLAASC = Cast<UATLAAbilitySystemComponent>(ASC))
@@ -108,4 +101,14 @@ void UATLAAbilitySystemLibrary::InitializeATLACharacterInfo(const UObject* World
 		ATLAASC->bStartupAbilitiesGiven = true;
 		ATLAASC->AbilitiesGiven.Broadcast(ATLAASC);
 	}
+}
+
+void UATLAAbilitySystemLibrary::ApplyGameplayEffectToTarget(const TSubclassOf<UGameplayEffect>& Attribute,
+	UAbilitySystemComponent* ASC, const AActor* AvatarActor, const int32 Level)
+{
+	FGameplayEffectContextHandle AttributeContextHandle = ASC->MakeEffectContext();
+	AttributeContextHandle.AddSourceObject(AvatarActor);
+	const FGameplayEffectSpecHandle AttributeSpecHandle = ASC->MakeOutgoingSpec(
+		Attribute, Level, AttributeContextHandle);
+	ASC->ApplyGameplayEffectSpecToTarget(*AttributeSpecHandle.Data.Get(), ASC);
 }

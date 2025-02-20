@@ -5,12 +5,13 @@
 #include "AbilitySystem/ATLAAbilitySystemLibrary.h"
 #include "AbilitySystem/ATLAAttributeSet.h"
 
-AATLAEnemy::AATLAEnemy()
+AATLAEnemy::AATLAEnemy(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
 {
 	AbilitySystemComponent = CreateDefaultSubobject<UATLAAbilitySystemComponent>("AbilitySystemComponent");
 	AbilitySystemComponent->SetIsReplicated(true);
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
-	
+
 	AttributeSet = CreateDefaultSubobject<UATLAAttributeSet>("AttributeSet");
 }
 

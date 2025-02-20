@@ -130,6 +130,9 @@ void AATLAPlayerController::ServerCreateOtherPlayerInfoHUD_Implementation()
 
 void AATLAPlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
 {
+	if (GetATLAASC() == nullptr) return;
+
+	GetATLAASC()->AbilityInputTagPressed(InputTag);
 }
 
 void AATLAPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)

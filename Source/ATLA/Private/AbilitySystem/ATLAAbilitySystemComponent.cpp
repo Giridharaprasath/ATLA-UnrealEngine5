@@ -24,6 +24,22 @@ void UATLAAbilitySystemComponent::AddCharacterAbilities(const TArray<TSubclassOf
 	}
 }
 
+void UATLAAbilitySystemComponent::AbilityInputTagPressed(const FGameplayTag& InputTag)
+{
+	// if (!InputTag.IsValid()) return;
+	//
+	// for (FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
+	// {
+	// 	if (AbilitySpec.GetDynamicSpecSourceTags().HasTag(InputTag))
+	// 	{
+	// 		AbilitySpecInputPressed(AbilitySpec);
+	// 		if (!AbilitySpec.IsActive())
+	// 		{
+	// 		}
+	// 	}
+	// }
+}
+
 void UATLAAbilitySystemComponent::AbilityInputTagHeld(const FGameplayTag& InputTag)
 {
 	if (!InputTag.IsValid()) return;
@@ -47,7 +63,7 @@ void UATLAAbilitySystemComponent::AbilityInputTagReleased(const FGameplayTag& In
 
 	for (FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
 	{
-		if (AbilitySpec.GetDynamicSpecSourceTags().HasTag(InputTag))
+		if (AbilitySpec.GetDynamicSpecSourceTags().HasTag(InputTag) && AbilitySpec.IsActive())
 		{
 			AbilitySpecInputReleased(AbilitySpec);
 		}
@@ -103,4 +119,38 @@ void UATLAAbilitySystemComponent::ClientEffectApplied_Implementation(UAbilitySys
 	EffectSpec.GetAllAssetTags(TagContainer);
 
 	EffectAssetTags.Broadcast(TagContainer);
+}
+
+void UATLAAbilitySystemComponent::AbilitySpecInputPressed(FGameplayAbilitySpec& Spec)
+{
+	Super::AbilitySpecInputPressed(Spec);
+
+	// if (Spec.IsActive())
+	// {
+	// 	PRAGMA_DISABLE_DEPRECATION_WARNINGS
+	// 	const UGameplayAbility* Instance = Spec.GetPrimaryInstance();
+	// 	FPredictionKey OriginalPredictionKey = Instance
+	// 		                                       ? Instance->GetCurrentActivationInfo().GetActivationPredictionKey()
+	// 		                                       : Spec.ActivationInfo.GetActivationPredictionKey();
+	// 	PRAGMA_ENABLE_DEPRECATION_WARNINGS
+	//
+	// 	InvokeReplicatedEvent(EAbilityGenericReplicatedEvent::InputPressed, Spec.Handle, OriginalPredictionKey);
+	// }
+}
+
+void UATLAAbilitySystemComponent::AbilitySpecInputReleased(FGameplayAbilitySpec& Spec)
+{
+	Super::AbilitySpecInputReleased(Spec);
+
+	if (Spec.IsActive())
+	{
+		PRAGMA_DISABLE_DEPRECATION_WARNINGS
+		const UGameplayAbility* Instance = Spec.GetPrimaryInstance();
+		FPredictionKey OriginalPredictionKey = Instance
+			                                       ? Instance->GetCurrentActivationInfo().GetActivationPredictionKey()
+			                                       : Spec.ActivationInfo.GetActivationPredictionKey();
+		PRAGMA_ENABLE_DEPRECATION_WARNINGS
+
+		InvokeReplicatedEvent(EAbilityGenericReplicatedEvent::InputReleased, Spec.Handle, OriginalPredictionKey);
+	}
 }
