@@ -17,21 +17,21 @@ struct FCharacterInfo
 	GENERATED_BODY()
 
 	UPROPERTY(EditDefaultsOnly, Category = "Primary Attributes")
-	bool bUseCustomPrimaryAttributes;
+	bool bUseCustomPrimaryAttributes = false;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Primary Attributes",
 		meta = (EditCondition = "bUseCustomPrimaryAttributes", EditConditionHides))
 	TSubclassOf<UGameplayEffect> PrimaryAttributes;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Secondary Attributes")
-	bool bUseCustomSecondaryAttributes;
+	bool bUseCustomSecondaryAttributes = false;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Secondary Attributes",
 		meta = (EditCondition = "bUseCustomSecondaryAttributes", EditConditionHides))
 	TSubclassOf<UGameplayEffect> SecondaryAttributes;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Vital Attributes")
-	bool bUseCustomVitalAttributes;
+	bool bUseCustomVitalAttributes = false;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Vital Attributes",
 		meta = (EditCondition = "bUseCustomVitalAttributes", EditConditionHides))

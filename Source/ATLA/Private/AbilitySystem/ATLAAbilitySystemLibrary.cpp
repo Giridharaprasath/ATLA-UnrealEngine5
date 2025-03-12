@@ -1,6 +1,7 @@
 // Copyright Melon Studios.
 
 #include "AbilitySystem/ATLAAbilitySystemLibrary.h"
+#include "ATLABlueprintFunctionLibrary.h"
 #include "AbilitySystem/ATLAAbilitySystemComponent.h"
 #include "AbilitySystem/Abilities/ATLAGameplayAbility.h"
 #include "Game/ATLAGameMode.h"
@@ -8,6 +9,7 @@
 #include "HUD/ATLAHUD.h"
 #include "Player/ATLAPlayerState.h"
 #include "UI/WidgetController/ATLAWidgetController.h"
+#include "Structure/FAbilityVisionLevel.h"
 
 UPlayerHUDWidgetController* UATLAAbilitySystemLibrary::GetPlayerHUDWidgetController(const UObject* WorldContextObject)
 {
@@ -103,8 +105,13 @@ void UATLAAbilitySystemLibrary::InitializeATLACharacterInfo(const UObject* World
 	}
 }
 
+FAbilityVisionLevel UATLAAbilitySystemLibrary::GetAbilityVisionLevel(UDataTable* DataTable, const FName RowName)
+{
+	return *UATLABlueprintFunctionLibrary::GetDataTableRowByName<FAbilityVisionLevel>(DataTable, RowName);
+}
+
 void UATLAAbilitySystemLibrary::ApplyGameplayEffectToTarget(const TSubclassOf<UGameplayEffect>& Attribute,
-	UAbilitySystemComponent* ASC, const AActor* AvatarActor, const int32 Level)
+                                                            UAbilitySystemComponent* ASC, const AActor* AvatarActor, const int32 Level)
 {
 	FGameplayEffectContextHandle AttributeContextHandle = ASC->MakeEffectContext();
 	AttributeContextHandle.AddSourceObject(AvatarActor);

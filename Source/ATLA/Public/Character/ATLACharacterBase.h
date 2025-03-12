@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "AbilitySystemInterface.h"
 #include "Enum/ECharacterElement.h"
+#include "Interface/ATLAPlayerInterface.h"
 #include "Interface/CombatInterface.h"
 
 #include "ATLACharacterBase.generated.h"
@@ -20,7 +21,7 @@ class UGameplayAbility;
  * ATLA Character Base Class.
  */
 UCLASS(Abstract)
-class ATLA_API AATLACharacterBase : public ACharacter, public IAbilitySystemInterface, public ICombatInterface
+class ATLA_API AATLACharacterBase : public ACharacter, public IAbilitySystemInterface, public ICombatInterface, public IATLAPlayerInterface
 {
 	GENERATED_BODY()
 
@@ -31,6 +32,11 @@ public:
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const { return AttributeSet; }
 
+	/** ATLA Player Interface Functions START **/
+	virtual ECharacterElement GetCharacterElement() const override;
+	virtual ECharacterType GetCharacterType() const override;
+	/** ATLA Player Interface Functions END **/
+	
 protected:
 	virtual void BeginPlay() override;
 

@@ -43,6 +43,16 @@ UAbilitySystemComponent* AATLACharacterBase::GetAbilitySystemComponent() const
 	return AbilitySystemComponent;
 }
 
+ECharacterElement AATLACharacterBase::GetCharacterElement() const
+{
+	return CharacterElement;
+}
+
+ECharacterType AATLACharacterBase::GetCharacterType() const
+{
+	return CharacterType;
+}
+
 void AATLACharacterBase::BeginPlay()
 {
 	Super::BeginPlay();

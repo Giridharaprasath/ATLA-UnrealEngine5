@@ -24,7 +24,7 @@ public:
 	UFUNCTION(BlueprintPure, Category = "ATLA", meta = ( WorldContext="WorldContextObject" ))
 	static UATLAGameInstance* GetATLAGameInstance(const UObject* WorldContextObject);
 
-	/** UI Pop Up Interface Functions **/
+	/** UI Pop Up Interface Functions START **/
 	UFUNCTION(BlueprintCallable, Category = "ATLA|UI", meta = ( WorldContext="WorldContextObject" ))
 	static void ShowPopUpUI(const UObject* WorldContextObject, EUIPopUpWidget PopUpWidget);
 
@@ -33,7 +33,8 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "ATLA|UI", meta = ( WorldContext="WorldContextObject" ))
 	static void PopUpUINo(const UObject* WorldContextObject);
-
+	/** UI Pop Up Interface Functions END **/
+	
 	UFUNCTION(BlueprintPure, Category = "ATLA|Character Data")
 	static FATLACharacters GetCharacterData(UDataTable* DataTable, const FName RowName);
 

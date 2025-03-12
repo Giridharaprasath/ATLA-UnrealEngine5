@@ -8,6 +8,7 @@
 
 #include "ATLAAbilitySystemLibrary.generated.h"
 
+struct FAbilityVisionLevel;
 class UAbilitySystemComponent;
 class UPlayerHUDWidgetController;
 class UAttributeMenuWidgetController;
@@ -33,6 +34,9 @@ public:
 	static void InitializeATLACharacterInfo(const UObject* WorldContextObject, ECharacterElement CharacterElement,
 	                                        ECharacterType CharacterType, float Level, bool bIsPlayer,
 	                                        UAbilitySystemComponent* ASC);
+
+	UFUNCTION(BlueprintPure, Category = "ATLA|Ability|Vision")
+	static FAbilityVisionLevel GetAbilityVisionLevel(UDataTable* DataTable, const FName RowName);
 
 private:
 	static void ApplyGameplayEffectToTarget(const TSubclassOf<UGameplayEffect>& Attribute, UAbilitySystemComponent* ASC,

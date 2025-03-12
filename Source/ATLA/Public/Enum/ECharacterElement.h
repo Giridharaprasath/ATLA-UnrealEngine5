@@ -4,6 +4,9 @@
 
 #include "CoreMinimal.h"
 
+/**
+ *	ATLA Character Element Enum Class.
+ */
 UENUM(BlueprintType, Category = "ATLA|Character")
 enum class ECharacterElement : uint8
 {
@@ -14,6 +17,9 @@ enum class ECharacterElement : uint8
 	NonBender UMETA(DisplayName = "Non Bender"),
 };
 
+/**
+ *	ATLA Character Type Enum Class.
+ */
 UENUM(BlueprintType, Category = "ATLA|Character")
 enum class ECharacterType : uint8
 {
