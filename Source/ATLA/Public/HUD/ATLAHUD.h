@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ATLAGlobalDelegates.h"
 #include "GameFramework/HUD.h"
 #include "Interface/UIPopUpInterface.h"
 #include "UI/WidgetController/ATLAWidgetController.h"
@@ -49,6 +50,15 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ATLA|HUD")
 	void OpenCharacterSelectUIWidget();
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ATLA|HUD")
+	void CloseCharacterSelectUIWidget();
+
+	UPROPERTY(BlueprintAssignable, Category = "ATLA|HUD")
+	FOnInitSignature OnHUDInit;
+
+	UPROPERTY(BlueprintReadOnly, Category = "ATLA|HUD")
+	bool bHUDInitialized = false;
+	
 protected:
 	virtual void BeginPlay() override;
 
@@ -71,7 +81,7 @@ private:
 	UPROPERTY(EditAnywhere, Category = "ATLA|HUD")
 	TSubclassOf<UAttributeMenuWidgetController> AttributeMenuWidgetControllerClass;
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly, meta = ( AllowPrivateAccess = true ), Category = "ATLA|HUD")
 	TObjectPtr<UATLACommonUserWidget> PlayerUIWidgetBase;
 	UPROPERTY(EditAnywhere, Category = "ATLA|UI|Widget Base")
 	TSubclassOf<UATLACommonUserWidget> PlayerUIWidgetBaseClass;

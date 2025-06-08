@@ -8,6 +8,7 @@
 
 #include "ATLAGameMode.generated.h"
 
+enum class ECharacterElement : uint8;
 class UATLACharacterInfo;
 class AATLAPlayerController;
 
@@ -25,7 +26,7 @@ public:
 	TArray<AATLAPlayerController*> ATLAPlayerControllers;
 
 	UFUNCTION(BlueprintNativeEvent, Category = "Spawn")
-	void SpawnSelectedCharacter(AATLAPlayerController* ATLAPlayerController, const FName CharacterName);
+	void SpawnSelectedCharacter(AATLAPlayerController* ATLAPlayerController, const ECharacterElement CharacterElement);
 	
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "ATLA|Character Data")
 	TObjectPtr<UATLACharacterInfo> PlayerCharacterInfo;

@@ -4,6 +4,7 @@
 
 #include "Blueprint/WidgetLayoutLibrary.h"
 #include "Component/UIPopUpComponent.h"
+#include "Enum/ECharacterElement.h"
 #include "Game/ATLAGameInstance.h"
 #include "GameFramework/HUD.h"
 #include "Kismet/GameplayStatics.h"
@@ -46,6 +47,25 @@ FATLACharacters UATLABlueprintFunctionLibrary::GetCharacterData(UDataTable* Data
 	return *GetDataTableRowByName<FATLACharacters>(DataTable, RowName);
 }
 
+FString UATLABlueprintFunctionLibrary::GetCharacterElementString(const ECharacterElement CharacterElement)
+{
+	switch (CharacterElement)
+	{
+	case ECharacterElement::Air:
+		return "Air";
+	case ECharacterElement::Water:
+		return "Water";
+	case ECharacterElement::Earth:
+		return "Earth";
+	case ECharacterElement::Fire:
+		return "Fire";
+	case ECharacterElement::NonBender:
+		return "NonBender";
+	default:
+		return "";
+	}
+}
+
 FString UATLABlueprintFunctionLibrary::GetGameInfoDetails()
 {
 	FString GameName;
@@ -54,7 +74,7 @@ FString UATLABlueprintFunctionLibrary::GetGameInfoDetails()
 		TEXT("ProjectName"),
 		GameName,
 		GGameIni);
-	
+
 	FString GameVersion;
 	GConfig->GetString(
 		TEXT("/Script/EngineSettings.GeneralProjectSettings"),

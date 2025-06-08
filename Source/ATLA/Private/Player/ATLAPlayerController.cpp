@@ -47,17 +47,30 @@ void AATLAPlayerController::OnPlayerLeft_Implementation()
 	UE_LOG(LogATLA, Display, TEXT("PC : On A Player Left"));
 }
 
-void AATLAPlayerController::ClientSpawnSelectedPlayer_Implementation(const FName CharacterName)
+bool AATLAPlayerController::GetShowCharacterSelectMenuAtStart_Implementation()
 {
-	if (!IsLocalPlayerController())
+	// TODO : LATER ADD A SAVE LOAD METHOD TO CHECK TO SHOW CHARACTER SELECT MENU AT START, FOR NOW RETURNING TRUE TO SHOW ALL TIME
+	if (bAlwaysShowCharacterSelectMenu) return true;
+
+	return true;
+}
+
+void AATLAPlayerController::ServerOnCharacterSelected_Implementation(const ECharacterElement CharacterElement)
+{
+	if (AATLAGameMode* ATLAGameMode = Cast<AATLAGameMode>(UGameplayStatics::GetGameMode(GetWorld())))
+	{
+		ATLAGameMode->SpawnSelectedCharacter(this, CharacterElement);
+	}
+}
+
+void AATLAPlayerController::ClientOnCharacterSelected_Implementation(bool bIsSuccessful)
+{
+	if (!bIsSuccessful)
 	{
 		return;
 	}
 
-	UE_LOG(LogATLA, Display, TEXT("PC : On Client Spawn Selected Player Character Name : %s"),
-	       *CharacterName.ToString());
-
-	ServerSpawnSelectedPlayer(CharacterName);
+	// ATLAHUD
 }
 
 void AATLAPlayerController::BeginPlay()
@@ -84,6 +97,12 @@ void AATLAPlayerController::BeginPlay()
 
 	const FInputModeGameOnly InputModeData;
 	SetInputMode(InputModeData);
+
+	ATLAHUD->OnHUDInit.AddDynamic(this, &ThisClass::OnHUDInitialized);
+	if (ATLAHUD->bHUDInitialized)
+	{
+		OnHUDInitialized(true);
+	}
 }
 
 void AATLAPlayerController::SetupInputComponent()
@@ -109,23 +128,26 @@ void AATLAPlayerController::OpenAttributesMenu_Implementation()
 	GetATLAHUD()->OpenAttributesMenu();
 }
 
-void AATLAPlayerController::ServerSpawnSelectedPlayer_Implementation(const FName CharacterName)
-{
-	UE_LOG(LogATLA, Display, TEXT("PC : On Server Spawn Selected Player Character Name : %s"),
-	       *CharacterName.ToString());
-
-	if (AATLAGameMode* ATLAGameMode = Cast<AATLAGameMode>(UGameplayStatics::GetGameMode(GetWorld())))
-	{
-		ATLAGameMode->SpawnSelectedCharacter(this, CharacterName);
-	}
-}
-
 void AATLAPlayerController::ServerCreateOtherPlayerInfoHUD_Implementation()
 {
 	if (AATLAGameState* ATLAGameState = Cast<AATLAGameState>(UGameplayStatics::GetGameState(GetWorld())))
 	{
 		ATLAGameState->MulticastCreateOtherPlayerInfoHUD();
-	}	
+	}
+}
+
+void AATLAPlayerController::OnHUDInitialized(bool bIsSuccessful)
+{
+	if (!bIsSuccessful)
+	{
+		UE_LOG(LogATLA, Display, TEXT("PC : On HUD Initialize Returned False"));
+		return;
+	}
+
+	if (GetShowCharacterSelectMenuAtStart())
+	{
+		ATLAHUD->OpenCharacterSelectUIWidget();
+	}
 }
 
 void AATLAPlayerController::AbilityInputTagPressed(FGameplayTag InputTag)

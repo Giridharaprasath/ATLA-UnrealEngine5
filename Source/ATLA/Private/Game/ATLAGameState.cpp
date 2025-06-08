@@ -18,3 +18,37 @@ void AATLAGameState::MulticastCreateOtherPlayerInfoHUD_Implementation()
 		}
 	}
 }
+
+void AATLAGameState::ServerOnCharacterSelected_Implementation(const ECharacterElement CharacterElement)
+{
+	SelectedCharacterList.Add(CharacterElement, true);
+
+	MulticastOnCharacterSelected(CharacterElement);
+}
+
+bool AATLAGameState::CheckIsCharacterSelected(const ECharacterElement CharacterElement)
+{
+	if (SelectedCharacterList.Contains(CharacterElement))
+	{
+		return SelectedCharacterList[CharacterElement];
+	}
+	
+	return false;
+}
+
+void AATLAGameState::MulticastOnCharacterSelected_Implementation(const ECharacterElement CharacterElement)
+{
+	SelectedCharacterList.Add(CharacterElement, true);
+
+	TArray<ECharacterElement> SelectedCharacters;
+
+	for (auto CharacterList : SelectedCharacterList)
+	{
+		if (CharacterList.Value)
+		{
+			SelectedCharacters.Add(CharacterList.Key);
+		}
+	}
+
+	OnCharacterSelected.Broadcast(SelectedCharacters);
+}

@@ -24,3 +24,8 @@ void UATLACommonActivatableWidget::SetMouseCursorState_Implementation(bool bShow
 		UE_LOG(LogATLA, Display, TEXT("Set Show Mouse Cursor State : %hhd"), bShowMouseCursor);
 	}
 }
+
+void UATLACommonActivatableWidget::StartDeactivateWidget_Implementation()
+{
+	DeactivateWidget();
+}

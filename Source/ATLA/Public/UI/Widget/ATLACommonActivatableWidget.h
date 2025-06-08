@@ -21,4 +21,7 @@ public:
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ATLA|UI")
 	void SetMouseCursorState(bool bShowMouseCursor);
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ATLA|UI")
+	void StartDeactivateWidget();
 };

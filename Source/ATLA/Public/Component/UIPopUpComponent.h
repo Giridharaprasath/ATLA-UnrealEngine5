@@ -14,11 +14,11 @@ class ATLA_API UUIPopUpComponent : public UActorComponent, public IUIPopUpInterf
 	GENERATED_BODY()
 
 public:
-	/** UI Pop Up Interface **/
+# pragma region Pop Up Interface
 	virtual void ShowPopUpWidget(EUIPopUpWidget PopUpWidget) override;
 	virtual void PopUpWidgetYes() override;
 	virtual void PopUpWidgetNo() override;
-	/** End UI Pop Up Interface **/
+# pragma endregion
 
 	UFUNCTION(BlueprintCallable, Category="UI")
 	void SetWidgetBase(UATLACommonUserWidget* Widget);

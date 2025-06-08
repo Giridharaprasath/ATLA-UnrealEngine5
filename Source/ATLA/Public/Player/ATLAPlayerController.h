@@ -14,6 +14,7 @@ class AATLAPlayerState;
 class UInputMappingContext;
 class UATLAInputConfig;
 class UATLAAbilitySystemComponent;
+enum class ECharacterElement : uint8;
 
 /**
  * ATLA Player Controller Base Class.
@@ -44,8 +45,14 @@ public:
 	UFUNCTION(BlueprintGetter, Category = "ATLA")
 	AATLAPlayerState* GetATLAPlayerState() { return ATLAPlayerState; }
 
-	UFUNCTION(Client, Reliable, BlueprintCallable, Category = "ATLA|Character")
-	void ClientSpawnSelectedPlayer(const FName CharacterName);
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ATLA|HUD")
+	bool GetShowCharacterSelectMenuAtStart();
+
+	UFUNCTION(Server, Reliable, BlueprintCallable, Category = "ATLA|Character")
+	void ServerOnCharacterSelected(const ECharacterElement CharacterElement);
+
+	UFUNCTION(Client, Reliable)
+	void ClientOnCharacterSelected(bool bIsSuccessful);
 
 protected:
 	virtual void BeginPlay() override;
@@ -65,12 +72,11 @@ protected:
 
 	UFUNCTION(Server, Reliable, BlueprintCallable, Category = "ATLA|HUD")
 	void ServerCreateOtherPlayerInfoHUD();
-	
-private:
 
-	UFUNCTION(Server, Reliable)
-	void ServerSpawnSelectedPlayer(const FName CharacterName);
-	
+private:
+	UFUNCTION()
+	void OnHUDInitialized(bool bIsSuccessful);
+
 	UPROPERTY(EditAnywhere, Category = "ATLA|Input|Controls")
 	TObjectPtr<UInputMappingContext> UIGenericControls;
 	UPROPERTY(EditAnywhere, Category = "ATLA|Input|Controls")
@@ -87,4 +93,7 @@ private:
 	TObjectPtr<UATLAAbilitySystemComponent> ATLAAbilitySystemComponent;
 
 	UATLAAbilitySystemComponent* GetATLAASC();
+
+	UPROPERTY(EditAnywhere, Category = "ATLA|Character")
+	bool bAlwaysShowCharacterSelectMenu;
 };

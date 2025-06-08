@@ -8,6 +8,7 @@
 
 #include "ATLABlueprintFunctionLibrary.generated.h"
 
+enum class ECharacterElement : uint8;
 enum class EUIPopUpWidget : uint8;
 class UATLAGameInstance;
 struct FATLACharacters;
@@ -24,7 +25,7 @@ public:
 	UFUNCTION(BlueprintPure, Category = "ATLA", meta = ( WorldContext="WorldContextObject" ))
 	static UATLAGameInstance* GetATLAGameInstance(const UObject* WorldContextObject);
 
-	/** UI Pop Up Interface Functions START **/
+#pragma region UI Pop Up Interface Functions START
 	UFUNCTION(BlueprintCallable, Category = "ATLA|UI", meta = ( WorldContext="WorldContextObject" ))
 	static void ShowPopUpUI(const UObject* WorldContextObject, EUIPopUpWidget PopUpWidget);
 
@@ -33,13 +34,16 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "ATLA|UI", meta = ( WorldContext="WorldContextObject" ))
 	static void PopUpUINo(const UObject* WorldContextObject);
-	/** UI Pop Up Interface Functions END **/
-	
+#pragma endregion
+
 	UFUNCTION(BlueprintPure, Category = "ATLA|Character Data")
 	static FATLACharacters GetCharacterData(UDataTable* DataTable, const FName RowName);
 
 	template <typename T>
 	static T* GetDataTableRowByName(UDataTable* DataTable, const FName& RowName);
+
+	UFUNCTION(BlueprintPure, Category = "ATLA|Character Element")
+	static FString GetCharacterElementString(const ECharacterElement CharacterElement);
 
 	UFUNCTION(BlueprintPure, Category = "ATLA")
 	static FString GetGameInfoDetails();

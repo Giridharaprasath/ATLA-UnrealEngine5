@@ -7,6 +7,7 @@
 #include "UI/WidgetController/PlayerHUDWidgetController.h"
 #include "UI/WidgetController/AttributeMenuWidgetController.h"
 #include "Component/UIPopUpComponent.h"
+#include "Player/ATLAPlayerController.h"
 #include "UI/Widget/ATLACommonActivatableUserWidget.h"
 
 AATLAHUD::AATLAHUD()
@@ -84,12 +85,21 @@ void AATLAHUD::OpenCharacterSelectUIWidget_Implementation()
 	PlayerUIWidgetBase->PushToMenuUIStack(CharacterSelectWidget);
 }
 
+void AATLAHUD::CloseCharacterSelectUIWidget_Implementation()
+{
+	checkf(CharacterSelectWidget, TEXT("Character Select Widget Not Set in BP_HUD_ATLA"));
+
+	
+}
+
 void AATLAHUD::BeginPlay()
 {
 	Super::BeginPlay();
 
 	CreatePlayerUIBaseWidget();
-	OpenCharacterSelectUIWidget();
+
+	bHUDInitialized = true;
+	OnHUDInit.Broadcast(true);
 }
 
 void AATLAHUD::CreatePlayerUIBaseWidget_Implementation()
