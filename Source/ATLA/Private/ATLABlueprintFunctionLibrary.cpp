@@ -18,6 +18,7 @@ UATLAGameInstance* UATLABlueprintFunctionLibrary::GetATLAGameInstance(const UObj
 	return ATLAGameInstance;
 }
 
+#pragma region Pop Up Interface
 void UATLABlueprintFunctionLibrary::ShowPopUpUI(const UObject* WorldContextObject, EUIPopUpWidget PopUpWidget)
 {
 	const APlayerController* PC = UGameplayStatics::GetPlayerController(WorldContextObject, 0);
@@ -41,6 +42,7 @@ void UATLABlueprintFunctionLibrary::PopUpUINo(const UObject* WorldContextObject)
 	IUIPopUpInterface* PopUpInterface = Cast<IUIPopUpInterface>(HUD->FindComponentByClass<UUIPopUpComponent>());
 	PopUpInterface->PopUpWidgetNo();
 }
+#pragma endregion
 
 FATLACharacters UATLABlueprintFunctionLibrary::GetCharacterData(UDataTable* DataTable, const FName RowName)
 {

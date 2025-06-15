@@ -3,11 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ATLAGlobalDelegates.h"
 #include "Data/Asset/ATLAAbilityInfo.h"
 #include "UI/WidgetController/ATLAWidgetController.h"
 
 #include "PlayerHUDWidgetController.generated.h"
 
+enum class ECharacterElement : uint8;
 class UATLAAbilitySystemComponent;
 class UATLAUserWidget;
 
@@ -28,7 +30,6 @@ struct FUIWidgetRow : public FTableRowBase
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributeChangedSignature, float, NewValue);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMessageWidgetRowSignature, FUIWidgetRow, Row);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnCharacterNameChangedSignature, FText, NewCharacterName);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FAbilityInfoSignature, const FAbilityInfo&, Info);
 
 /**
@@ -59,7 +60,7 @@ public:
 	FMessageWidgetRowSignature MessageWidgetRowDelegate;
 
 	UPROPERTY(BlueprintAssignable, Category = "ATLA|Player Info")
-	FOnCharacterNameChangedSignature OnCharacterNameChanged;
+	FOnCharacterSelectedSignature OnCharacterSelected;
 
 	UPROPERTY(BlueprintAssignable, Category = "ATLA|Player Info")
 	FAbilityInfoSignature AbilityInfoDelegate;
@@ -75,14 +76,8 @@ protected:
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "ATLA|Widget Data")
 	TObjectPtr<UATLAAbilityInfo> AbilityInfo;
 	
-	template<typename T>
-	T* GetDataTableRowByTag(UDataTable* DataTable, const FGameplayTag& Tag);
-
 	void OnInitializeStartupAbilitiesGiven(UATLAAbilitySystemComponent* ATLAASC);
-};
 
-template <typename T>
-T* UPlayerHUDWidgetController::GetDataTableRowByTag(UDataTable* DataTable, const FGameplayTag& Tag)
-{
-	return DataTable->FindRow<T>(Tag.GetTagName(), TEXT(""));
-}
+	UFUNCTION()
+	void CharacterSelected(bool bIsSuccessful, ECharacterElement CharacterElement);
+};

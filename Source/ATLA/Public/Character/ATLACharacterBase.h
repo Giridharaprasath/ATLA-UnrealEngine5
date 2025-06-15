@@ -21,7 +21,8 @@ class UGameplayAbility;
  * ATLA Character Base Class.
  */
 UCLASS(Abstract)
-class ATLA_API AATLACharacterBase : public ACharacter, public IAbilitySystemInterface, public ICombatInterface, public IATLAPlayerInterface
+class ATLA_API AATLACharacterBase : public ACharacter, public IAbilitySystemInterface, public ICombatInterface,
+                                    public IATLAPlayerInterface
 {
 	GENERATED_BODY()
 
@@ -32,16 +33,13 @@ public:
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const { return AttributeSet; }
 
-	/** ATLA Player Interface Functions START **/
+# pragma region ATLA Player Interface Functions
 	virtual ECharacterElement GetCharacterElement() const override;
 	virtual ECharacterType GetCharacterType() const override;
-	/** ATLA Player Interface Functions END **/
-	
+# pragma endregion
+
 protected:
 	virtual void BeginPlay() override;
-
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "ATLA|Character")
-	FText CharacterName;
 
 	UPROPERTY()
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;

@@ -97,9 +97,14 @@ void AATLAHUD::BeginPlay()
 	Super::BeginPlay();
 
 	CreatePlayerUIBaseWidget();
+	CreateGameUI();
 
 	bHUDInitialized = true;
 	OnHUDInit.Broadcast(true);
+}
+
+void AATLAHUD::CreateGameUI_Implementation()
+{
 }
 
 void AATLAHUD::CreatePlayerUIBaseWidget_Implementation()

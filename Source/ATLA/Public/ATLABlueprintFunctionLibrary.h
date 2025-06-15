@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameplayTagContainer.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "Engine/DataTable.h"
 
@@ -25,7 +26,7 @@ public:
 	UFUNCTION(BlueprintPure, Category = "ATLA", meta = ( WorldContext="WorldContextObject" ))
 	static UATLAGameInstance* GetATLAGameInstance(const UObject* WorldContextObject);
 
-#pragma region UI Pop Up Interface Functions START
+#pragma region UI Pop Up Interface Functions
 	UFUNCTION(BlueprintCallable, Category = "ATLA|UI", meta = ( WorldContext="WorldContextObject" ))
 	static void ShowPopUpUI(const UObject* WorldContextObject, EUIPopUpWidget PopUpWidget);
 
@@ -42,6 +43,9 @@ public:
 	template <typename T>
 	static T* GetDataTableRowByName(UDataTable* DataTable, const FName& RowName);
 
+	template <typename T>
+	static T* GetDataTableRowByTag(UDataTable* DataTable, const FGameplayTag& Tag);
+
 	UFUNCTION(BlueprintPure, Category = "ATLA|Character Element")
 	static FString GetCharacterElementString(const ECharacterElement CharacterElement);
 
@@ -53,4 +57,10 @@ template <typename T>
 T* UATLABlueprintFunctionLibrary::GetDataTableRowByName(UDataTable* DataTable, const FName& RowName)
 {
 	return DataTable->FindRow<T>(RowName, TEXT(""));
+}
+
+template <typename T>
+T* UATLABlueprintFunctionLibrary::GetDataTableRowByTag(UDataTable* DataTable, const FGameplayTag& Tag)
+{
+	return DataTable->FindRow<T>(Tag.GetTagName(), TEXT(""));
 }

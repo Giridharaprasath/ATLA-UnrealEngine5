@@ -1,6 +1,7 @@
 // Copyright Melon Studios.
 
 #include "UI/WidgetController/PlayerHUDWidgetController.h"
+#include "ATLABlueprintFunctionLibrary.h"
 #include "AbilitySystem/ATLAAbilitySystemComponent.h"
 #include "AbilitySystem/ATLAAttributeSet.h"
 #include "Player/ATLAPlayerState.h"
@@ -15,16 +16,12 @@ void UPlayerHUDWidgetController::BroadcastInitialValues()
 	OnMaxStaminaChanged.Broadcast(ATLAAttributeSet->GetMaxStamina());
 
 	const AATLAPlayerState* ATLAPlayerState = CastChecked<AATLAPlayerState>(PlayerState);
-	OnCharacterNameChanged.Broadcast(ATLAPlayerState->GetCharacterName());
+	CharacterSelected(true, ATLAPlayerState->GetCharacterElement());
 }
 
 void UPlayerHUDWidgetController::BindCallbacksToDependencies()
 {
-	Cast<AATLAPlayerState>(PlayerState)->OnCharacterSelected.AddLambda(
-		[this](const FText& CharacterName)
-		{
-			OnCharacterNameChanged.Broadcast(CharacterName);
-		});
+	Cast<AATLAPlayerState>(PlayerState)->OnCharacterSelected.AddDynamic(this, &ThisClass::CharacterSelected);
 
 	const UATLAAttributeSet* ATLAAttributeSet = CastChecked<UATLAAttributeSet>(AttributeSet);
 
@@ -79,7 +76,8 @@ void UPlayerHUDWidgetController::BindCallbacksToDependencies()
 					FGameplayTag MessageTag = FGameplayTag::RequestGameplayTag(FName("Message"));
 					if (Tag.MatchesTag(MessageTag))
 					{
-						const FUIWidgetRow* Row = GetDataTableRowByTag<FUIWidgetRow>(MessageWidgetDataTable, Tag);
+						const FUIWidgetRow* Row = UATLABlueprintFunctionLibrary::GetDataTableRowByTag<FUIWidgetRow>(
+							MessageWidgetDataTable, Tag);
 						MessageWidgetRowDelegate.Broadcast(*Row);
 					}
 				}
@@ -101,4 +99,9 @@ void UPlayerHUDWidgetController::OnInitializeStartupAbilitiesGiven(UATLAAbilityS
 	});
 
 	ATLAASC->ForEachAbility(BroadcastDelegate);
+}
+
+void UPlayerHUDWidgetController::CharacterSelected(bool bIsSuccessful, ECharacterElement CharacterElement)
+{	
+	OnCharacterSelected.Broadcast(bIsSuccessful, CharacterElement);
 }

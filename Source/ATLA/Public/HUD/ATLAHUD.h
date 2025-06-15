@@ -65,33 +65,36 @@ protected:
 	UFUNCTION(BlueprintNativeEvent, Category = "ATLA|HUD")
 	void CreatePlayerUIBaseWidget();
 
-private:
-	UPROPERTY(BlueprintReadOnly, meta = ( AllowPrivateAccess = true ), Category = "ATLA|HUD")
-	TObjectPtr<UATLAPlayerHUD> PlayerHUDWidget;
-	UPROPERTY(EditAnywhere, Category = "ATLA|HUD")
-	TSubclassOf<UATLAPlayerHUD> PlayerHUDWidgetClass;
+	UFUNCTION(BlueprintNativeEvent, Category = "ATLA|HUD")
+	void CreateGameUI();
 
-	UPROPERTY()
+private:
+	UPROPERTY(BlueprintReadOnly, meta = ( AllowPrivateAccess = true ), Category = "ATLA|UI")
+	TObjectPtr<UATLAPlayerHUD> PlayerHUDWidget;
+	UPROPERTY(EditAnywhere, Category = "ATLA|UI|HUD")
+	TSubclassOf<UATLAPlayerHUD> PlayerHUDWidgetClass;
+	
+	UPROPERTY(BlueprintReadOnly, meta = ( AllowPrivateAccess = true ), Category = "ATLA|UI")
 	TObjectPtr<UPlayerHUDWidgetController> PlayerHUDWidgetController;
-	UPROPERTY(EditAnywhere, Category = "ATLA|HUD")
+	UPROPERTY(EditAnywhere, Category = "ATLA|UI|HUD")
 	TSubclassOf<UPlayerHUDWidgetController> PlayerHUDWidgetControllerClass;
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, Category = "ATLA|UI|Attributes Menu")
+	TSubclassOf<UATLACommonActivatableUserWidget> AttributesMenuWidget;
+	
+	UPROPERTY(BlueprintReadOnly, meta = ( AllowPrivateAccess = true ), Category = "ATLA|UI|Attributes Menu")
 	TObjectPtr<UAttributeMenuWidgetController> AttributeMenuWidgetController;
-	UPROPERTY(EditAnywhere, Category = "ATLA|HUD")
+	UPROPERTY(EditAnywhere, Category = "ATLA|UI|Attributes Menu")
 	TSubclassOf<UAttributeMenuWidgetController> AttributeMenuWidgetControllerClass;
 
-	UPROPERTY(BlueprintReadOnly, meta = ( AllowPrivateAccess = true ), Category = "ATLA|HUD")
+	UPROPERTY(BlueprintReadOnly, meta = ( AllowPrivateAccess = true ), Category = "ATLA|UI|Widget Base")
 	TObjectPtr<UATLACommonUserWidget> PlayerUIWidgetBase;
 	UPROPERTY(EditAnywhere, Category = "ATLA|UI|Widget Base")
 	TSubclassOf<UATLACommonUserWidget> PlayerUIWidgetBaseClass;
 
-	UPROPERTY(EditAnywhere, Category = "ATLA|HUD|Pause Menu")
+	UPROPERTY(EditAnywhere, Category = "ATLA|UI|Pause Menu")
 	TSubclassOf<UATLACommonActivatableWidget> PauseMenuWidget;
 
-	UPROPERTY(EditAnywhere, Category = "ATLA|HUD|Attributes Menu")
-	TSubclassOf<UATLACommonActivatableUserWidget> AttributesMenuWidget;
-
-	UPROPERTY(EditAnywhere, Category = "ATLA|HUD|Character Select")
+	UPROPERTY(EditAnywhere, Category = "ATLA|UI|Character Select")
 	TSubclassOf<UATLACommonActivatableWidget> CharacterSelectWidget;
 };

@@ -21,7 +21,7 @@ class ATLA_API AATLAGameMode : public AGameMode
 	GENERATED_BODY()
 
 public:
-	// All Connected Player Controller Array
+	// * All Connected Player Controller Array
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "ATLA")
 	TArray<AATLAPlayerController*> ATLAPlayerControllers;
 

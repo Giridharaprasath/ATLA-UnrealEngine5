@@ -24,4 +24,5 @@ UENUM(BlueprintType, Category = "ATLA|Character")
 enum class ECharacterType : uint8
 {
 	Mage UMETA(DisplayName = "Mage"),
+	Warrior UMETA(DisplayName = "Warrior"),
 };

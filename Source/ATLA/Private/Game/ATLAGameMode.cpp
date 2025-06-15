@@ -15,10 +15,9 @@ void AATLAGameMode::SpawnSelectedCharacter_Implementation(AATLAPlayerController*
 
 	AATLAGameState* ATLAGameState = GetGameState<AATLAGameState>();
 
-	if (bool IsCharacterSelected = ATLAGameState->CheckIsCharacterSelected(CharacterElement))
+	if (ATLAGameState->CheckIsCharacterSelected(CharacterElement))
 	{
-		// TODO : ADD LOGIC IF CHARACTER ALREADY SELECTED
-		ATLAPlayerController->ClientOnCharacterSelected(false);
+		ATLAPlayerController->ClientOnCharacterSelected(false, CharacterElement);
 		return;
 	}
 
@@ -31,6 +30,9 @@ void AATLAGameMode::SpawnSelectedCharacter_Implementation(AATLAPlayerController*
 	{
 		Pawn->Destroy();
 	}
+
+	// TODO : ADD LOGIC TO DESELECT THE CHARACTER WHEN SWITCHING CHARACTER
+	// ? IS SWITCHING CHARACTER ALLOWED?
 
 	const FATLACharacters Row = UATLABlueprintFunctionLibrary::GetCharacterData(
 		CharacterDataTable, FName(*CharacterName));
@@ -45,7 +47,7 @@ void AATLAGameMode::SpawnSelectedCharacter_Implementation(AATLAPlayerController*
 	ATLAPlayerController->Possess(SpawnCharacter);
 	SpawnCharacter->ClientSetUpCharacter();
 
-	ATLAPlayerController->ClientOnCharacterSelected(true);
+	ATLAPlayerController->ClientOnCharacterSelected(true, CharacterElement);
 }
 
 void AATLAGameMode::OnPostLogin(AController* NewPlayer)

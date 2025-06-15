@@ -18,9 +18,9 @@ class ATLA_API AATLAEnemy : public AATLACharacterBase
 public:
 	AATLAEnemy(const FObjectInitializer& ObjectInitializer);
 
-	/** Combat Interface **/
+#pragma region Combat Interface
 	virtual int32 GetPlayerLevel() override;
-	/** End Combat Interface **/
+#pragma endregion
 
 protected:
 	virtual void BeginPlay() override;

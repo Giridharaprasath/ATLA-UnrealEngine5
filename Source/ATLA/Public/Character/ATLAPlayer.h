@@ -24,9 +24,9 @@ public:
 	virtual void PossessedBy(AController* NewController) override;
 	virtual void OnRep_PlayerState() override;
 
-	/** Combat Interface **/
+#pragma region Combat Interface
 	virtual int32 GetPlayerLevel() override;
-	/** End Combat Interface **/
+#pragma endregion
 
 	UFUNCTION(Client, Reliable)
 	void ClientSetUpCharacter();

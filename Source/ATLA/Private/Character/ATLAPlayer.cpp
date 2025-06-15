@@ -56,7 +56,7 @@ void AATLAPlayer::InitAbilityActorInfo()
 	AATLAPlayerState* ATLAPlayerState = GetPlayerState<AATLAPlayerState>();
 	check(ATLAPlayerState);
 
-	ATLAPlayerState->SetCharacterName(CharacterName);
+	ATLAPlayerState->SetCharacterElement(CharacterElement);
 
 	ATLAPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(ATLAPlayerState, this);
 	Cast<UATLAAbilitySystemComponent>(ATLAPlayerState->GetAbilitySystemComponent())->AbilityActorInfoSet();

@@ -5,13 +5,12 @@
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerState.h"
 #include "AbilitySystemInterface.h"
+#include "ATLAGlobalDelegates.h"
 
 #include "ATLAPlayerState.generated.h"
 
 class UAbilitySystemComponent;
 class UAttributeSet;
-
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnCharacterSelectedSignature, const FText&);
 
 /**
  * ATLA Player State Base Class.
@@ -29,12 +28,13 @@ public:
 	UAttributeSet* GetAttributeSet() const { return AttributeSet; }
 
 	FORCEINLINE int32 GetPlayerLevel() const { return Level; }
-	FORCEINLINE FText GetCharacterName() const { return CharacterName; }
+	FORCEINLINE ECharacterElement GetCharacterElement() const { return CharacterElement; }
 
-	void SetCharacterName(FText InCharacterName);
-	
+	void SetCharacterElement(ECharacterElement InCharacterElement);
+
+	UPROPERTY(BlueprintAssignable, Category = "ATLA|Character")
 	FOnCharacterSelectedSignature OnCharacterSelected;
-	
+
 protected:
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
@@ -46,12 +46,12 @@ private:
 	UPROPERTY(VisibleAnywhere, ReplicatedUsing = OnRep_Level, Category = "ATLA|Player State")
 	int32 Level = 1;
 
-	UPROPERTY(VisibleAnywhere, ReplicatedUsing = OnRep_CharacterName, Category = "ATLA|Player State")
-	FText CharacterName;
+	UPROPERTY(VisibleAnywhere, ReplicatedUsing = OnRep_CharacterElement, Category = "ATLA|Player State")
+	ECharacterElement CharacterElement;
 
 	UFUNCTION()
 	void OnRep_Level(int32 OldLevel);
-	
+
 	UFUNCTION()
-	void OnRep_CharacterName(FText OldCharacterName);
+	void OnRep_CharacterElement(ECharacterElement OldCharacterElement);
 };

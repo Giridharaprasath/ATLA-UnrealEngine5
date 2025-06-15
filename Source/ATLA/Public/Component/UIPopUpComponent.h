@@ -8,7 +8,7 @@
 
 #include "UIPopUpComponent.generated.h"
 
-UCLASS(BlueprintType, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
+UCLASS(BlueprintType, ClassGroup=(UI), meta=(BlueprintSpawnableComponent))
 class ATLA_API UUIPopUpComponent : public UActorComponent, public IUIPopUpInterface
 {
 	GENERATED_BODY()

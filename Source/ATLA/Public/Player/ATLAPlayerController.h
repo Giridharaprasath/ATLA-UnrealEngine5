@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ATLAGlobalDelegates.h"
 #include "GameFramework/PlayerController.h"
 #include "GameplayTagContainer.h"
 
@@ -52,7 +53,13 @@ public:
 	void ServerOnCharacterSelected(const ECharacterElement CharacterElement);
 
 	UFUNCTION(Client, Reliable)
-	void ClientOnCharacterSelected(bool bIsSuccessful);
+	void ClientOnCharacterSelected(bool bIsSuccessful, ECharacterElement CharacterElement);
+
+	UPROPERTY(BlueprintAssignable, Category = "ATLA|Character")
+	FOnCharacterSelectedSignature OnCharacterSelected;
+
+	UPROPERTY(BlueprintReadOnly, Category = "ATLA|Character")
+	bool bOnCharacterSelected = false;
 
 protected:
 	virtual void BeginPlay() override;

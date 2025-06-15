@@ -3,6 +3,7 @@
 #include "Player/ATLAPlayerState.h"
 #include "AbilitySystem/ATLAAbilitySystemComponent.h"
 #include "AbilitySystem/ATLAAttributeSet.h"
+#include "Enum/ECharacterElement.h"
 #include "Net/UnrealNetwork.h"
 
 AATLAPlayerState::AATLAPlayerState()
@@ -21,7 +22,7 @@ void AATLAPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(AATLAPlayerState, Level);
-	DOREPLIFETIME(AATLAPlayerState, CharacterName);
+	DOREPLIFETIME(AATLAPlayerState, CharacterElement);
 }
 
 UAbilitySystemComponent* AATLAPlayerState::GetAbilitySystemComponent() const
@@ -29,16 +30,16 @@ UAbilitySystemComponent* AATLAPlayerState::GetAbilitySystemComponent() const
 	return AbilitySystemComponent;
 }
 
-void AATLAPlayerState::SetCharacterName(FText InCharacterName)
+void AATLAPlayerState::SetCharacterElement(const ECharacterElement InCharacterElement)
 {
-	CharacterName = InCharacterName;
-	OnCharacterSelected.Broadcast(CharacterName);
+	CharacterElement = InCharacterElement;
+	OnCharacterSelected.Broadcast(true, CharacterElement);
 }
 
 void AATLAPlayerState::OnRep_Level(int32 OldLevel)
 {
 }
 
-void AATLAPlayerState::OnRep_CharacterName(FText OldCharacterName)
+void AATLAPlayerState::OnRep_CharacterElement(ECharacterElement OldCharacterElement)
 {
 }

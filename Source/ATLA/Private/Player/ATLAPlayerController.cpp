@@ -49,9 +49,9 @@ void AATLAPlayerController::OnPlayerLeft_Implementation()
 
 bool AATLAPlayerController::GetShowCharacterSelectMenuAtStart_Implementation()
 {
-	// TODO : LATER ADD A SAVE LOAD METHOD TO CHECK TO SHOW CHARACTER SELECT MENU AT START, FOR NOW RETURNING TRUE TO SHOW ALL TIME
 	if (bAlwaysShowCharacterSelectMenu) return true;
 
+	// TODO : LATER ADD A SAVE LOAD METHOD TO CHECK TO SHOW CHARACTER SELECT MENU AT START, FOR NOW RETURNING TRUE TO SHOW ALL TIME
 	return true;
 }
 
@@ -63,14 +63,14 @@ void AATLAPlayerController::ServerOnCharacterSelected_Implementation(const EChar
 	}
 }
 
-void AATLAPlayerController::ClientOnCharacterSelected_Implementation(bool bIsSuccessful)
+void AATLAPlayerController::ClientOnCharacterSelected_Implementation(bool bIsSuccessful, ECharacterElement CharacterElement)
 {
-	if (!bIsSuccessful)
+	if (bIsSuccessful)
 	{
-		return;
+		bOnCharacterSelected = true;
 	}
-
-	// ATLAHUD
+	
+	OnCharacterSelected.Broadcast(bIsSuccessful, CharacterElement);
 }
 
 void AATLAPlayerController::BeginPlay()
@@ -143,6 +143,8 @@ void AATLAPlayerController::OnHUDInitialized(bool bIsSuccessful)
 		UE_LOG(LogATLA, Display, TEXT("PC : On HUD Initialize Returned False"));
 		return;
 	}
+
+	ATLAHUD->OnHUDInit.RemoveDynamic(this, &ThisClass::OnHUDInitialized);
 
 	if (GetShowCharacterSelectMenuAtStart())
 	{
