@@ -29,6 +29,7 @@ public:
 
 	FORCEINLINE int32 GetPlayerLevel() const { return Level; }
 	FORCEINLINE ECharacterElement GetCharacterElement() const { return CharacterElement; }
+	FORCEINLINE bool GetIsCharacterSelected() const { return bIsCharacterSelected; }
 
 	void SetCharacterElement(ECharacterElement InCharacterElement);
 
@@ -48,6 +49,9 @@ private:
 
 	UPROPERTY(VisibleAnywhere, ReplicatedUsing = OnRep_CharacterElement, Category = "ATLA|Player State")
 	ECharacterElement CharacterElement;
+
+	UPROPERTY(VisibleAnywhere)
+	bool bIsCharacterSelected;
 
 	UFUNCTION()
 	void OnRep_Level(int32 OldLevel);

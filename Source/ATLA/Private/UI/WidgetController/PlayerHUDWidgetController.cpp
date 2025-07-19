@@ -16,7 +16,7 @@ void UPlayerHUDWidgetController::BroadcastInitialValues()
 	OnMaxStaminaChanged.Broadcast(ATLAAttributeSet->GetMaxStamina());
 
 	const AATLAPlayerState* ATLAPlayerState = CastChecked<AATLAPlayerState>(PlayerState);
-	CharacterSelected(true, ATLAPlayerState->GetCharacterElement());
+	CharacterSelected(ATLAPlayerState->GetIsCharacterSelected(), ATLAPlayerState->GetCharacterElement());
 }
 
 void UPlayerHUDWidgetController::BindCallbacksToDependencies()

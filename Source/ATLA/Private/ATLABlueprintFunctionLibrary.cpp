@@ -3,10 +3,12 @@
 #include "ATLABlueprintFunctionLibrary.h"
 
 #include "Blueprint/WidgetLayoutLibrary.h"
+#include "Component/UICutsceneComponent.h"
 #include "Component/UIPopUpComponent.h"
 #include "Enum/ECharacterElement.h"
 #include "Game/ATLAGameInstance.h"
 #include "GameFramework/HUD.h"
+#include "Interface/UICutsceneInterface.h"
 #include "Kismet/GameplayStatics.h"
 #include "Structure/FATLACharacters.h"
 #include "Interface/UIPopUpInterface.h"
@@ -17,32 +19,6 @@ UATLAGameInstance* UATLABlueprintFunctionLibrary::GetATLAGameInstance(const UObj
 	UATLAGameInstance* ATLAGameInstance = Cast<UATLAGameInstance>(GameInstance);
 	return ATLAGameInstance;
 }
-
-#pragma region Pop Up Interface
-void UATLABlueprintFunctionLibrary::ShowPopUpUI(const UObject* WorldContextObject, EUIPopUpWidget PopUpWidget)
-{
-	const APlayerController* PC = UGameplayStatics::GetPlayerController(WorldContextObject, 0);
-	const AHUD* HUD = PC->GetHUD();
-	IUIPopUpInterface* PopUpInterface = Cast<IUIPopUpInterface>(HUD->FindComponentByClass<UUIPopUpComponent>());
-	PopUpInterface->ShowPopUpWidget(PopUpWidget);
-}
-
-void UATLABlueprintFunctionLibrary::PopUpUIYes(const UObject* WorldContextObject)
-{
-	const APlayerController* PC = UGameplayStatics::GetPlayerController(WorldContextObject, 0);
-	const AHUD* HUD = PC->GetHUD();
-	IUIPopUpInterface* PopUpInterface = Cast<IUIPopUpInterface>(HUD->FindComponentByClass<UUIPopUpComponent>());
-	PopUpInterface->PopUpWidgetYes();
-}
-
-void UATLABlueprintFunctionLibrary::PopUpUINo(const UObject* WorldContextObject)
-{
-	const APlayerController* PC = UGameplayStatics::GetPlayerController(WorldContextObject, 0);
-	const AHUD* HUD = PC->GetHUD();
-	IUIPopUpInterface* PopUpInterface = Cast<IUIPopUpInterface>(HUD->FindComponentByClass<UUIPopUpComponent>());
-	PopUpInterface->PopUpWidgetNo();
-}
-#pragma endregion
 
 FATLACharacters UATLABlueprintFunctionLibrary::GetCharacterData(UDataTable* DataTable, const FName RowName)
 {
@@ -93,3 +69,49 @@ FString UATLABlueprintFunctionLibrary::GetGameInfoDetails()
 
 	return CompanyName + "-" + GameName + "-v" + GameVersion;
 }
+
+#pragma region UI Pop Up Interface Functions
+void UATLABlueprintFunctionLibrary::ShowPopUpUI(const UObject* WorldContextObject, EUIPopUpWidget PopUpWidget)
+{
+	const APlayerController* PC = UGameplayStatics::GetPlayerController(WorldContextObject, 0);
+	const AHUD* HUD = PC->GetHUD();
+	IUIPopUpInterface* PopUpInterface = Cast<IUIPopUpInterface>(HUD->FindComponentByClass<UUIPopUpComponent>());
+	PopUpInterface->ShowPopUpWidget(PopUpWidget);
+}
+
+void UATLABlueprintFunctionLibrary::PopUpUIYes(const UObject* WorldContextObject)
+{
+	const APlayerController* PC = UGameplayStatics::GetPlayerController(WorldContextObject, 0);
+	const AHUD* HUD = PC->GetHUD();
+	IUIPopUpInterface* PopUpInterface = Cast<IUIPopUpInterface>(HUD->FindComponentByClass<UUIPopUpComponent>());
+	PopUpInterface->PopUpWidgetYes();
+}
+
+void UATLABlueprintFunctionLibrary::PopUpUINo(const UObject* WorldContextObject)
+{
+	const APlayerController* PC = UGameplayStatics::GetPlayerController(WorldContextObject, 0);
+	const AHUD* HUD = PC->GetHUD();
+	IUIPopUpInterface* PopUpInterface = Cast<IUIPopUpInterface>(HUD->FindComponentByClass<UUIPopUpComponent>());
+	PopUpInterface->PopUpWidgetNo();
+}
+#pragma endregion
+
+#pragma region UI Cutscene Interface Functions
+void UATLABlueprintFunctionLibrary::ShowCutsceneBlackBars(const UObject* WorldContextObject)
+{
+	const APlayerController* PC = UGameplayStatics::GetPlayerController(WorldContextObject, 0);
+	const AHUD* HUD = PC->GetHUD();
+	IUICutsceneInterface* CutsceneInterface = Cast<IUICutsceneInterface>(
+		HUD->FindComponentByClass<UUICutsceneComponent>());
+	CutsceneInterface->ShowCutsceneBlackBars();
+}
+
+void UATLABlueprintFunctionLibrary::HideCutsceneBlackBars(const UObject* WorldContextObject)
+{
+	const APlayerController* PC = UGameplayStatics::GetPlayerController(WorldContextObject, 0);
+	const AHUD* HUD = PC->GetHUD();
+	IUICutsceneInterface* CutsceneInterface = Cast<IUICutsceneInterface>(
+		HUD->FindComponentByClass<UUICutsceneComponent>());
+	CutsceneInterface->HideCutsceneBlackBars();
+}
+#pragma endregion

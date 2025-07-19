@@ -26,17 +26,6 @@ public:
 	UFUNCTION(BlueprintPure, Category = "ATLA", meta = ( WorldContext="WorldContextObject" ))
 	static UATLAGameInstance* GetATLAGameInstance(const UObject* WorldContextObject);
 
-#pragma region UI Pop Up Interface Functions
-	UFUNCTION(BlueprintCallable, Category = "ATLA|UI", meta = ( WorldContext="WorldContextObject" ))
-	static void ShowPopUpUI(const UObject* WorldContextObject, EUIPopUpWidget PopUpWidget);
-
-	UFUNCTION(BlueprintCallable, Category = "ATLA|UI", meta = ( WorldContext="WorldContextObject" ))
-	static void PopUpUIYes(const UObject* WorldContextObject);
-
-	UFUNCTION(BlueprintCallable, Category = "ATLA|UI", meta = ( WorldContext="WorldContextObject" ))
-	static void PopUpUINo(const UObject* WorldContextObject);
-#pragma endregion
-
 	UFUNCTION(BlueprintPure, Category = "ATLA|Character Data")
 	static FATLACharacters GetCharacterData(UDataTable* DataTable, const FName RowName);
 
@@ -51,6 +40,24 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "ATLA")
 	static FString GetGameInfoDetails();
+
+#pragma region UI Pop Up Interface Functions
+	UFUNCTION(BlueprintCallable, Category = "ATLA|UI", meta = ( WorldContext="WorldContextObject" ))
+	static void ShowPopUpUI(const UObject* WorldContextObject, EUIPopUpWidget PopUpWidget);
+
+	UFUNCTION(BlueprintCallable, Category = "ATLA|UI", meta = ( WorldContext="WorldContextObject" ))
+	static void PopUpUIYes(const UObject* WorldContextObject);
+
+	UFUNCTION(BlueprintCallable, Category = "ATLA|UI", meta = ( WorldContext="WorldContextObject" ))
+	static void PopUpUINo(const UObject* WorldContextObject);
+#pragma endregion
+
+#pragma region UI Cutscene Interface Functions
+	UFUNCTION(BlueprintCallable, Category = "ATLA|UI", meta = ( WorldContext="WorldContextObject" ))
+	static void ShowCutsceneBlackBars(const UObject* WorldContextObject);
+	UFUNCTION(BlueprintCallable, Category = "ATLA|UI", meta = ( WorldContext="WorldContextObject" ))
+	static void HideCutsceneBlackBars(const UObject* WorldContextObject);
+#pragma endregion
 };
 
 template <typename T>

@@ -33,6 +33,7 @@ UAbilitySystemComponent* AATLAPlayerState::GetAbilitySystemComponent() const
 void AATLAPlayerState::SetCharacterElement(const ECharacterElement InCharacterElement)
 {
 	CharacterElement = InCharacterElement;
+	bIsCharacterSelected = true;
 	OnCharacterSelected.Broadcast(true, CharacterElement);
 }
 

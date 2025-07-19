@@ -20,6 +20,7 @@ struct FWidgetController;
 class UAbilitySystemComponent;
 class UAttributeSet;
 class UUIPopUpComponent;
+class UUICutsceneComponent;
 
 /**
  * ATLA HUD Base Class.
@@ -34,6 +35,9 @@ public:
 
 	UPROPERTY()
 	UUIPopUpComponent* UIPopUpComponent;
+
+	UPROPERTY(EditAnywhere)
+	UUICutsceneComponent* UICutsceneComponent;
 	
 	UPlayerHUDWidgetController* GetPlayerHUDWidgetController(const FWidgetController& WidgetController);
 	UAttributeMenuWidgetController* GetAttributeMenuWidgetController(const FWidgetController& WidgetController);
@@ -49,9 +53,6 @@ public:
 	
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ATLA|HUD")
 	void OpenCharacterSelectUIWidget();
-
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ATLA|HUD")
-	void CloseCharacterSelectUIWidget();
 
 	UPROPERTY(BlueprintAssignable, Category = "ATLA|HUD")
 	FOnInitSignature OnHUDInit;

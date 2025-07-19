@@ -1,18 +1,20 @@
 // Copyright Melon Studios.
 
 #include "HUD/ATLAHUD.h"
+
+#include "Component/UICutsceneComponent.h"
 #include "UI/Widget/ATLACommonActivatableWidget.h"
 #include "UI/Widget/PlayerHUD/ATLAPlayerHUD.h"
 #include "UI/Widget/ATLACommonUserWidget.h"
 #include "UI/WidgetController/PlayerHUDWidgetController.h"
 #include "UI/WidgetController/AttributeMenuWidgetController.h"
 #include "Component/UIPopUpComponent.h"
-#include "Player/ATLAPlayerController.h"
 #include "UI/Widget/ATLACommonActivatableUserWidget.h"
 
 AATLAHUD::AATLAHUD()
 {
 	UIPopUpComponent = CreateDefaultSubobject<UUIPopUpComponent>("UI Pop Up Component");
+	UICutsceneComponent = CreateDefaultSubobject<UUICutsceneComponent>("UI Cutscene Component");
 }
 
 UPlayerHUDWidgetController* AATLAHUD::GetPlayerHUDWidgetController(const FWidgetController& WidgetController)
@@ -85,13 +87,6 @@ void AATLAHUD::OpenCharacterSelectUIWidget_Implementation()
 	PlayerUIWidgetBase->PushToMenuUIStack(CharacterSelectWidget);
 }
 
-void AATLAHUD::CloseCharacterSelectUIWidget_Implementation()
-{
-	checkf(CharacterSelectWidget, TEXT("Character Select Widget Not Set in BP_HUD_ATLA"));
-
-	
-}
-
 void AATLAHUD::BeginPlay()
 {
 	Super::BeginPlay();
@@ -105,6 +100,7 @@ void AATLAHUD::BeginPlay()
 
 void AATLAHUD::CreateGameUI_Implementation()
 {
+	UICutsceneComponent->CreateCutsceneWidgets();
 }
 
 void AATLAHUD::CreatePlayerUIBaseWidget_Implementation()
