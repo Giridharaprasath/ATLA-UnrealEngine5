@@ -8,6 +8,9 @@
 
 #include "UIPopUpComponent.generated.h"
 
+/**
+ *	ATLA UI Pop Up Component Class.	
+ */
 UCLASS(BlueprintType, ClassGroup=(UI), meta=(BlueprintSpawnableComponent))
 class ATLA_API UUIPopUpComponent : public UActorComponent, public IUIPopUpInterface
 {

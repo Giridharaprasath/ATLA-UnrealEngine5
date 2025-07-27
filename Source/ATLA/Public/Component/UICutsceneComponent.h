@@ -10,6 +10,9 @@
 
 class UATLACutsceneWidget;
 
+/**
+ *	ATLA UI Cutscene Component Class.	
+ */
 UCLASS(BlueprintType, ClassGroup=(UI), meta=(BlueprintSpawnableComponent))
 class ATLA_API UUICutsceneComponent : public UActorComponent, public IUICutsceneInterface
 {

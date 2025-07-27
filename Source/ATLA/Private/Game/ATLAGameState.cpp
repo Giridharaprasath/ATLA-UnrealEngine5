@@ -24,6 +24,7 @@ void AATLAGameState::ServerOnCharacterSelected_Implementation(const ECharacterEl
 	SelectedCharacterList.Add(CharacterElement, true);
 
 	MulticastOnCharacterSelected(CharacterElement);
+	ServerSetSelectedCharactersList(CharacterElement);
 }
 
 bool AATLAGameState::CheckIsCharacterSelected(const ECharacterElement CharacterElement)
@@ -34,6 +35,10 @@ bool AATLAGameState::CheckIsCharacterSelected(const ECharacterElement CharacterE
 	}
 	
 	return false;
+}
+
+void AATLAGameState::ServerSetSelectedCharactersList_Implementation(const ECharacterElement CharacterElement)
+{
 }
 
 void AATLAGameState::MulticastOnCharacterSelected_Implementation(const ECharacterElement CharacterElement)

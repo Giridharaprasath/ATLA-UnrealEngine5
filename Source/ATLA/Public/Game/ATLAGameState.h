@@ -32,6 +32,9 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "ATLA|Character")
 	FOnSelectedCharacterListSignature OnCharacterSelected;
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintAuthorityOnly, BlueprintCallable, Category = "ATLA|Character")
+	void ServerSetSelectedCharactersList(const ECharacterElement CharacterElement);
+
 private:
 	UFUNCTION(BlueprintCallable, NetMulticast, Reliable, Category = "ATLA|Character")
 	void MulticastOnCharacterSelected(const ECharacterElement CharacterElement);
