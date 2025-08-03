@@ -22,7 +22,7 @@ void AATLAPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(AATLAPlayerState, Level);
-	DOREPLIFETIME(AATLAPlayerState, CharacterElement);
+	DOREPLIFETIME(AATLAPlayerState, SelectedCharacter);
 }
 
 UAbilitySystemComponent* AATLAPlayerState::GetAbilitySystemComponent() const
@@ -32,15 +32,15 @@ UAbilitySystemComponent* AATLAPlayerState::GetAbilitySystemComponent() const
 
 void AATLAPlayerState::SetCharacterElement(const ECharacterElement InCharacterElement)
 {
-	CharacterElement = InCharacterElement;
-	bIsCharacterSelected = true;
-	OnCharacterSelected.Broadcast(true, CharacterElement);
+	SelectedCharacter.CharacterElement = InCharacterElement;
+	SelectedCharacter.bIsSelected = true;
+	OnCharacterSelected.Broadcast(SelectedCharacter);
 }
 
 void AATLAPlayerState::OnRep_Level(int32 OldLevel)
 {
 }
 
-void AATLAPlayerState::OnRep_CharacterElement(ECharacterElement OldCharacterElement)
+void AATLAPlayerState::OnRep_SelectedCharacter(FSelectedCharacter OldSelectedCharacter)
 {
 }

@@ -8,8 +8,7 @@
 #include "Game/ATLAGameState.h"
 #include "Structure/FATLACharacters.h"
 
-void AATLAGameMode::SpawnSelectedCharacter_Implementation(AATLAPlayerController* ATLAPlayerController,
-                                                          const ECharacterElement CharacterElement)
+void AATLAGameMode::SpawnSelectedCharacter_Implementation(AATLAPlayerController* ATLAPlayerController, const ECharacterElement CharacterElement)
 {
 	const FString CharacterName = UATLABlueprintFunctionLibrary::GetCharacterElementString(CharacterElement);
 
@@ -31,22 +30,21 @@ void AATLAGameMode::SpawnSelectedCharacter_Implementation(AATLAPlayerController*
 		Pawn->Destroy();
 	}
 
-	// TODO : ADD LOGIC TO DESELECT THE CHARACTER WHEN SWITCHING CHARACTER
-	// ? IS SWITCHING CHARACTER ALLOWED?
+	// TODO : ADD LOGIC TO DESELECT THE CHARACTER WHEN SWITCHING CHARACTER.
+	// IS SWITCHING CHARACTER ALLOWED?
 
-	const FATLACharacters Row = UATLABlueprintFunctionLibrary::GetCharacterData(
-		CharacterDataTable, FName(*CharacterName));
+	const FATLACharacters Row = UATLABlueprintFunctionLibrary::GetCharacterData(CharacterDataTable, FName(*CharacterName));
 
 	FActorSpawnParameters PlayerSpawnParameters;
 	PlayerSpawnParameters.Owner = ATLAPlayerController;
 
 	const AActor* PlayerStart = FindPlayerStart(ATLAPlayerController, Row.CharacterName);
 
-	AATLAPlayer* SpawnCharacter = GetWorld()->SpawnActor<AATLAPlayer>(Row.CharacterClass, PlayerStart->GetTransform(),
-	                                                                  PlayerSpawnParameters);
+	AATLAPlayer* SpawnCharacter = GetWorld()->SpawnActor<AATLAPlayer>(Row.CharacterClass, PlayerStart->GetTransform(), PlayerSpawnParameters);
 	ATLAPlayerController->Possess(SpawnCharacter);
 	SpawnCharacter->ClientSetUpCharacter();
 
+	ATLAPlayerController->ServerSetSelectedCharacter(true, CharacterElement);
 	ATLAPlayerController->ClientOnCharacterSelected(true, CharacterElement);
 }
 
@@ -69,6 +67,12 @@ void AATLAGameMode::Logout(AController* Exiting)
 	Super::Logout(Exiting);
 
 	AATLAPlayerController* ExitingATLAPlayerController = Cast<AATLAPlayerController>(Exiting);
+	if (ExitingATLAPlayerController->SelectedCharacter.bIsSelected)
+	{
+		AATLAGameState* ATLAGameState = GetGameState<AATLAGameState>();
+		ATLAGameState->ServerOnCharacterDeselected(
+			ExitingATLAPlayerController->SelectedCharacter.CharacterElement);
+	}
 
 	ATLAPlayerControllers.Remove(ExitingATLAPlayerController);
 

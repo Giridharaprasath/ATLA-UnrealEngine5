@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Delegates/DelegateCombinations.h"
+#include "Structure/FSelectedCharacter.h"
 
 #include "ATLAGlobalDelegates.generated.h"
 
@@ -12,5 +13,4 @@ UDELEGATE()
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnInitSignature, bool, bIsSuccessfull);
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnCharacterSelectedSignature, bool, bIsSuccessfull, ECharacterElement,
-                                             CharacterElement);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnCharacterSelectedSignature, FSelectedCharacter, SelectedCharacter);

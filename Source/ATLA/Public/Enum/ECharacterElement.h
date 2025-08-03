@@ -15,7 +15,9 @@ enum class ECharacterElement : uint8
 	Earth UMETA(DisplayName = "Earth"),
 	Fire UMETA(DisplayName = "Fire"),
 	NonBender UMETA(DisplayName = "Non Bender"),
+	Count UMETA(Hidden),
 };
+ENUM_RANGE_BY_COUNT(ECharacterElement, ECharacterElement::Count);
 
 /**
  *	ATLA Character Type Enum Class.
@@ -25,4 +27,6 @@ enum class ECharacterType : uint8
 {
 	Mage UMETA(DisplayName = "Mage"),
 	Warrior UMETA(DisplayName = "Warrior"),
+	Count UMETA(Hidden),
 };
+ENUM_RANGE_BY_COUNT(ECharacterType, ECharacterType::Count);

@@ -14,5 +14,4 @@ UCLASS()
 class ATLA_API UATLAAttributeMenu : public UATLACommonActivatableUserWidget
 {
 	GENERATED_BODY()
-	
 };

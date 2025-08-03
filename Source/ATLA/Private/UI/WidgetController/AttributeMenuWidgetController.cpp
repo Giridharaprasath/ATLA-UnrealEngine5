@@ -33,8 +33,7 @@ void UAttributeMenuWidgetController::BindCallbacksToDependencies()
 	}
 }
 
-void UAttributeMenuWidgetController::BroadcastAttributeInfo(const FGameplayTag& AttributeTag,
-                                                            const FGameplayAttribute& Attribute) const
+void UAttributeMenuWidgetController::BroadcastAttributeInfo(const FGameplayTag& AttributeTag, const FGameplayAttribute& Attribute) const
 {
 	FAttributeSetInfo Info = ATLAAttributeSetInfo->FindAttributeInfoForTag(AttributeTag);
 	Info.AttributeValue = Attribute.GetNumericValue(AttributeSet);

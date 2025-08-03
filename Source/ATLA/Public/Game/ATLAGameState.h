@@ -4,13 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameState.h"
+#include "Structure/FSelectedCharacter.h"
 
 #include "ATLAGameState.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnSelectedCharacterListSignature, const TArray<ECharacterElement>&,
-                                            SelectedCharacters);
-
 enum class ECharacterElement : uint8;
+class UCharacterSelectMenuViewModel;
 
 /**
  *	ATLA Game State Class.
@@ -21,24 +20,35 @@ class ATLA_API AATLAGameState : public AGameState
 	GENERATED_BODY()
 
 public:
+	AATLAGameState();
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	UFUNCTION(BlueprintGetter, Category = "ATLA|Character|Selection")
+	FORCEINLINE UCharacterSelectMenuViewModel* GetCharacterSelectMenuViewModel() const { return CharacterSelectMenuViewModel; }
+
 	UFUNCTION(BlueprintCallable, NetMulticast, Reliable, Category = "ATLA|HUD")
 	void MulticastCreateOtherPlayerInfoHUD();
 
+	bool CheckIsCharacterSelected(const ECharacterElement CharacterElement) const;
 	UFUNCTION(BlueprintCallable, Server, Reliable, Category = "ATLA|Character")
 	void ServerOnCharacterSelected(const ECharacterElement CharacterElement);
-
-	bool CheckIsCharacterSelected(const ECharacterElement CharacterElement);
-
-	UPROPERTY(BlueprintAssignable, Category = "ATLA|Character")
-	FOnSelectedCharacterListSignature OnCharacterSelected;
-
-	UFUNCTION(BlueprintNativeEvent, BlueprintAuthorityOnly, BlueprintCallable, Category = "ATLA|Character")
-	void ServerSetSelectedCharactersList(const ECharacterElement CharacterElement);
+	UFUNCTION(BlueprintCallable, Server, Reliable, Category = "ATLA|Character")
+	void ServerOnCharacterDeselected(const ECharacterElement CharacterElement);
 
 private:
-	UFUNCTION(BlueprintCallable, NetMulticast, Reliable, Category = "ATLA|Character")
-	void MulticastOnCharacterSelected(const ECharacterElement CharacterElement);
+	virtual void BeginPlay() override;
 
-	UPROPERTY(EditDefaultsOnly, Category = "ATLA|Character")
-	TMap<ECharacterElement, bool> SelectedCharacterList;
+	UPROPERTY(VisibleAnywhere, ReplicatedUsing = OnRep_SelectedCharacterInfo, Category = "ATLA|Character|Selection")
+	TArray<FSelectedCharacter> SelectedCharacterInfo;
+
+	UFUNCTION()
+	void OnRep_SelectedCharacterInfo();
+
+	void CreateCharacterSelectMenuViewModel();
+	void SetSelectedCharacterInViewModel();
+
+	UPROPERTY(BlueprintGetter = GetCharacterSelectMenuViewModel, Category = "ATLA|Character|Selection")
+	TObjectPtr<UCharacterSelectMenuViewModel> CharacterSelectMenuViewModel;
+	UPROPERTY(EditAnywhere, Category = "ATLA|Character|Selection")
+	TSubclassOf<UCharacterSelectMenuViewModel> CharacterSelectMenuViewModelClass;
 };

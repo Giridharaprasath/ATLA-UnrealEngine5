@@ -9,7 +9,6 @@
 
 #include "ATLAPlayerController.generated.h"
 
-struct FGameplayTag;
 class AATLAHUD;
 class AATLAPlayerState;
 class UInputMappingContext;
@@ -41,10 +40,10 @@ public:
 	void OnPlayerLeft();
 
 	UFUNCTION(BlueprintGetter, Category = "ATLA")
-	AATLAHUD* GetATLAHUD() { return ATLAHUD; }
+	FORCEINLINE AATLAHUD* GetATLAHUD() const { return ATLAHUD; }
 
 	UFUNCTION(BlueprintGetter, Category = "ATLA")
-	AATLAPlayerState* GetATLAPlayerState() { return ATLAPlayerState; }
+	FORCEINLINE AATLAPlayerState* GetATLAPlayerState() const { return ATLAPlayerState; }
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ATLA|HUD")
 	bool GetShowCharacterSelectMenuAtStart();
@@ -52,24 +51,24 @@ public:
 	UFUNCTION(Server, Reliable, BlueprintCallable, Category = "ATLA|Character")
 	void ServerOnCharacterSelected(const ECharacterElement CharacterElement);
 
+	UFUNCTION(Server, Reliable)
+	void ServerSetSelectedCharacter(const bool bIsSuccessful, const ECharacterElement CharacterElement);
+
 	UFUNCTION(Client, Reliable)
-	void ClientOnCharacterSelected(bool bIsSuccessful, ECharacterElement CharacterElement);
+	void ClientOnCharacterSelected(const bool bIsSuccessful, const ECharacterElement CharacterElement);
 
 	UPROPERTY(BlueprintAssignable, Category = "ATLA|Character")
 	FOnCharacterSelectedSignature OnCharacterSelected;
 
 	UPROPERTY(BlueprintReadOnly, Category = "ATLA|Character")
-	bool bOnCharacterSelected = false;
+	FSelectedCharacter SelectedCharacter;
+
+	UFUNCTION(Client, Reliable, BlueprintCallable, Category = "ATLA|HUD")
+	void ClientCreateOtherPlayerInfoHUD();
 
 protected:
 	virtual void BeginPlay() override;
 	virtual void SetupInputComponent() override;
-
-	UPROPERTY(BlueprintGetter = GetATLAHUD, VisibleInstanceOnly, Category = "ATLA")
-	AATLAHUD* ATLAHUD;
-
-	UPROPERTY(BlueprintGetter = GetATLAPlayerState, VisibleInstanceOnly, Category = "ATLA")
-	AATLAPlayerState* ATLAPlayerState;
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ATLA|HUD")
 	void OpenPauseMenu();
@@ -81,6 +80,12 @@ protected:
 	void ServerCreateOtherPlayerInfoHUD();
 
 private:
+	UPROPERTY(BlueprintGetter = GetATLAHUD, VisibleInstanceOnly, Category = "ATLA")
+	AATLAHUD* ATLAHUD;
+
+	UPROPERTY(BlueprintGetter = GetATLAPlayerState, VisibleInstanceOnly, Category = "ATLA")
+	AATLAPlayerState* ATLAPlayerState;
+
 	UFUNCTION()
 	void OnHUDInitialized(bool bIsSuccessful);
 
@@ -101,6 +106,6 @@ private:
 
 	UATLAAbilitySystemComponent* GetATLAASC();
 
-	UPROPERTY(EditAnywhere, Category = "ATLA|Character")
+	UPROPERTY(EditAnywhere, Category = "ATLA|Character|Selection")
 	bool bAlwaysShowCharacterSelectMenu;
 };

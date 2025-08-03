@@ -5,8 +5,7 @@
 #include "AbilitySystem/ATLAAbilitySystemLibrary.h"
 #include "AbilitySystem/ATLAAttributeSet.h"
 
-AATLAEnemy::AATLAEnemy(const FObjectInitializer& ObjectInitializer)
-	: Super(ObjectInitializer)
+AATLAEnemy::AATLAEnemy(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
 	AbilitySystemComponent = CreateDefaultSubobject<UATLAAbilitySystemComponent>("AbilitySystemComponent");
 	AbilitySystemComponent->SetIsReplicated(true);

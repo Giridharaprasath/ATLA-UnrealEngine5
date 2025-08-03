@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Enum/ECharacterElement.h"
 
 #include "FATLACharacters.generated.h"
 
@@ -22,10 +23,10 @@ struct FATLACharacters : public FTableRowBase
 	FString CharacterName;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
-	ECharacterElement CharacterElement;
+	ECharacterElement CharacterElement = ECharacterElement::Air;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
-	ECharacterType CharacterType;
+	ECharacterType CharacterType = ECharacterType::Mage;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 	TSubclassOf<AATLAPlayer> CharacterClass;

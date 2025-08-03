@@ -29,8 +29,7 @@ public:
 	FCooldownChangeSignature CooldownEnd;
 
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"))
-	static UWaitCooldownChange* WaitForCooldownChange(UAbilitySystemComponent* AbilitySystemComponent,
-	                                                  const FGameplayTag& InCooldownTag);
+	static UWaitCooldownChange* WaitForCooldownChange(UAbilitySystemComponent* AbilitySystemComponent, const FGameplayTag& InCooldownTag);
 
 	UFUNCTION(BlueprintCallable)
 	void EndTask();

@@ -29,7 +29,7 @@ AATLACharacterBase::AATLACharacterBase(const FObjectInitializer& ObjectInitializ
 	ATLAMoveComp->bAllowPhysicsRotationDuringAnimRootMotion = false;
 	ATLAMoveComp->GetNavAgentPropertiesRef().bCanCrouch = true;
 	ATLAMoveComp->SetCrouchedHalfHeight(65.0f);
-	
+
 	PrimaryActorTick.bCanEverTick = false;
 }
 
@@ -85,7 +85,7 @@ void AATLACharacterBase::SetMovementModeTag(const EMovementMode MovementMode, ui
 			MovementModeTag = &FATLAGameplayTags::Get().MovementMode_Walking;
 		else if (MovementMode == MOVE_Falling)
 			MovementModeTag = &FATLAGameplayTags::Get().MovementMode_Falling;
-		
+
 		if (MovementModeTag && MovementModeTag->IsValid())
 		{
 			ATLAASC->SetLooseGameplayTagCount(*MovementModeTag, bTagEnabled ? 1 : 0);

@@ -11,6 +11,7 @@
 
 class UAbilitySystemComponent;
 class UAttributeSet;
+struct FSelectedCharacter;
 
 /**
  * ATLA Player State Base Class.
@@ -28,8 +29,7 @@ public:
 	UAttributeSet* GetAttributeSet() const { return AttributeSet; }
 
 	FORCEINLINE int32 GetPlayerLevel() const { return Level; }
-	FORCEINLINE ECharacterElement GetCharacterElement() const { return CharacterElement; }
-	FORCEINLINE bool GetIsCharacterSelected() const { return bIsCharacterSelected; }
+	FORCEINLINE FSelectedCharacter GetSelectedCharacter() const { return SelectedCharacter; }
 
 	void SetCharacterElement(ECharacterElement InCharacterElement);
 
@@ -47,15 +47,12 @@ private:
 	UPROPERTY(VisibleAnywhere, ReplicatedUsing = OnRep_Level, Category = "ATLA|Player State")
 	int32 Level = 1;
 
-	UPROPERTY(VisibleAnywhere, ReplicatedUsing = OnRep_CharacterElement, Category = "ATLA|Player State")
-	ECharacterElement CharacterElement;
-
-	UPROPERTY(VisibleAnywhere)
-	bool bIsCharacterSelected;
+	UPROPERTY(VisibleAnywhere, ReplicatedUsing = OnRep_SelectedCharacter, Category = "ATLA|Character")
+	FSelectedCharacter SelectedCharacter;
 
 	UFUNCTION()
 	void OnRep_Level(int32 OldLevel);
 
 	UFUNCTION()
-	void OnRep_CharacterElement(ECharacterElement OldCharacterElement);
+	void OnRep_SelectedCharacter(FSelectedCharacter OldSelectedCharacter);
 };

@@ -48,10 +48,8 @@ UAttributeMenuWidgetController* UATLAAbilitySystemLibrary::GetAttributeMenuWidge
 	return nullptr;
 }
 
-void UATLAAbilitySystemLibrary::InitializeATLACharacterInfo(const UObject* WorldContextObject,
-                                                            ECharacterElement CharacterElement,
-                                                            ECharacterType CharacterType, float Level, bool bIsPlayer,
-                                                            UAbilitySystemComponent* ASC)
+void UATLAAbilitySystemLibrary::InitializeATLACharacterInfo(const UObject* WorldContextObject, ECharacterElement CharacterElement, ECharacterType CharacterType,
+                                                            float Level, bool bIsPlayer, UAbilitySystemComponent* ASC)
 {
 	const AATLAGameMode* ATLAGameMode = Cast<AATLAGameMode>(UGameplayStatics::GetGameMode(WorldContextObject));
 	if (ATLAGameMode == nullptr) return;
@@ -86,7 +84,7 @@ void UATLAAbilitySystemLibrary::InitializeATLACharacterInfo(const UObject* World
 	}
 
 	if (VitalAttribute != nullptr)
-	{		
+	{
 		ApplyGameplayEffectToTarget(VitalAttribute, ASC, AvatarActor, Level);
 	}
 
@@ -99,7 +97,7 @@ void UATLAAbilitySystemLibrary::InitializeATLACharacterInfo(const UObject* World
 	{
 		ATLAASC->AddCharacterAbilities(ATLACharacterInfo->CommonAbilities, Level);
 		ATLAASC->AddCharacterAbilities(CharacterInfo.CharacterAbilities, Level);
-		
+
 		ATLAASC->bStartupAbilitiesGiven = true;
 		ATLAASC->AbilitiesGiven.Broadcast(ATLAASC);
 	}
@@ -110,8 +108,7 @@ FAbilityVisionLevel UATLAAbilitySystemLibrary::GetAbilityVisionLevel(UDataTable*
 	return *UATLABlueprintFunctionLibrary::GetDataTableRowByName<FAbilityVisionLevel>(DataTable, RowName);
 }
 
-void UATLAAbilitySystemLibrary::ApplyGameplayEffectToTarget(const TSubclassOf<UGameplayEffect>& Attribute,
-                                                            UAbilitySystemComponent* ASC, const AActor* AvatarActor, const int32 Level)
+void UATLAAbilitySystemLibrary::ApplyGameplayEffectToTarget(const TSubclassOf<UGameplayEffect>& Attribute, UAbilitySystemComponent* ASC, const AActor* AvatarActor, const int32 Level)
 {
 	FGameplayEffectContextHandle AttributeContextHandle = ASC->MakeEffectContext();
 	AttributeContextHandle.AddSourceObject(AvatarActor);

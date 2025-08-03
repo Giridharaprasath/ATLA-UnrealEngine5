@@ -79,5 +79,5 @@ protected:
 	void OnInitializeStartupAbilitiesGiven(UATLAAbilitySystemComponent* ATLAASC);
 
 	UFUNCTION()
-	void CharacterSelected(bool bIsSuccessful, ECharacterElement CharacterElement);
+	void CharacterSelected(const FSelectedCharacter SelectedCharacter);
 };

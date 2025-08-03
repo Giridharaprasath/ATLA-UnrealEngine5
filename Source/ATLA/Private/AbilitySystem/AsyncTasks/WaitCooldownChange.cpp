@@ -4,8 +4,7 @@
 
 #include "AbilitySystemComponent.h"
 
-UWaitCooldownChange* UWaitCooldownChange::WaitForCooldownChange(UAbilitySystemComponent* AbilitySystemComponent,
-                                                                const FGameplayTag& InCooldownTag)
+UWaitCooldownChange* UWaitCooldownChange::WaitForCooldownChange(UAbilitySystemComponent* AbilitySystemComponent, const FGameplayTag& InCooldownTag)
 {
 	UWaitCooldownChange* WaitCooldownChange = NewObject<UWaitCooldownChange>();
 	WaitCooldownChange->ASC = AbilitySystemComponent;
@@ -17,11 +16,9 @@ UWaitCooldownChange* UWaitCooldownChange::WaitForCooldownChange(UAbilitySystemCo
 		return nullptr;
 	}
 
-	AbilitySystemComponent->RegisterGameplayTagEvent(InCooldownTag, EGameplayTagEventType::NewOrRemoved).AddUObject(
-		WaitCooldownChange, &ThisClass::CooldownTagChanged);
+	AbilitySystemComponent->RegisterGameplayTagEvent(InCooldownTag, EGameplayTagEventType::NewOrRemoved).AddUObject(WaitCooldownChange, &ThisClass::CooldownTagChanged);
 
-	AbilitySystemComponent->OnActiveGameplayEffectAddedDelegateToSelf.AddUObject(
-		WaitCooldownChange, &ThisClass::OnActiveEffectAdded);
+	AbilitySystemComponent->OnActiveGameplayEffectAddedDelegateToSelf.AddUObject(WaitCooldownChange, &ThisClass::OnActiveEffectAdded);
 
 	return WaitCooldownChange;
 }
@@ -44,9 +41,7 @@ void UWaitCooldownChange::CooldownTagChanged(const FGameplayTag InCooldownTag, i
 	}
 }
 
-void UWaitCooldownChange::OnActiveEffectAdded(UAbilitySystemComponent* TargetASC,
-                                              const FGameplayEffectSpec& SpecApplied,
-                                              FActiveGameplayEffectHandle ActiveEffectHandle)
+void UWaitCooldownChange::OnActiveEffectAdded(UAbilitySystemComponent* TargetASC, const FGameplayEffectSpec& SpecApplied, FActiveGameplayEffectHandle ActiveEffectHandle)
 {
 	FGameplayTagContainer AssetTags;
 	SpecApplied.GetAllAssetTags(AssetTags);

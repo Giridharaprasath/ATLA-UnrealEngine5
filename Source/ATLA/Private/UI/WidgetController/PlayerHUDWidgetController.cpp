@@ -16,7 +16,7 @@ void UPlayerHUDWidgetController::BroadcastInitialValues()
 	OnMaxStaminaChanged.Broadcast(ATLAAttributeSet->GetMaxStamina());
 
 	const AATLAPlayerState* ATLAPlayerState = CastChecked<AATLAPlayerState>(PlayerState);
-	CharacterSelected(ATLAPlayerState->GetIsCharacterSelected(), ATLAPlayerState->GetCharacterElement());
+	CharacterSelected(ATLAPlayerState->GetSelectedCharacter());
 }
 
 void UPlayerHUDWidgetController::BindCallbacksToDependencies()
@@ -76,8 +76,7 @@ void UPlayerHUDWidgetController::BindCallbacksToDependencies()
 					FGameplayTag MessageTag = FGameplayTag::RequestGameplayTag(FName("Message"));
 					if (Tag.MatchesTag(MessageTag))
 					{
-						const FUIWidgetRow* Row = UATLABlueprintFunctionLibrary::GetDataTableRowByTag<FUIWidgetRow>(
-							MessageWidgetDataTable, Tag);
+						const FUIWidgetRow* Row = UATLABlueprintFunctionLibrary::GetDataTableRowByTag<FUIWidgetRow>(MessageWidgetDataTable, Tag);
 						MessageWidgetRowDelegate.Broadcast(*Row);
 					}
 				}
@@ -101,7 +100,7 @@ void UPlayerHUDWidgetController::OnInitializeStartupAbilitiesGiven(UATLAAbilityS
 	ATLAASC->ForEachAbility(BroadcastDelegate);
 }
 
-void UPlayerHUDWidgetController::CharacterSelected(bool bIsSuccessful, ECharacterElement CharacterElement)
+void UPlayerHUDWidgetController::CharacterSelected(const FSelectedCharacter SelectedCharacter)
 {	
-	OnCharacterSelected.Broadcast(bIsSuccessful, CharacterElement);
+	OnCharacterSelected.Broadcast(SelectedCharacter);
 }

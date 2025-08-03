@@ -17,11 +17,15 @@ struct FAbilityVisionLevel : public FTableRowBase
 	GENERATED_BODY()
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
-	float Radius;
+	float Radius = 0.f;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
-	float Duration;
+	float Duration = 0.f;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
-	UCurveVector* CurveVector;
+	UCurveVector* CurveVector = nullptr;
+
+	FAbilityVisionLevel()
+	{
+	}
 };

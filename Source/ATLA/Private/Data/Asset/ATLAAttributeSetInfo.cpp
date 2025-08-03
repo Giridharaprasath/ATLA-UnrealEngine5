@@ -3,8 +3,7 @@
 #include "Data/Asset/ATLAAttributeSetInfo.h"
 #include "ATLA/ATLA.h"
 
-FAttributeSetInfo UATLAAttributeSetInfo::FindAttributeInfoForTag(const FGameplayTag& AttributeTag,
-                                                                 bool bLogNotFound) const
+FAttributeSetInfo UATLAAttributeSetInfo::FindAttributeInfoForTag(const FGameplayTag& AttributeTag, bool bLogNotFound) const
 {
 	for (const FAttributeSetInfo& Info : AttributeInformation)
 	{

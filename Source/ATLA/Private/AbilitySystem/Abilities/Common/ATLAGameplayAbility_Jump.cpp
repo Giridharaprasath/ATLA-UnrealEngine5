@@ -1,7 +1,6 @@
 // Copyright Melon Studios.
 
 #include "AbilitySystem/Abilities/Common/ATLAGameplayAbility_Jump.h"
-
 #include "Character/ATLACharacterBase.h"
 
 UATLAGameplayAbility_Jump::UATLAGameplayAbility_Jump(const FObjectInitializer& ObjectInitializer)
@@ -11,9 +10,9 @@ UATLAGameplayAbility_Jump::UATLAGameplayAbility_Jump(const FObjectInitializer& O
 	NetExecutionPolicy = EGameplayAbilityNetExecutionPolicy::LocalPredicted;
 }
 
-bool UATLAGameplayAbility_Jump::CanActivateAbility(const FGameplayAbilitySpecHandle Handle,
-	const FGameplayAbilityActorInfo* ActorInfo, const FGameplayTagContainer* SourceTags,
-	const FGameplayTagContainer* TargetTags, FGameplayTagContainer* OptionalRelevantTags) const
+bool UATLAGameplayAbility_Jump::CanActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo,
+                                                   const FGameplayTagContainer* SourceTags, const FGameplayTagContainer* TargetTags,
+                                                   FGameplayTagContainer* OptionalRelevantTags) const
 {
 	if (!ActorInfo || !ActorInfo->AvatarActor.IsValid())
 	{
@@ -25,7 +24,7 @@ bool UATLAGameplayAbility_Jump::CanActivateAbility(const FGameplayAbilitySpecHan
 	{
 		return false;
 	}
-	
+
 	if (!Super::CanActivateAbility(Handle, ActorInfo, SourceTags, TargetTags, OptionalRelevantTags))
 	{
 		return false;
@@ -34,12 +33,11 @@ bool UATLAGameplayAbility_Jump::CanActivateAbility(const FGameplayAbilitySpecHan
 	return true;
 }
 
-void UATLAGameplayAbility_Jump::EndAbility(const FGameplayAbilitySpecHandle Handle,
-	const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo,
-	bool bReplicateEndAbility, bool bWasCancelled)
+void UATLAGameplayAbility_Jump::EndAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo,
+                                           const FGameplayAbilityActivationInfo ActivationInfo, bool bReplicateEndAbility, bool bWasCancelled)
 {
 	CharacterJumpStop();
-	
+
 	Super::EndAbility(Handle, ActorInfo, ActivationInfo, bReplicateEndAbility, bWasCancelled);
 }
 
@@ -65,5 +63,3 @@ void UATLAGameplayAbility_Jump::CharacterJumpStop()
 		}
 	}
 }
-
-

@@ -21,8 +21,7 @@ public class ATLA : ModuleRules
 		PublicDependencyModuleNames.AddRange(new[] { "CommonInput", "CommonUI" });
 
 		// * Online Subsystem dependencies
-		PublicDependencyModuleNames.AddRange(new[]
-			{ "OnlineSubsystem", "OnlineSubsystemSteam", "OnlineSubsystemUtils", "Steamworks" });
+		PublicDependencyModuleNames.AddRange(new[] { "OnlineSubsystem", "OnlineSubsystemSteam", "OnlineSubsystemUtils", "Steamworks" });
 
 		// * Discord Game SDK Plugin
 		PublicDependencyModuleNames.AddRange(new[] { "DiscordGameSDK" });

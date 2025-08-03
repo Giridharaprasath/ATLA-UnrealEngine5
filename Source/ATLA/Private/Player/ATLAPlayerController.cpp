@@ -63,14 +63,30 @@ void AATLAPlayerController::ServerOnCharacterSelected_Implementation(const EChar
 	}
 }
 
-void AATLAPlayerController::ClientOnCharacterSelected_Implementation(bool bIsSuccessful, ECharacterElement CharacterElement)
+void AATLAPlayerController::ServerSetSelectedCharacter_Implementation(const bool bIsSuccessful, const ECharacterElement CharacterElement)
 {
-	if (bIsSuccessful)
+	SelectedCharacter.bIsSelected = bIsSuccessful;
+	SelectedCharacter.CharacterElement = CharacterElement;
+}
+
+void AATLAPlayerController::ClientOnCharacterSelected_Implementation(const bool bIsSuccessful, const ECharacterElement CharacterElement)
+{
+	SelectedCharacter.CharacterElement = CharacterElement;
+	SelectedCharacter.bIsSelected = bIsSuccessful;
+	OnCharacterSelected.Broadcast(SelectedCharacter);
+}
+
+void AATLAPlayerController::ClientCreateOtherPlayerInfoHUD_Implementation()
+{
+	if (!IsLocalPlayerController())
 	{
-		bOnCharacterSelected = true;
+		return;
 	}
-	
-	OnCharacterSelected.Broadcast(bIsSuccessful, CharacterElement);
+
+	if (ATLAHUD != nullptr)
+	{
+		ATLAHUD->CreateOtherPlayerInfoHUD();
+	}
 }
 
 void AATLAPlayerController::BeginPlay()
@@ -88,8 +104,7 @@ void AATLAPlayerController::BeginPlay()
 	check(UIGenericControls);
 	check(ATLAPlayerControls);
 
-	UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(
-		GetLocalPlayer());
+	UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
 	check(Subsystem);
 
 	Subsystem->AddMappingContext(UIGenericControls, 0);
@@ -110,8 +125,7 @@ void AATLAPlayerController::SetupInputComponent()
 	Super::SetupInputComponent();
 
 	UATLAInputComponent* ATLAInputComponent = CastChecked<UATLAInputComponent>(InputComponent);
-	ATLAInputComponent->BindAbilityActions(InputConfig, this, &ThisClass::AbilityInputTagPressed,
-	                                       &ThisClass::AbilityInputTagReleased, &ThisClass::AbilityInputTagHeld);
+	ATLAInputComponent->BindAbilityActions(InputConfig, this, &ThisClass::AbilityInputTagPressed, &ThisClass::AbilityInputTagReleased, &ThisClass::AbilityInputTagHeld);
 }
 
 void AATLAPlayerController::OpenPauseMenu_Implementation()
@@ -177,8 +191,7 @@ UATLAAbilitySystemComponent* AATLAPlayerController::GetATLAASC()
 {
 	if (ATLAAbilitySystemComponent == nullptr)
 	{
-		ATLAAbilitySystemComponent = Cast<UATLAAbilitySystemComponent>(
-			UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetPawn<APawn>()));
+		ATLAAbilitySystemComponent = Cast<UATLAAbilitySystemComponent>(UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetPawn()));
 	}
 
 	return ATLAAbilitySystemComponent;

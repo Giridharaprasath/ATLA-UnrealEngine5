@@ -20,8 +20,7 @@ class COMMONMULTIPLAYERSDK_API UCommonMultiplayerLibrary : public UBlueprintFunc
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Multiplayer", meta = ( WorldContext="WorldContextObject" ))
-	static void CreateMultiplayerSession(const UObject* WorldContextObject, ULocalPlayer* LocalPlayer,
-	                                     FSessionSettingsInfo SessionSettingsInfo);
+	static void CreateMultiplayerSession(const UObject* WorldContextObject, ULocalPlayer* LocalPlayer, FSessionSettingsInfo SessionSettingsInfo);
 
 	UFUNCTION(BlueprintCallable, Category = "Multiplayer", meta = ( WorldContext="WorldContextObject" ))
 	static void DestroyMultiplayerSession(const UObject* WorldContextObject);

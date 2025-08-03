@@ -21,8 +21,7 @@ class UGameplayAbility;
  * ATLA Character Base Class.
  */
 UCLASS(Abstract)
-class ATLA_API AATLACharacterBase : public ACharacter, public IAbilitySystemInterface, public ICombatInterface,
-                                    public IATLAPlayerInterface
+class ATLA_API AATLACharacterBase : public ACharacter, public IAbilitySystemInterface, public ICombatInterface, public IATLAPlayerInterface
 {
 	GENERATED_BODY()
 

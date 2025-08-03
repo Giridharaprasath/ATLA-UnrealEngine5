@@ -9,6 +9,7 @@
 
 #include "ATLABlueprintFunctionLibrary.generated.h"
 
+class UCharacterSelectMenuViewModel;
 enum class ECharacterElement : uint8;
 enum class EUIPopUpWidget : uint8;
 class UATLAGameInstance;
@@ -38,24 +39,29 @@ public:
 	UFUNCTION(BlueprintPure, Category = "ATLA|Character Element")
 	static FString GetCharacterElementString(const ECharacterElement CharacterElement);
 
+#pragma region View Model Functions
+	UFUNCTION(BlueprintPure, Category = "ATLA|Character|Selection", meta = ( WorldContext = "WorldContextObject" ))
+	static UCharacterSelectMenuViewModel* GetCharacterSelectMenuViewModel(const UObject* WorldContextObject);
+#pragma endregion
+
 	UFUNCTION(BlueprintPure, Category = "ATLA")
 	static FString GetGameInfoDetails();
 
 #pragma region UI Pop Up Interface Functions
-	UFUNCTION(BlueprintCallable, Category = "ATLA|UI", meta = ( WorldContext="WorldContextObject" ))
+	UFUNCTION(BlueprintCallable, Category = "ATLA|UI", meta = ( WorldContext = "WorldContextObject" ))
 	static void ShowPopUpUI(const UObject* WorldContextObject, EUIPopUpWidget PopUpWidget);
 
-	UFUNCTION(BlueprintCallable, Category = "ATLA|UI", meta = ( WorldContext="WorldContextObject" ))
+	UFUNCTION(BlueprintCallable, Category = "ATLA|UI", meta = ( WorldContext = "WorldContextObject" ))
 	static void PopUpUIYes(const UObject* WorldContextObject);
 
-	UFUNCTION(BlueprintCallable, Category = "ATLA|UI", meta = ( WorldContext="WorldContextObject" ))
+	UFUNCTION(BlueprintCallable, Category = "ATLA|UI", meta = ( WorldContext = "WorldContextObject" ))
 	static void PopUpUINo(const UObject* WorldContextObject);
 #pragma endregion
 
 #pragma region UI Cutscene Interface Functions
-	UFUNCTION(BlueprintCallable, Category = "ATLA|UI", meta = ( WorldContext="WorldContextObject" ))
+	UFUNCTION(BlueprintCallable, Category = "ATLA|UI", meta = ( WorldContext = "WorldContextObject" ))
 	static void ShowCutsceneBlackBars(const UObject* WorldContextObject);
-	UFUNCTION(BlueprintCallable, Category = "ATLA|UI", meta = ( WorldContext="WorldContextObject" ))
+	UFUNCTION(BlueprintCallable, Category = "ATLA|UI", meta = ( WorldContext = "WorldContextObject" ))
 	static void HideCutsceneBlackBars(const UObject* WorldContextObject);
 #pragma endregion
 };

@@ -14,7 +14,8 @@
 				"UMG",
 				"CoreUObject",
 				"CommonUI",
-				"EnhancedInput"
+				"EnhancedInput",
+				"ModelViewViewModel"
 			]
 		}
 	],

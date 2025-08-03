@@ -19,24 +19,21 @@ struct FCharacterInfo
 	UPROPERTY(EditDefaultsOnly, Category = "Primary Attributes")
 	bool bUseCustomPrimaryAttributes = false;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Primary Attributes",
-		meta = (EditCondition = "bUseCustomPrimaryAttributes", EditConditionHides))
+	UPROPERTY(EditDefaultsOnly, Category = "Primary Attributes", meta = (EditCondition = "bUseCustomPrimaryAttributes", EditConditionHides))
 	TSubclassOf<UGameplayEffect> PrimaryAttributes;
-	
+
 	UPROPERTY(EditDefaultsOnly, Category = "Secondary Attributes")
 	bool bUseCustomSecondaryAttributes = false;
-	
-	UPROPERTY(EditDefaultsOnly, Category = "Secondary Attributes",
-		meta = (EditCondition = "bUseCustomSecondaryAttributes", EditConditionHides))
+
+	UPROPERTY(EditDefaultsOnly, Category = "Secondary Attributes", meta = (EditCondition = "bUseCustomSecondaryAttributes", EditConditionHides))
 	TSubclassOf<UGameplayEffect> SecondaryAttributes;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Vital Attributes")
 	bool bUseCustomVitalAttributes = false;
-	
-	UPROPERTY(EditDefaultsOnly, Category = "Vital Attributes",
-		meta = (EditCondition = "bUseCustomVitalAttributes", EditConditionHides))
+
+	UPROPERTY(EditDefaultsOnly, Category = "Vital Attributes", meta = (EditCondition = "bUseCustomVitalAttributes", EditConditionHides))
 	TSubclassOf<UGameplayEffect> VitalAttributes;
-	
+
 	UPROPERTY(EditDefaultsOnly, Category = "Abilities")
 	TArray<TSubclassOf<UGameplayAbility>> CharacterAbilities;
 };

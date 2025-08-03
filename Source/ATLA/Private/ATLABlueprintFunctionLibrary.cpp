@@ -1,12 +1,11 @@
 // Copyright Melon Studios.
 
 #include "ATLABlueprintFunctionLibrary.h"
-
-#include "Blueprint/WidgetLayoutLibrary.h"
 #include "Component/UICutsceneComponent.h"
 #include "Component/UIPopUpComponent.h"
 #include "Enum/ECharacterElement.h"
 #include "Game/ATLAGameInstance.h"
+#include "Game/ATLAGameState.h"
 #include "GameFramework/HUD.h"
 #include "Interface/UICutsceneInterface.h"
 #include "Kismet/GameplayStatics.h"
@@ -42,6 +41,12 @@ FString UATLABlueprintFunctionLibrary::GetCharacterElementString(const ECharacte
 	default:
 		return "";
 	}
+}
+
+UCharacterSelectMenuViewModel* UATLABlueprintFunctionLibrary::GetCharacterSelectMenuViewModel(const UObject* WorldContextObject)
+{
+	const AATLAGameState* GS = Cast<AATLAGameState>(UGameplayStatics::GetGameState(WorldContextObject));
+	return GS->GetCharacterSelectMenuViewModel();
 }
 
 FString UATLABlueprintFunctionLibrary::GetGameInfoDetails()
@@ -101,8 +106,7 @@ void UATLABlueprintFunctionLibrary::ShowCutsceneBlackBars(const UObject* WorldCo
 {
 	const APlayerController* PC = UGameplayStatics::GetPlayerController(WorldContextObject, 0);
 	const AHUD* HUD = PC->GetHUD();
-	IUICutsceneInterface* CutsceneInterface = Cast<IUICutsceneInterface>(
-		HUD->FindComponentByClass<UUICutsceneComponent>());
+	IUICutsceneInterface* CutsceneInterface = Cast<IUICutsceneInterface>(HUD->FindComponentByClass<UUICutsceneComponent>());
 	CutsceneInterface->ShowCutsceneBlackBars();
 }
 
@@ -110,8 +114,7 @@ void UATLABlueprintFunctionLibrary::HideCutsceneBlackBars(const UObject* WorldCo
 {
 	const APlayerController* PC = UGameplayStatics::GetPlayerController(WorldContextObject, 0);
 	const AHUD* HUD = PC->GetHUD();
-	IUICutsceneInterface* CutsceneInterface = Cast<IUICutsceneInterface>(
-		HUD->FindComponentByClass<UUICutsceneComponent>());
+	IUICutsceneInterface* CutsceneInterface = Cast<IUICutsceneInterface>(HUD->FindComponentByClass<UUICutsceneComponent>());
 	CutsceneInterface->HideCutsceneBlackBars();
 }
 #pragma endregion

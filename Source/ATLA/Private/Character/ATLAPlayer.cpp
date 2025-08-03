@@ -10,9 +10,8 @@
 #include "Player/ATLAPlayerController.h"
 #include "Player/ATLAPlayerState.h"
 
-AATLAPlayer::AATLAPlayer(const FObjectInitializer& ObjectInitializer)
-	: Super(ObjectInitializer)
-{	
+AATLAPlayer::AATLAPlayer(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
+{
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationRoll = false;
 	bUseControllerRotationYaw = false;
@@ -109,7 +108,7 @@ void AATLAPlayer::MoveATLAPlayer(const FInputActionValue& Value)
 
 	const FRotator Rotation = Controller->GetControlRotation();
 	const FRotator YawRotation(0.f, Rotation.Yaw, 0.f);
-	
+
 	const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 	const FVector RightDirection = FRotationMatrix(Rotation).GetUnitAxis(EAxis::Y);
 

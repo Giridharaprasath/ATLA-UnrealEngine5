@@ -8,8 +8,7 @@ UWaitOnTick::UWaitOnTick(const FObjectInitializer& ObjectInitializer)
 	bTickingTask = true;
 }
 
-UWaitOnTick* UWaitOnTick::WaitOnTick(UGameplayAbility* OwningAbility, FName TaskInstanceName, float Duration,
-                                     UCurveVector* CurveVector)
+UWaitOnTick* UWaitOnTick::WaitOnTick(UGameplayAbility* OwningAbility, FName TaskInstanceName, float Duration, UCurveVector* CurveVector)
 {
 	UWaitOnTick* MyObj = NewAbilityTask<UWaitOnTick>(OwningAbility);
 

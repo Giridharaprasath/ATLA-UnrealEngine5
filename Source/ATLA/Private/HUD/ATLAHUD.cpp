@@ -33,8 +33,7 @@ UAttributeMenuWidgetController* AATLAHUD::GetAttributeMenuWidgetController(const
 {
 	if (AttributeMenuWidgetController == nullptr)
 	{
-		AttributeMenuWidgetController = NewObject<UAttributeMenuWidgetController>(
-			this, AttributeMenuWidgetControllerClass);
+		AttributeMenuWidgetController = NewObject<UAttributeMenuWidgetController>(this, AttributeMenuWidgetControllerClass);
 		AttributeMenuWidgetController->SetWidgetController(WidgetController);
 		AttributeMenuWidgetController->BindCallbacksToDependencies();
 	}
