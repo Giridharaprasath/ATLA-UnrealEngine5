@@ -1,7 +1,5 @@
 # ATLA
 
-# CURRENTLY UNDER FULL RECONSTRUCTION
-
 ALTA Game Developed using Unreal Engine 5.
 
 Made this project to learn Gameplay Ability System. 
