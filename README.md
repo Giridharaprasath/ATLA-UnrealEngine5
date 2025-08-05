@@ -26,6 +26,7 @@ Project uses both Blueprints and C++.
 
 - Gameplay Ability System
 - Common UI
+- UMG View Model
 
 ![Screenshot 2024-03-09 154119](https://github.com/Giridharaprasath/ATLA-UnrealEngine5/assets/83279100/00f0f85d-a150-4bd3-b2ee-bb375058534e)
   
