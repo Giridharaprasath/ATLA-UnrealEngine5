@@ -8,15 +8,14 @@
 #include "Game/ATLAGameState.h"
 #include "GameFramework/HUD.h"
 #include "Interface/UICutsceneInterface.h"
+#include "Interface/UILoadingInterface.h"
 #include "Kismet/GameplayStatics.h"
 #include "Structure/FATLACharacters.h"
 #include "Interface/UIPopUpInterface.h"
 
 UATLAGameInstance* UATLABlueprintFunctionLibrary::GetATLAGameInstance(const UObject* WorldContextObject)
 {
-	UGameInstance* GameInstance = UGameplayStatics::GetGameInstance(WorldContextObject);
-	UATLAGameInstance* ATLAGameInstance = Cast<UATLAGameInstance>(GameInstance);
-	return ATLAGameInstance;
+	return Cast<UATLAGameInstance>(UGameplayStatics::GetGameInstance(WorldContextObject));
 }
 
 FATLACharacters UATLABlueprintFunctionLibrary::GetCharacterData(UDataTable* DataTable, const FName RowName)
@@ -80,7 +79,7 @@ void UATLABlueprintFunctionLibrary::ShowPopUpUI(const UObject* WorldContextObjec
 {
 	const APlayerController* PC = UGameplayStatics::GetPlayerController(WorldContextObject, 0);
 	const AHUD* HUD = PC->GetHUD();
-	IUIPopUpInterface* PopUpInterface = Cast<IUIPopUpInterface>(HUD->FindComponentByClass<UUIPopUpComponent>());
+	IUIPopUpInterface* PopUpInterface = HUD->FindComponentByInterface<IUIPopUpInterface>();
 	PopUpInterface->ShowPopUpWidget(PopUpWidget);
 }
 
@@ -88,7 +87,7 @@ void UATLABlueprintFunctionLibrary::PopUpUIYes(const UObject* WorldContextObject
 {
 	const APlayerController* PC = UGameplayStatics::GetPlayerController(WorldContextObject, 0);
 	const AHUD* HUD = PC->GetHUD();
-	IUIPopUpInterface* PopUpInterface = Cast<IUIPopUpInterface>(HUD->FindComponentByClass<UUIPopUpComponent>());
+	IUIPopUpInterface* PopUpInterface = HUD->FindComponentByInterface<IUIPopUpInterface>();
 	PopUpInterface->PopUpWidgetYes();
 }
 
@@ -96,25 +95,73 @@ void UATLABlueprintFunctionLibrary::PopUpUINo(const UObject* WorldContextObject)
 {
 	const APlayerController* PC = UGameplayStatics::GetPlayerController(WorldContextObject, 0);
 	const AHUD* HUD = PC->GetHUD();
-	IUIPopUpInterface* PopUpInterface = Cast<IUIPopUpInterface>(HUD->FindComponentByClass<UUIPopUpComponent>());
+	IUIPopUpInterface* PopUpInterface = HUD->FindComponentByInterface<IUIPopUpInterface>();
 	PopUpInterface->PopUpWidgetNo();
 }
 #pragma endregion
 
 #pragma region UI Cutscene Interface Functions
-void UATLABlueprintFunctionLibrary::ShowCutsceneBlackBars(const UObject* WorldContextObject)
+void UATLABlueprintFunctionLibrary::ShowCutsceneHorizontalBars(const UObject* WorldContextObject)
 {
 	const APlayerController* PC = UGameplayStatics::GetPlayerController(WorldContextObject, 0);
 	const AHUD* HUD = PC->GetHUD();
-	IUICutsceneInterface* CutsceneInterface = Cast<IUICutsceneInterface>(HUD->FindComponentByClass<UUICutsceneComponent>());
-	CutsceneInterface->ShowCutsceneBlackBars();
+	IUICutsceneInterface* CutsceneInterface = HUD->FindComponentByInterface<IUICutsceneInterface>();
+	CutsceneInterface->ShowCutsceneHorizontalBars();
 }
 
-void UATLABlueprintFunctionLibrary::HideCutsceneBlackBars(const UObject* WorldContextObject)
+void UATLABlueprintFunctionLibrary::HideCutsceneHorizontalBars(const UObject* WorldContextObject)
 {
 	const APlayerController* PC = UGameplayStatics::GetPlayerController(WorldContextObject, 0);
 	const AHUD* HUD = PC->GetHUD();
-	IUICutsceneInterface* CutsceneInterface = Cast<IUICutsceneInterface>(HUD->FindComponentByClass<UUICutsceneComponent>());
-	CutsceneInterface->HideCutsceneBlackBars();
+	IUICutsceneInterface* CutsceneInterface = HUD->FindComponentByInterface<IUICutsceneInterface>();
+	CutsceneInterface->HideCutsceneHorizontalBars();
+}
+
+void UATLABlueprintFunctionLibrary::ShowCutsceneVerticalBars(const UObject* WorldContextObject)
+{
+	const APlayerController* PC = UGameplayStatics::GetPlayerController(WorldContextObject, 0);
+	const AHUD* HUD = PC->GetHUD();
+	IUICutsceneInterface* CutsceneInterface = HUD->FindComponentByInterface<IUICutsceneInterface>();
+	CutsceneInterface->ShowCutsceneVerticalBars();
+}
+
+void UATLABlueprintFunctionLibrary::HideCutsceneVerticalBars(const UObject* WorldContextObject)
+{
+	const APlayerController* PC = UGameplayStatics::GetPlayerController(WorldContextObject, 0);
+	const AHUD* HUD = PC->GetHUD();
+	IUICutsceneInterface* CutsceneInterface = HUD->FindComponentByInterface<IUICutsceneInterface>();
+	CutsceneInterface->HideCutsceneVerticalBars();
+}
+
+void UATLABlueprintFunctionLibrary::ShowBlurredLoadingPage(const UObject* WorldContextObject)
+{
+	const APlayerController* PC = UGameplayStatics::GetPlayerController(WorldContextObject, 0);
+	const AHUD* HUD = PC->GetHUD();
+	IUILoadingInterface* LoadingInterface = HUD->FindComponentByInterface<IUILoadingInterface>();
+	LoadingInterface->ShowBlurredLoadingPage();
+}
+
+void UATLABlueprintFunctionLibrary::HideBlurredLoadingPage(const UObject* WorldContextObject)
+{
+	const APlayerController* PC = UGameplayStatics::GetPlayerController(WorldContextObject, 0);
+	const AHUD* HUD = PC->GetHUD();
+	IUILoadingInterface* LoadingInterface = HUD->FindComponentByInterface<IUILoadingInterface>();
+	LoadingInterface->HideBlurredLoadingPage();
+}
+
+void UATLABlueprintFunctionLibrary::ShowClearLoadingPage(const UObject* WorldContextObject)
+{
+	const APlayerController* PC = UGameplayStatics::GetPlayerController(WorldContextObject, 0);
+	const AHUD* HUD = PC->GetHUD();
+	IUILoadingInterface* LoadingInterface = HUD->FindComponentByInterface<IUILoadingInterface>();
+	LoadingInterface->ShowClearLoadingPage();
+}
+
+void UATLABlueprintFunctionLibrary::HideClearLoadingPage(const UObject* WorldContextObject)
+{
+	const APlayerController* PC = UGameplayStatics::GetPlayerController(WorldContextObject, 0);
+	const AHUD* HUD = PC->GetHUD();
+	IUILoadingInterface* LoadingInterface = HUD->FindComponentByInterface<IUILoadingInterface>();
+	LoadingInterface->HideClearLoadingPage();
 }
 #pragma endregion

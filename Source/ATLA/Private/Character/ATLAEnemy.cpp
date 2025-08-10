@@ -35,6 +35,5 @@ void AATLAEnemy::InitAbilityActorInfo()
 
 void AATLAEnemy::InitializeDefaultAttributes() const
 {
-	UATLAAbilitySystemLibrary::InitializeATLACharacterInfo(this, CharacterElement, CharacterType, 1.f, false,
-	                                                       GetAbilitySystemComponent());
+	UATLAAbilitySystemLibrary::InitializeATLACharacterInfo(this, CharacterElement, CharacterType, 1.f, false, GetAbilitySystemComponent());
 }

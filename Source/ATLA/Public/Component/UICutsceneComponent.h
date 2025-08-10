@@ -19,16 +19,20 @@ class ATLA_API UUICutsceneComponent : public UActorComponent, public IUICutscene
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable, Category = "ATLA|UI")
 	void CreateCutsceneWidgets();
 
 #pragma region UI Cutscene Interface
-	virtual void ShowCutsceneBlackBars() override;
-	virtual void HideCutsceneBlackBars() override;
+	virtual void ShowCutsceneHorizontalBars() override;
+	virtual void HideCutsceneHorizontalBars() override;
+	virtual void ShowCutsceneVerticalBars() override;
+	virtual void HideCutsceneVerticalBars() override;
 #pragma endregion
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "UI")
-	TSubclassOf<UATLACutsceneWidget> CutsceneHorizontalBarsWidgetClass;
+	TSubclassOf<UATLACutsceneWidget> CutsceneBlackBarsWidgetClass;
 
 private:
-	TObjectPtr<UATLACutsceneWidget> CutsceneHorizontalBarsWidget;
+	UPROPERTY()
+	TObjectPtr<UATLACutsceneWidget> CutsceneBlackBarsWidget;
 };

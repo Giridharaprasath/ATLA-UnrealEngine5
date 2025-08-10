@@ -50,19 +50,32 @@ public:
 #pragma region UI Pop Up Interface Functions
 	UFUNCTION(BlueprintCallable, Category = "ATLA|UI", meta = ( WorldContext = "WorldContextObject" ))
 	static void ShowPopUpUI(const UObject* WorldContextObject, EUIPopUpWidget PopUpWidget);
-
 	UFUNCTION(BlueprintCallable, Category = "ATLA|UI", meta = ( WorldContext = "WorldContextObject" ))
 	static void PopUpUIYes(const UObject* WorldContextObject);
-
 	UFUNCTION(BlueprintCallable, Category = "ATLA|UI", meta = ( WorldContext = "WorldContextObject" ))
 	static void PopUpUINo(const UObject* WorldContextObject);
 #pragma endregion
 
 #pragma region UI Cutscene Interface Functions
 	UFUNCTION(BlueprintCallable, Category = "ATLA|UI", meta = ( WorldContext = "WorldContextObject" ))
-	static void ShowCutsceneBlackBars(const UObject* WorldContextObject);
+	static void ShowCutsceneHorizontalBars(const UObject* WorldContextObject);
 	UFUNCTION(BlueprintCallable, Category = "ATLA|UI", meta = ( WorldContext = "WorldContextObject" ))
-	static void HideCutsceneBlackBars(const UObject* WorldContextObject);
+	static void HideCutsceneHorizontalBars(const UObject* WorldContextObject);
+	UFUNCTION(BlueprintCallable, Category = "ATLA|UI", meta = ( WorldContext = "WorldContextObject" ))
+	static void ShowCutsceneVerticalBars(const UObject* WorldContextObject);
+	UFUNCTION(BlueprintCallable, Category = "ATLA|UI", meta = ( WorldContext = "WorldContextObject" ))
+	static void HideCutsceneVerticalBars(const UObject* WorldContextObject);
+#pragma endregion
+
+#pragma region UI Loading Interface Functions
+	UFUNCTION(BlueprintCallable, Category = "ATLA|UI", meta = ( WorldContext = "WorldContextObject" ))
+	static void ShowBlurredLoadingPage(const UObject* WorldContextObject);
+	UFUNCTION(BlueprintCallable, Category = "ATLA|UI", meta = ( WorldContext = "WorldContextObject" ))
+	static void HideBlurredLoadingPage(const UObject* WorldContextObject);
+	UFUNCTION(BlueprintCallable, Category = "ATLA|UI", meta = ( WorldContext = "WorldContextObject" ))
+	static void ShowClearLoadingPage(const UObject* WorldContextObject);
+	UFUNCTION(BlueprintCallable, Category = "ATLA|UI", meta = ( WorldContext = "WorldContextObject" ))
+	static void HideClearLoadingPage(const UObject* WorldContextObject);
 #pragma endregion
 };
 

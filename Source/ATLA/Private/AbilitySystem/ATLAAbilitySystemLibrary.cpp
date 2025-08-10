@@ -29,8 +29,7 @@ UPlayerHUDWidgetController* UATLAAbilitySystemLibrary::GetPlayerHUDWidgetControl
 	return nullptr;
 }
 
-UAttributeMenuWidgetController* UATLAAbilitySystemLibrary::GetAttributeMenuWidgetController(
-	const UObject* WorldContextObject)
+UAttributeMenuWidgetController* UATLAAbilitySystemLibrary::GetAttributeMenuWidgetController(const UObject* WorldContextObject)
 {
 	if (APlayerController* PC = UGameplayStatics::GetPlayerController(WorldContextObject, 0))
 	{
@@ -55,11 +54,9 @@ void UATLAAbilitySystemLibrary::InitializeATLACharacterInfo(const UObject* World
 	if (ATLAGameMode == nullptr) return;
 
 	const AActor* AvatarActor = ASC->GetAvatarActor();
-	UATLACharacterInfo* ATLACharacterInfo =
-		bIsPlayer ? ATLAGameMode->PlayerCharacterInfo : ATLAGameMode->EnemyCharacterInfo;
+	UATLACharacterInfo* ATLACharacterInfo = bIsPlayer ? ATLAGameMode->PlayerCharacterInfo : ATLAGameMode->EnemyCharacterInfo;
 
-	const FCharacterInfo CharacterInfo = ATLACharacterInfo->GetCharacterInfo(
-		CharacterElement, CharacterType);
+	const FCharacterInfo CharacterInfo = ATLACharacterInfo->GetCharacterInfo(CharacterElement, CharacterType);
 
 	const TSubclassOf<UGameplayEffect> PrimaryAttribute = CharacterInfo.bUseCustomPrimaryAttributes
 		                                                      ? CharacterInfo.PrimaryAttributes
@@ -112,7 +109,6 @@ void UATLAAbilitySystemLibrary::ApplyGameplayEffectToTarget(const TSubclassOf<UG
 {
 	FGameplayEffectContextHandle AttributeContextHandle = ASC->MakeEffectContext();
 	AttributeContextHandle.AddSourceObject(AvatarActor);
-	const FGameplayEffectSpecHandle AttributeSpecHandle = ASC->MakeOutgoingSpec(
-		Attribute, Level, AttributeContextHandle);
+	const FGameplayEffectSpecHandle AttributeSpecHandle = ASC->MakeOutgoingSpec(Attribute, Level, AttributeContextHandle);
 	ASC->ApplyGameplayEffectSpecToTarget(*AttributeSpecHandle.Data.Get(), ASC);
 }

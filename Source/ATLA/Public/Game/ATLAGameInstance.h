@@ -7,6 +7,9 @@
 
 #include "ATLAGameInstance.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnCreateSessionDelegateSignature, bool, bIsSuccessful);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnJoinSessionDelegateSignature, bool, bIsSuccessful);
+
 /**
  *	ATLA Game Instance Class.
  */
@@ -29,6 +32,11 @@ public:
 	void DestroyATLASession();
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "ATLA|Multiplayer")
 	void FindATLASession(const FString& LobbyName);
+
+	UPROPERTY(BlueprintAssignable, Category = "ATLA|Multiplayer")
+	FOnCreateSessionDelegateSignature OnCreateSessionDelegate;
+	UPROPERTY(BlueprintAssignable, Category = "ATLA|Multiplayer")
+	FOnJoinSessionDelegateSignature OnJoinSessionDelegate;
 
 protected:
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "ATLA|Level")

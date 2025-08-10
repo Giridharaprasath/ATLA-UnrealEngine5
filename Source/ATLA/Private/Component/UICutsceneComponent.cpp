@@ -2,25 +2,40 @@
 
 #include "Component/UICutsceneComponent.h"
 #include "Blueprint/UserWidget.h"
-#include "UI/Widget/PlayerHUD/SubWidgets/CutsceneHUD/ATLACutsceneWidget.h"
+#include "UI/Widget/SubWidgets/CutsceneHUD/ATLACutsceneWidget.h"
 
 void UUICutsceneComponent::CreateCutsceneWidgets()
 {
-	checkf(CutsceneHorizontalBarsWidgetClass, TEXT("Cutscene Widget Class Not Set In ATLA HUD"));
-	CutsceneHorizontalBarsWidget = CreateWidget<UATLACutsceneWidget>(GetWorld(), CutsceneHorizontalBarsWidgetClass);
-	CutsceneHorizontalBarsWidget->AddToViewport(50);
+	checkf(CutsceneBlackBarsWidgetClass, TEXT("Cutscene Widget Class Not Set In %hs"), __FUNCTION__);
+
+	CutsceneBlackBarsWidget = CreateWidget<UATLACutsceneWidget>(GetWorld(), CutsceneBlackBarsWidgetClass);
+	CutsceneBlackBarsWidget->AddToViewport(50);
 }
 
-void UUICutsceneComponent::ShowCutsceneBlackBars()
+void UUICutsceneComponent::ShowCutsceneHorizontalBars()
 {
-	checkf(CutsceneHorizontalBarsWidget, TEXT("Cutscene Widget Not Set"));
+	checkf(CutsceneBlackBarsWidget, TEXT("Cutscene Widget Not Set In %hs"), __FUNCTION__);
 
-	CutsceneHorizontalBarsWidget->ShowCutsceneBlackBars();
+	CutsceneBlackBarsWidget->ShowCutsceneHorizontalBars();
 }
 
-void UUICutsceneComponent::HideCutsceneBlackBars()
+void UUICutsceneComponent::HideCutsceneHorizontalBars()
 {
-	checkf(CutsceneHorizontalBarsWidget, TEXT("Cutscene Widget Not Set"));
+	checkf(CutsceneBlackBarsWidget, TEXT("Cutscene Widget Not Set In %hs"), __FUNCTION__);
 
-	CutsceneHorizontalBarsWidget->HideCutsceneBlackBars();
+	CutsceneBlackBarsWidget->HideCutsceneHorizontalBars();
+}
+
+void UUICutsceneComponent::ShowCutsceneVerticalBars()
+{
+	checkf(CutsceneBlackBarsWidget, TEXT("Cutscene Widget Not Set In %hs"), __FUNCTION__);
+
+	CutsceneBlackBarsWidget->ShowCutsceneVerticalBars();
+}
+
+void UUICutsceneComponent::HideCutsceneVerticalBars()
+{
+	checkf(CutsceneBlackBarsWidget, TEXT("Cutscene Widget Not Set In %hs"), __FUNCTION__);
+
+	CutsceneBlackBarsWidget->HideCutsceneVerticalBars();
 }

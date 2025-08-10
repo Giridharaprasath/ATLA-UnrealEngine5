@@ -24,10 +24,10 @@ public:
 	UMultiplayerGameInstanceSubsystem();
 	virtual void Deinitialize() override;
 
-	void CreateMultiplayerSession(ULocalPlayer* LocalPlayer, FSessionSettingsInfo SessionSettingsInfo);
+	void CreateMultiplayerSession(const ULocalPlayer* LocalPlayer, FSessionSettingsInfo SessionSettingsInfo);
 	void DestroyMultiplayerSession();
-	void JoinMultiplayerSession(int32 LocalPlayer, const FOnlineSessionSearchResult& SessionSearchResult);
-	void FindMultiplayerSession(bool bUseLan, FString LobbyName);
+	void JoinMultiplayerSession(const int32 LocalPlayer, const FOnlineSessionSearchResult& SessionSearchResult);
+	void FindMultiplayerSession(const bool bUseLan, const FString& LobbyName);
 
 protected:
 	void OnCreateSessionComplete(FName SessionName, bool bWasSuccessful);

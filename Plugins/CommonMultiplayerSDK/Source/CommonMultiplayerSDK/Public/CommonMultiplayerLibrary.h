@@ -7,6 +7,8 @@
 
 #include "CommonMultiplayerLibrary.generated.h"
 
+DECLARE_DELEGATE_OneParam(FOnSessionProcessSignature, const bool /* bIsSuccessful */);
+
 class UMultiplayerGameInstanceSubsystem;
 struct FSessionSettingsInfo;
 
@@ -19,17 +21,20 @@ class COMMONMULTIPLAYERSDK_API UCommonMultiplayerLibrary : public UBlueprintFunc
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Multiplayer", meta = ( WorldContext="WorldContextObject" ))
-	static void CreateMultiplayerSession(const UObject* WorldContextObject, ULocalPlayer* LocalPlayer, FSessionSettingsInfo SessionSettingsInfo);
+	UFUNCTION(Category = "Multiplayer", meta = ( WorldContext = "WorldContextObject" ))
+	static void CreateMultiplayerSession(const UObject* WorldContextObject, ULocalPlayer* LocalPlayer, const FSessionSettingsInfo SessionSettingsInfo);
 
-	UFUNCTION(BlueprintCallable, Category = "Multiplayer", meta = ( WorldContext="WorldContextObject" ))
+	UFUNCTION(BlueprintCallable, Category = "Multiplayer", meta = ( WorldContext = "WorldContextObject" ))
 	static void DestroyMultiplayerSession(const UObject* WorldContextObject);
 
-	UFUNCTION(BlueprintCallable, Category = "Multiplayer", meta = ( WorldContext="WorldContextObject" ))
-	static void FindMultiplayerSession(const UObject* WorldContextObject, bool bUseLan, FString LobbyName);
+	UFUNCTION(BlueprintCallable, Category = "Multiplayer", meta = ( WorldContext = "WorldContextObject" ))
+	static void FindMultiplayerSession(const UObject* WorldContextObject, bool bUseLan, const FString LobbyName);
 
-	UFUNCTION(BlueprintCallable, Category = "Multiplayer", meta = ( WorldContext="WorldContextObject" ))
+	UFUNCTION(BlueprintCallable, Category = "Multiplayer", meta = ( WorldContext = "WorldContextObject" ))
 	static bool UseLanMode(const UObject* WorldContextObject);
+
+	static FOnSessionProcessSignature OnCreateStartSessionProcessDelegate;
+	static FOnSessionProcessSignature OnFindJoinSessionProcessDelegate;
 
 private:
 	static UMultiplayerGameInstanceSubsystem* GetMultiplayerGameInstanceSubsystem(const UObject* WorldContextObject);

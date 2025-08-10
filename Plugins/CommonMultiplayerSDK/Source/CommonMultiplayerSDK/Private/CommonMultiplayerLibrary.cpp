@@ -6,7 +6,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Steam/SteamBlueprintFunctionLibrary.h"
 
-void UCommonMultiplayerLibrary::CreateMultiplayerSession(const UObject* WorldContextObject, ULocalPlayer* LocalPlayer, FSessionSettingsInfo SessionSettingsInfo)
+void UCommonMultiplayerLibrary::CreateMultiplayerSession(const UObject* WorldContextObject, ULocalPlayer* LocalPlayer, const FSessionSettingsInfo SessionSettingsInfo)
 {
 	GetMultiplayerGameInstanceSubsystem(WorldContextObject)->CreateMultiplayerSession(LocalPlayer, SessionSettingsInfo);
 }
@@ -16,7 +16,7 @@ void UCommonMultiplayerLibrary::DestroyMultiplayerSession(const UObject* WorldCo
 	GetMultiplayerGameInstanceSubsystem(WorldContextObject)->DestroyMultiplayerSession();
 }
 
-void UCommonMultiplayerLibrary::FindMultiplayerSession(const UObject* WorldContextObject, bool bUseLan, FString LobbyName)
+void UCommonMultiplayerLibrary::FindMultiplayerSession(const UObject* WorldContextObject, const bool bUseLan, const FString LobbyName)
 {
 	GetMultiplayerGameInstanceSubsystem(WorldContextObject)->FindMultiplayerSession(bUseLan, LobbyName);
 }
@@ -33,8 +33,10 @@ bool UCommonMultiplayerLibrary::UseLanMode(const UObject* WorldContextObject)
 	return bUseLanMode;
 }
 
-UMultiplayerGameInstanceSubsystem* UCommonMultiplayerLibrary::GetMultiplayerGameInstanceSubsystem(
-	const UObject* WorldContextObject)
+FOnSessionProcessSignature UCommonMultiplayerLibrary::OnCreateStartSessionProcessDelegate;
+FOnSessionProcessSignature UCommonMultiplayerLibrary::OnFindJoinSessionProcessDelegate;
+
+UMultiplayerGameInstanceSubsystem* UCommonMultiplayerLibrary::GetMultiplayerGameInstanceSubsystem(const UObject* WorldContextObject)
 {
 	return UGameplayStatics::GetGameInstance(WorldContextObject)->GetSubsystem<UMultiplayerGameInstanceSubsystem>();
 }

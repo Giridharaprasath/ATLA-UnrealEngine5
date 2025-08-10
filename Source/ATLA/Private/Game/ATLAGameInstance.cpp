@@ -52,6 +52,10 @@ void UATLAGameInstance::CreateATLASession_Implementation(ULocalPlayer* LocalPlay
 	SessionSettingsInfo.bUseLobbiesIfAvailable = true;
 	SessionSettingsInfo.bShouldAdvertise = true;
 
+	UCommonMultiplayerLibrary::OnCreateStartSessionProcessDelegate.BindLambda([this](const bool bIsSuccessful)
+	{
+		OnCreateSessionDelegate.Broadcast(bIsSuccessful);
+	});
 	UCommonMultiplayerLibrary::CreateMultiplayerSession(GetWorld(), LocalPlayer, SessionSettingsInfo);
 }
 
@@ -66,6 +70,10 @@ void UATLAGameInstance::FindATLASession_Implementation(const FString& LobbyName)
 {
 	UE_LOG(LogATLA, Display, TEXT("Finding ATLA Session %s"), *LobbyName);
 
+	UCommonMultiplayerLibrary::OnFindJoinSessionProcessDelegate.BindLambda([this](const bool bIsSuccessful)
+	{
+		OnJoinSessionDelegate.Broadcast(bIsSuccessful);
+	});
 	const bool bUseLan = UCommonMultiplayerLibrary::UseLanMode(GetWorld());
 	UCommonMultiplayerLibrary::FindMultiplayerSession(GetWorld(), bUseLan, LobbyName);
 }

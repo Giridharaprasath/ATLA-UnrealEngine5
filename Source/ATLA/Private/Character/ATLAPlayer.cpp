@@ -81,8 +81,7 @@ void AATLAPlayer::InitializeDefaultAttributes() const
 {
 	if (!HasAuthority()) return;
 
-	UATLAAbilitySystemLibrary::InitializeATLACharacterInfo(this, CharacterElement, CharacterType, 1.f, true,
-	                                                       GetAbilitySystemComponent());
+	UATLAAbilitySystemLibrary::InitializeATLACharacterInfo(this, CharacterElement, CharacterType, 1.f, true, GetAbilitySystemComponent());
 }
 
 void AATLAPlayer::NotifyControllerChanged()

@@ -22,6 +22,8 @@ class ATLA_API IUICutsceneInterface
 	GENERATED_BODY()
 
 public:
-	virtual void ShowCutsceneBlackBars() = 0;
-	virtual void HideCutsceneBlackBars() = 0;
+	virtual void ShowCutsceneHorizontalBars() = 0;
+	virtual void HideCutsceneHorizontalBars() = 0;
+	virtual void ShowCutsceneVerticalBars() = 0;
+	virtual void HideCutsceneVerticalBars() = 0;
 };

@@ -1,6 +1,7 @@
 // Copyright Melon Studios.
 
 #include "MultiplayerGameInstanceSubsystem.h"
+#include "CommonMultiplayerLibrary.h"
 #include "CommonMultiplayerSDK.h"
 #include "Kismet/GameplayStatics.h"
 #include "Online/OnlineSessionNames.h"
@@ -19,12 +20,10 @@ UMultiplayerGameInstanceSubsystem::UMultiplayerGameInstanceSubsystem() :
 		SessionInterface = Subsystem->GetSessionInterface();
 		if (SessionInterface)
 		{
-			UE_LOG(LogCommonMultiplayerSDK, Display, TEXT("Subsystem Present : %s"),
-			       *Subsystem->GetSubsystemName().ToString());
+			UE_LOG(LogCommonMultiplayerSDK, Display, TEXT("Subsystem Present : %s"), *Subsystem->GetSubsystemName().ToString());
 		}
 
-		OnSessionUserInviteAcceptedDelegateHandle = SessionInterface->AddOnSessionUserInviteAcceptedDelegate_Handle(
-			OnSessionUserInviteAcceptedDelegate);
+		OnSessionUserInviteAcceptedDelegateHandle = SessionInterface->AddOnSessionUserInviteAcceptedDelegate_Handle(OnSessionUserInviteAcceptedDelegate);
 	}
 }
 
@@ -37,12 +36,11 @@ void UMultiplayerGameInstanceSubsystem::Deinitialize()
 	Super::Deinitialize();
 }
 
-void UMultiplayerGameInstanceSubsystem::CreateMultiplayerSession(ULocalPlayer* LocalPlayer, FSessionSettingsInfo SessionSettingsInfo)
+void UMultiplayerGameInstanceSubsystem::CreateMultiplayerSession(const ULocalPlayer* LocalPlayer, FSessionSettingsInfo SessionSettingsInfo)
 {
 	if (!SessionInterface.IsValid()) return;
 
-	UE_LOG(LogCommonMultiplayerSDK, Display, TEXT("Create Session LAN : %hhd, Level : %s"), SessionSettingsInfo.bUseLan,
-	       *SessionSettingsInfo.MapPath);
+	UE_LOG(LogCommonMultiplayerSDK, Display, TEXT("Create Session LAN : %hhd, Level : %s"), SessionSettingsInfo.bUseLan, *SessionSettingsInfo.MapPath);
 
 	if (const auto ExistingSession = SessionInterface->GetNamedSession(NAME_GameSession); ExistingSession != nullptr)
 	{
@@ -82,14 +80,13 @@ void UMultiplayerGameInstanceSubsystem::DestroyMultiplayerSession()
 	SessionInterface->DestroySession(NAME_GameSession);
 }
 
-void UMultiplayerGameInstanceSubsystem::JoinMultiplayerSession(int32 LocalPlayer, const FOnlineSessionSearchResult& SessionSearchResult)
+void UMultiplayerGameInstanceSubsystem::JoinMultiplayerSession(const int32 LocalPlayer, const FOnlineSessionSearchResult& SessionSearchResult)
 {
 	if (!SessionInterface.IsValid()) return;
 
-	UE_LOG(LogCommonMultiplayerSDK, Display, TEXT("Join Session Player : %d, SSR : %s"), LocalPlayer, *SessionSearchResult.GetSessionIdStr());
+	UE_LOG(LogCommonMultiplayerSDK, Display, TEXT("Join Session Player : %d, SN : %s"), LocalPlayer, *SessionSearchResult.Session.OwningUserName);
 
-	OnJoinSessionCompleteDelegateHandle = SessionInterface->AddOnJoinSessionCompleteDelegate_Handle(
-		OnJoinSessionCompleteDelegate);
+	OnJoinSessionCompleteDelegateHandle = SessionInterface->AddOnJoinSessionCompleteDelegate_Handle(OnJoinSessionCompleteDelegate);
 
 	FOnlineSessionSearchResult ModResult = SessionSearchResult;
 	ModResult.Session.SessionSettings.bUsesPresence = true;
@@ -98,7 +95,7 @@ void UMultiplayerGameInstanceSubsystem::JoinMultiplayerSession(int32 LocalPlayer
 	SessionInterface->JoinSession(LocalPlayer, NAME_GameSession, ModResult);
 }
 
-void UMultiplayerGameInstanceSubsystem::FindMultiplayerSession(bool bUseLan, FString LobbyName)
+void UMultiplayerGameInstanceSubsystem::FindMultiplayerSession(const bool bUseLan, const FString& LobbyName)
 {
 	if (!SessionInterface.IsValid()) return;
 
@@ -122,7 +119,7 @@ void UMultiplayerGameInstanceSubsystem::FindMultiplayerSession(bool bUseLan, FSt
 	}
 }
 
-void UMultiplayerGameInstanceSubsystem::OnCreateSessionComplete(FName SessionName, bool bWasSuccessful)
+void UMultiplayerGameInstanceSubsystem::OnCreateSessionComplete(const FName SessionName, const bool bWasSuccessful)
 {
 	UE_LOG(LogCommonMultiplayerSDK, Display, TEXT("On Create Session Complete SN : %s, b : %hhd"), *SessionName.ToString(), bWasSuccessful);
 
@@ -138,7 +135,7 @@ void UMultiplayerGameInstanceSubsystem::OnCreateSessionComplete(FName SessionNam
 	}
 }
 
-void UMultiplayerGameInstanceSubsystem::OnStartSessionComplete(FName SessionName, bool bWasSuccessful)
+void UMultiplayerGameInstanceSubsystem::OnStartSessionComplete(const FName SessionName, const bool bWasSuccessful)
 {
 	UE_LOG(LogCommonMultiplayerSDK, Display, TEXT("On Start Session Complete SN : %s, b : %hhd"), *SessionName.ToString(), bWasSuccessful);
 
@@ -150,14 +147,15 @@ void UMultiplayerGameInstanceSubsystem::OnStartSessionComplete(FName SessionName
 			UGameplayStatics::OpenLevel(GetWorld(), FName(*FString(PathToLobby)), true, "?listen");
 		}
 	}
+	UCommonMultiplayerLibrary::OnCreateStartSessionProcessDelegate.ExecuteIfBound(bWasSuccessful);
 }
 
-void UMultiplayerGameInstanceSubsystem::OnDestroySessionComplete(FName SessionName, bool bWasSuccessful)
+void UMultiplayerGameInstanceSubsystem::OnDestroySessionComplete(const FName SessionName, const bool bWasSuccessful)
 {
 	UE_LOG(LogCommonMultiplayerSDK, Display, TEXT("On Destroy Session Complete SN : %s, b : %hhd"), *SessionName.ToString(), bWasSuccessful);
 }
 
-void UMultiplayerGameInstanceSubsystem::OnSessionInviteAccepted(bool bWasSuccessful, int32 LocalPlayer, TSharedPtr<const FUniqueNetId> PersonInviting,
+void UMultiplayerGameInstanceSubsystem::OnSessionInviteAccepted(const bool bWasSuccessful, const int32 LocalPlayer, TSharedPtr<const FUniqueNetId> PersonInviting,
                                                                 const FOnlineSessionSearchResult& SessionToJoin)
 {
 	UE_LOG(LogCommonMultiplayerSDK, Display, TEXT("On Session User Invite Accept Complete PI : %s, b : %hhd"), *PersonInviting->ToString(), bWasSuccessful);
@@ -171,7 +169,7 @@ void UMultiplayerGameInstanceSubsystem::OnSessionInviteAccepted(bool bWasSuccess
 	}
 }
 
-void UMultiplayerGameInstanceSubsystem::OnJoinSessionComplete(FName SessionName, EOnJoinSessionCompleteResult::Type Result)
+void UMultiplayerGameInstanceSubsystem::OnJoinSessionComplete(const FName SessionName, const EOnJoinSessionCompleteResult::Type Result)
 {
 	UE_LOG(LogCommonMultiplayerSDK, Display, TEXT("On Join Session Complete PI : %s, b : %s"), *SessionName.ToString(), LexToString(Result));
 
@@ -179,24 +177,31 @@ void UMultiplayerGameInstanceSubsystem::OnJoinSessionComplete(FName SessionName,
 	{
 		SessionInterface->ClearOnJoinSessionCompleteDelegate_Handle(OnJoinSessionCompleteDelegateHandle);
 
-		FString TravelURL;
-		SessionInterface->GetResolvedConnectString(NAME_GameSession, TravelURL);
-
-		if (APlayerController* PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0))
+		if (Result == EOnJoinSessionCompleteResult::Success)
 		{
-			PlayerController->ClientTravel(TravelURL, TRAVEL_Absolute);
+			FString TravelURL;
+			SessionInterface->GetResolvedConnectString(NAME_GameSession, TravelURL);
+
+			if (APlayerController* PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0))
+			{
+				PlayerController->ClientTravel(TravelURL, TRAVEL_Absolute);
+			}
+			UCommonMultiplayerLibrary::OnFindJoinSessionProcessDelegate.ExecuteIfBound(true);
+		}
+		else
+		{
+			UCommonMultiplayerLibrary::OnFindJoinSessionProcessDelegate.ExecuteIfBound(false);
 		}
 	}
 }
 
-void UMultiplayerGameInstanceSubsystem::OnFindSessionComplete(bool bWasSuccessful)
+void UMultiplayerGameInstanceSubsystem::OnFindSessionComplete(const bool bWasSuccessful)
 {
 	UE_LOG(LogCommonMultiplayerSDK, Display, TEXT("On Find Session Complete b : %hhd, C : %d"), bWasSuccessful, SessionSearch->SearchResults.Num());
 
 	if (SessionInterface)
 	{
 		SessionInterface->ClearOnFindSessionsCompleteDelegate_Handle(OnFindSessionCompleteDelegateHandle);
-
 		if (bWasSuccessful)
 		{
 			for (auto Result : SessionSearch->SearchResults)
