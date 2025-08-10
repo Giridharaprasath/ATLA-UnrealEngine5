@@ -28,5 +28,6 @@ public:
 
 private:
 	EUIPopUpWidget CurrentUIPopUpWidget;
+	UPROPERTY()
 	TObjectPtr<UATLACommonUserWidget> WidgetBase;
 };
