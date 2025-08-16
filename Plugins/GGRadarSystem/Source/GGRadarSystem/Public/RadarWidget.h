@@ -33,7 +33,6 @@ public:
 	TArray<UWorldDirectionWidget*> WorldDirectionWidgets;
 	void AddWorldDirection(const FWorldDirection& WorldDirection);
 	
-protected:
 	UPROPERTY(BlueprintReadWrite, Transient, Category = "Radar", meta = ( BindWidgetAnim ))
 	TObjectPtr<UWidgetAnimation> RadarBlendAnim;
 

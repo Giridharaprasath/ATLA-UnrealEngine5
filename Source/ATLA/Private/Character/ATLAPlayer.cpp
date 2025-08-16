@@ -2,6 +2,7 @@
 
 #include "Character/ATLAPlayer.h"
 #include "AbilitySystemComponent.h"
+#include "RadarComponent.h"
 #include "AbilitySystem/ATLAAbilitySystemComponent.h"
 #include "AbilitySystem/ATLAAbilitySystemLibrary.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -15,6 +16,8 @@ AATLAPlayer::AATLAPlayer(const FObjectInitializer& ObjectInitializer) : Super(Ob
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationRoll = false;
 	bUseControllerRotationYaw = false;
+
+	RadarComponent = CreateDefaultSubobject<URadarComponent>("Radar Component");
 }
 
 void AATLAPlayer::PossessedBy(AController* NewController)
@@ -35,7 +38,7 @@ void AATLAPlayer::OnRep_PlayerState()
 
 int32 AATLAPlayer::GetPlayerLevel()
 {
-	AATLAPlayerState* ATLAPlayerState = GetPlayerState<AATLAPlayerState>();
+	const AATLAPlayerState* ATLAPlayerState = GetPlayerState<AATLAPlayerState>();
 	check(ATLAPlayerState);
 
 	return ATLAPlayerState->GetPlayerLevel();
@@ -103,7 +106,7 @@ void AATLAPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 void AATLAPlayer::MoveATLAPlayer(const FInputActionValue& Value)
 {
 	if (Controller == nullptr) return;
-	FVector2D MovementVector = Value.Get<FVector2D>();
+	const FVector2D MovementVector = Value.Get<FVector2D>();
 
 	const FRotator Rotation = Controller->GetControlRotation();
 	const FRotator YawRotation(0.f, Rotation.Yaw, 0.f);
@@ -118,8 +121,13 @@ void AATLAPlayer::MoveATLAPlayer(const FInputActionValue& Value)
 void AATLAPlayer::LookATLAPlayer(const FInputActionValue& Value)
 {
 	if (Controller == nullptr) return;
-	FVector2D LookAxisVector = Value.Get<FVector2D>();
+	const FVector2D LookAxisVector = Value.Get<FVector2D>();
 
 	AddControllerYawInput(LookAxisVector.X);
 	AddControllerPitchInput(LookAxisVector.Y);
+
+	if (LookAxisVector.X != 0)
+	{
+		RadarComponent->OnPlayerTurnedDelegate.Broadcast();
+	}
 }
