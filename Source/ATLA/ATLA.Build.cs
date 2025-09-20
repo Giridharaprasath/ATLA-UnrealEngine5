@@ -28,8 +28,5 @@ public class ATLA : ModuleRules
 
 		// * Common Multiplayer SDK Plugin
 		PublicDependencyModuleNames.AddRange(new[] { "CommonMultiplayerSDK" });
-
-		// * GG Radar System Plugin
-		PublicDependencyModuleNames.AddRange(new[] { "GGRadarSystem" });
 	}
 }

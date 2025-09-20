@@ -7,7 +7,6 @@
 
 #include "ATLAPlayer.generated.h"
 
-class URadarComponent;
 struct FInputActionValue;
 class UInputAction;
 
@@ -24,9 +23,6 @@ public:
 
 	virtual void PossessedBy(AController* NewController) override;
 	virtual void OnRep_PlayerState() override;
-	
-	UPROPERTY(BlueprintReadOnly, Category = "Radar")
-	URadarComponent* RadarComponent;
 
 #pragma region Combat Interface
 	virtual int32 GetPlayerLevel() override;

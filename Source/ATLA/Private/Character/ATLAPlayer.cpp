@@ -2,7 +2,6 @@
 
 #include "Character/ATLAPlayer.h"
 #include "AbilitySystemComponent.h"
-#include "RadarComponent.h"
 #include "AbilitySystem/ATLAAbilitySystemComponent.h"
 #include "AbilitySystem/ATLAAbilitySystemLibrary.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -16,8 +15,6 @@ AATLAPlayer::AATLAPlayer(const FObjectInitializer& ObjectInitializer) : Super(Ob
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationRoll = false;
 	bUseControllerRotationYaw = false;
-
-	RadarComponent = CreateDefaultSubobject<URadarComponent>("Radar Component");
 }
 
 void AATLAPlayer::PossessedBy(AController* NewController)
@@ -125,9 +122,4 @@ void AATLAPlayer::LookATLAPlayer(const FInputActionValue& Value)
 
 	AddControllerYawInput(LookAxisVector.X);
 	AddControllerPitchInput(LookAxisVector.Y);
-
-	if (LookAxisVector.X != 0)
-	{
-		RadarComponent->OnPlayerTurnedDelegate.Broadcast();
-	}
 }
