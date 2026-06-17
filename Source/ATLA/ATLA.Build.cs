@@ -8,9 +8,13 @@ public class ATLA : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
+		// * Core dependencies
 		PublicDependencyModuleNames.AddRange(["Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput"]);
 
-		// * Gameplay Systems
+		// * Gameplay System dependencies
 		PublicDependencyModuleNames.AddRange(["GameplayTags"]);
+
+		// * UMG dependencies
+		PublicDependencyModuleNames.AddRange(["UMG", "CommonUI"]);
 	}
 }
